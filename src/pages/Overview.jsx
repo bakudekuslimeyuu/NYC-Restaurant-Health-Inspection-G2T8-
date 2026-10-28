@@ -35,7 +35,7 @@ export function Overview(){
       <Reveal className="mt-16">
         <section className="rounded-2xl bg-band px-6 py-10 sm:px-10">
           <SectionHeading>Who does it matter to?</SectionHeading>
-          <p className="mt-5 max-w-2xl text-[16px] leading-[1.75] text-sub">Four groups have something at stake in how New York shows inspection results.</p>
+          <p className="mt-5 max-w-2xl text-[16px] leading-[1.75] text-sub">Three groups have something at stake in how New York shows inspection results.</p>
           <StakeholderGrid />
         </section>
       </Reveal>

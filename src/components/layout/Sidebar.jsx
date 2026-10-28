@@ -24,13 +24,6 @@ export function Sidebar({ route, open, onClose }){
     <>
       <div onClick={onClose} className={`fixed inset-0 z-40 bg-black/40 transition-opacity duration-300 lg:hidden ${open ? "opacity-100" : "pointer-events-none opacity-0"}`} />
       <aside className={`fixed inset-y-0 left-0 z-50 flex w-[280px] flex-col border-r border-sideline bg-side text-white transition-transform duration-300 ease-out lg:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}>
-        <div className="flex items-center gap-3 border-b border-sideline p-6">
-          <a href="#home" onClick={onClose} className="flex flex-1 items-center gap-3">
-            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[10px] bg-coral text-[17px] font-semibold">A</span>
-            <span className="text-[13px] font-semibold leading-snug">{CONTENT.siteName}</span>
-          </a>
-          <button onClick={onClose} aria-label="Close menu" className="rounded-lg p-1.5 text-white/70 hover:bg-sideactive lg:hidden"><Icon d={icons.close} /></button>
-        </div>
         <nav className="flex-1 space-y-1 overflow-y-auto p-6">
           <NavLink to="home" icon={icons.home} label="Home" {...link} />
           <NavLink to="problem" icon={icons.info} label="Problem Statement" {...link} />

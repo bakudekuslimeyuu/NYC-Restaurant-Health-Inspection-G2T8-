@@ -11,6 +11,7 @@ export function Home(){
       <div className="relative z-10 w-full px-6 pb-16 pt-28 sm:px-10 lg:px-14 lg:pb-20">
         <div className="max-w-4xl">
           <h1 className="text-[34px] font-bold leading-[1.08] tracking-tight text-white sm:text-[44px] lg:text-[52px] xl:text-[58px]">{CONTENT.heroTitle}</h1>
+          <p className="mt-5 max-w-2xl text-[17px] leading-relaxed text-white/75 sm:text-[19px]">{CONTENT.heroSub}</p>
           <div className="mt-7 h-[3px] w-16 rounded-full bg-coral" />
           <p className="caret mt-8 min-h-[1.3em] text-[24px] font-semibold tracking-tight text-white sm:text-[30px]">{name}</p>
         </div>

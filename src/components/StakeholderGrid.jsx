@@ -3,14 +3,13 @@ import { Reveal } from "./Reveal.jsx";
 
 const items = [
   [icons.fork, "Diners", "They choose by stars and have no practical way to see what an inspector found before they sit down."],
-  [icons.store, "Restaurants", "A letter that lags behind today’s kitchen hides the restaurant that fixed a problem — and the one that hasn’t."],
   [icons.chat, "Review platforms", "They already publish the record, just unclearly. The fix is a display change, not a new dataset."],
   [icons.bank, "Regulators", "Inspection findings only change behaviour if the people eating there actually see them."]
 ];
 
 export function StakeholderGrid(){
   return (
-    <div className="mt-8 grid gap-x-10 gap-y-9 sm:grid-cols-2">
+    <div className="mt-8 grid gap-x-10 gap-y-9 md:grid-cols-3">
       {items.map(([ic, t, d], i) => (
         <Reveal key={t} delay={i * 80}>
           <span className="grid h-12 w-12 place-items-center rounded-full bg-coral text-white"><Icon d={ic} className="h-5 w-5" /></span>

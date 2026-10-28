@@ -20,7 +20,7 @@ export function Dashboard({ d }){
   const prev = CONTENT.dashboards[i - 1], next = CONTENT.dashboards[i + 1];
   return (
     <Page>
-      <PageHeader eyebrow={`${pad(d.n)} · ${d.owner}`} title={d.title} />
+      <PageHeader eyebrow={`Dashboard ${pad(d.n)}`} title={d.title} />
       <p className="mt-7 max-w-3xl text-[16.5px] leading-[1.75] text-sub">{d.intro}</p>
       <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.16em] text-sub">Source: {d.source}</p>
       <Reveal className="mt-8"><TableauFrame n={d.n} question={d.question} views={d.views} source={d.source} /></Reveal>

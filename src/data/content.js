@@ -3,7 +3,8 @@ export const CONTENT = {
   siteName: "Restaurant Health Inspection Analysis",
   // Street photo from the base44 site. To use your own, put hero.jpg in public/ and set this to "hero.jpg".
   heroImage: "https://media.base44.com/images/public/6ae0c7d1eaacca254cee908c/f93a37096_generated_image.png",
-  heroTitle: "Can you trust a restaurant’s health grade or its Yelp stars? We compared NYC inspection records with Yelp reviews to find out.",
+  heroTitle: "Can you trust a restaurant’s health grade or its Yelp stars?",
+  heroSub: "We compared NYC inspection records with Yelp reviews to find out.",
   members: ["Xuan Wei", "Mei Yu", "Zheng Long", "Shanice", "Zheng Seng"],
   dataNote: "DOHMH New York City Restaurant Inspection Results · Yelp restaurant records, star ratings & public review text",
 
