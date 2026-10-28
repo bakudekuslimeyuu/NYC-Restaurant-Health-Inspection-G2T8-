@@ -1,0 +1,628 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Restaurant Health Inspection Analysis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink: "#16181D", sub: "#6A7078", line: "#E5E7EB", band: "#F2F2F2",
+          coral: "#ED7A6A", side: "#0A0B10", sideline: "#1E2029", sideactive: "#171922"
+        },
+        fontFamily: {
+          sans: ['"Instrument Sans"', "Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+          mono: ['"JetBrains Mono"', "ui-monospace", "SFMono-Regular", "Menlo", "monospace"]
+        }
+      }
+    }
+  };
+</script>
+<style>
+  body{background:#fff}
+  @keyframes routeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  .route-in{animation:routeIn 450ms ease-out both}
+  @keyframes caret{50%{opacity:0}}
+  .caret::after{content:"";display:inline-block;width:2px;height:1.05em;margin-left:2px;vertical-align:-3px;background:#ED7A6A;animation:caret 1s steps(1) infinite}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  .fade-in{opacity:0;animation:fadeIn 500ms ease-out forwards}
+</style>
+<!-- Tableau Embedding API v3: provides the <tableau-viz> element -->
+<script type="module" src="https://public.tableau.com/javascripts/api/tableau.embedding.3.latest.min.js"></script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.26.4/babel.min.js"></script>
+</head>
+<body class="font-sans text-ink antialiased">
+<div id="root"></div>
+
+<script type="text/babel" data-presets="react">
+/* ======================= CONTENT — edit me ======================= */
+const CONTENT = {
+  siteName: "Restaurant Health Inspection Analysis",
+  // Street photo from the base44 site. Save it locally as hero.jpg and point this at "hero.jpg" if you prefer.
+  heroImage: "https://media.base44.com/images/public/6ae0c7d1eaacca254cee908c/f93a37096_generated_image.png",
+  heroTitle: "Can you trust a restaurant’s health grade or its Yelp stars? We compared NYC inspection records with Yelp reviews to find out.",
+  members: ["Xuan Wei", "Mei Yu", "Zheng Long", "Shanice", "Zheng Seng"],
+  dataNote: "DOHMH New York City Restaurant Inspection Results · Yelp restaurant records, star ratings & public review text",
+
+  // Paste each Tableau Public link into `url`, e.g. https://public.tableau.com/views/Workbook/Dashboard1
+  // (In Tableau Public: open the viz → Share → copy the Link. Anything after "?" is ignored.)
+  dashboards: [
+    { n:1, owner:"Xuan Wei", nav:"Grade on the Door",
+      title:"You can’t rely on the grade on the door",
+      intro:"This part looks only at the official record: the DOHMH inspection results for New York City restaurants. Nothing here comes from Yelp. The question is whether the letter on the door — the signal almost every diner already uses — is an accurate picture of the kitchen behind it.",
+      source:"DOHMH NYC Restaurant Inspection Results",
+      question:"Does the letter on the door match what the inspection record actually says?",
+      views:[{label:"Grade posted vs. inspection score", url:""}],
+      insights:[
+        ["The letter can trail the latest inspection.", "Edit: how often the posted grade comes from an older inspection cycle."],
+        ["“Grade pending” hides the newest result.", "Edit: restaurants whose most recent inspection is unresolved."],
+        ["An A can sit alongside serious violations.", "Edit: serious findings recorded within A-graded cycles."]
+      ],
+      takeaway:"The letter is the end of a process, not a live reading of the kitchen." },
+    { n:2, owner:"Mei Yu", nav:"Stars vs. Citations",
+      title:"You can’t rely on the Yelp stars either",
+      intro:"This part asks whether the star rating does the job instead. We matched Yelp restaurant records to the DOHMH inspection history and compared stars against citations: before and after a restaurant is cited, and against comparable restaurants that are never cited at all.",
+      source:"Yelp star ratings matched to DOHMH inspection history",
+      question:"If the letter is stale, does the star rating tell a diner what the record does not?",
+      views:[{label:"Star rating vs. number of citations", url:""}],
+      insights:[
+        ["There is no relationship between stars and citations.", "Highly rated and poorly rated restaurants are cited at similar rates."],
+        ["A citation barely moves a rating.", "Average ratings move by about 0.02 stars after a citation."],
+        ["The reviews don’t react either.", "Related complaints do not rise in the reviews that follow a citation."]
+      ],
+      takeaway:"Stars measure the meal, not the kitchen. They should not carry a public health signal they were never built for." },
+    { n:3, owner:"Zheng Long", nav:"Why Reviewers Miss It",
+      title:"Reviewers don’t see the kitchen",
+      intro:"If neither the letter nor the stars warn a diner, the reason is probably in what reviewers actually describe. This part reads the review text itself — what it talks about, and how it feels — and compares that with the inspection record for the same restaurants.",
+      source:"Topic and sentiment analysis of Yelp review text, matched to inspection outcomes",
+      question:"Why is there no relationship between stars and citations?",
+      views:[{label:"Review topics & sentiment", url:""}],
+      insights:[
+        ["Reviews are about food, service and price.", "Edit: share of review text by topic."],
+        ["Hygiene is rarely mentioned.", "Edit: how often cleanliness or pest terms appear."],
+        ["Sentiment doesn’t shift after a citation.", "Edit: sentiment before vs. after an inspection."]
+      ],
+      takeaway:"Diners review what they experience at the table. The kitchen is out of sight, so it is out of the reviews." },
+    { n:4, owner:"Shanice", nav:"What to Check Instead",
+      title:"What to check instead",
+      intro:"If both familiar signals are weak, some others still carry information. This part looks at when violations happen and which kinds of restaurants are cited, so a diner knows what is actually worth checking.",
+      source:"DOHMH NYC Restaurant Inspection Results, by month and restaurant type",
+      question:"If both signals are weak, what should a diner actually use?",
+      views:[{label:"Seasonality", url:""},{label:"Chains vs. established", url:""}],
+      insights:[
+        ["Violations rise in the summer.", "Edit: monthly pattern of violations."],
+        ["Chains and established restaurants differ.", "Edit: citation rates for chains vs. long-running independents."],
+        ["The inspection date matters as much as the letter.", "Edit: how recency changes what a grade means."]
+      ],
+      takeaway:"Check when the restaurant was last inspected and what was found — not just the letter or the stars." },
+    { n:5, owner:"Zheng Seng", nav:"Insights",
+      title:"Making health information readable",
+      intro:"This part brings the findings together and asks what should change in how health information is shown to diners — on the door, and on the review platforms they already use.",
+      source:"Synthesis of dashboards 01–04",
+      question:"What should change in how health information is displayed?",
+      views:[{label:"Insights", url:""}],
+      insights:[
+        ["Neither signal warns a diner today.", "The letter can be stale. The stars don’t respond to citations."],
+        ["The data already exists.", "Platforms already publish inspection results. The problem is placement and wording."],
+        ["The fix is a display change.", "Put the grade beside the stars, flag pending results, and write findings in plain English."]
+      ],
+      takeaway:"Show the inspection record where diners are already looking." }
+  ],
+
+  // `principle` = the course concept behind each change — edit to match what your Prof taught.
+  changes: [
+    { t:"Put the grade next to the stars", d:"The record sits where a diner is already looking, not under Amenities.", principle:"Information hierarchy", why:"The most decision-relevant fact belongs where attention already is." },
+    { t:"Show “Grade pending” when a newer inspection is unresolved", d:"A pending result becomes a state a diner can read, not a stale letter.", principle:"Displaying uncertainty", why:"A missing or unresolved result is information too." },
+    { t:"List findings in plain English, marked Serious or Minor", d:"Short descriptions, with severity carried by a label.", principle:"Plain language + severity encoding", why:"Reading effort drops when severity is a tag, not a paragraph." },
+    { t:"Compare with similar restaurants", d:"A grade alone means little. Next to similar places nearby, it becomes readable.", principle:"Reference classes", why:"A number needs a comparison before it says anything." },
+    { t:"Allow filtering by grade in the initial search", d:"Grade becomes part of how a diner chooses, not a footnote found later.", principle:"Dynamic queries / filtering", why:"Let people narrow options by what matters to them, up front." },
+    { t:"Show the grade on every search result", d:"The information arrives at the point of comparison — in the results list.", principle:"Information at the point of decision", why:"Facts shown while options are compared get used." }
+  ]
+};
+/* ================================================================= */
+
+const { useState, useEffect, useRef } = React;
+const pad = n => String(n).padStart(2, "0");
+
+/* ---------- hooks ---------- */
+function useHashRoute(){
+  const read = () => (location.hash || "#home").slice(1) || "home";
+  const [route, setRoute] = useState(read);
+  useEffect(() => {
+    const on = () => { setRoute(read()); window.scrollTo(0, 0); };
+    addEventListener("hashchange", on); return () => removeEventListener("hashchange", on);
+  }, []);
+  return route;
+}
+function useTyping(text, speed = 38){
+  const [out, setOut] = useState("");
+  useEffect(() => {
+    let i = 0, t;
+    const step = () => { setOut(text.slice(0, i)); if (i++ < text.length) t = setTimeout(step, speed); };
+    step(); return () => clearTimeout(t);
+  }, [text]);
+  return out;
+}
+
+function useNameCycle(names){
+  // Types a name, holds it, erases it, then moves to the next one. Loops forever.
+  const [out, setOut] = useState("");
+  useEffect(() => {
+    let idx = 0, len = 0, deleting = false, t;
+    const tick = () => {
+      const name = names[idx];
+      if (!deleting){
+        len++; setOut(name.slice(0, len));
+        if (len === name.length){ deleting = true; t = setTimeout(tick, 1400); return; }
+        t = setTimeout(tick, 85);
+      } else {
+        len--; setOut(name.slice(0, len));
+        if (len === 0){ deleting = false; idx = (idx + 1) % names.length; t = setTimeout(tick, 350); return; }
+        t = setTimeout(tick, 40);
+      }
+    };
+    t = setTimeout(tick, 600);
+    return () => clearTimeout(t);
+  }, []);
+  return out;
+}
+
+/* ---------- icons (line, 1.75 stroke) ---------- */
+const Icon = ({ d, className = "h-[17px] w-[17px]" }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">{d}</svg>
+);
+const I = {
+  home: <><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h5v-6h4v6h5V9.5"/></>,
+  info: <><circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/></>,
+  doc: <><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></>,
+  chart: <><path d="M3 3v18h18"/><path d="M8 17v-3M12 17V9M16 17v-6M20 17V7"/></>,
+  spark: <><path d="M11 6.5 12.2 10l3.3 1.2L12.2 12.4 11 16l-1.2-3.6-3.3-1.2L9.8 10z"/><path d="M18 3v4M16 5h4M19 15v3M17.5 16.5h3"/></>,
+  chev: <path d="m6 9 6 6 6-6"/>,
+  up: <path d="M12 19V5M5 12l7-7 7 7"/>,
+  arrow: <path d="M5 12h14M13 6l6 6-6 6"/>,
+  menu: <path d="M4 6h16M4 12h16M4 18h16"/>,
+  close: <path d="M6 6l12 12M18 6 6 18"/>,
+  alert: <><path d="M12 3 2 21h20z"/><path d="M12 10v4M12 17h.01"/></>,
+  fork: <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/>,
+  store: <><path d="M3 9l1.5-5h15L21 9M3 9h18v2a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0z"/><path d="M5 13v8h14v-8M10 21v-4h4v4"/></>,
+  chat: <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"/>,
+  bank: <path d="M3 22h18M6 18v-7M10 18v-7M14 18v-7M18 18v-7M12 2l8 5H4z"/>
+};
+
+/* ---------- primitives ---------- */
+const Eyebrow = ({ children, className = "" }) => (
+  <p className={`text-[11px] font-semibold uppercase tracking-[0.2em] text-coral ${className}`}>{children}</p>
+);
+const Rule = ({ wide }) => <div className={`mt-3 h-[3px] rounded-full bg-coral ${wide ? "w-12" : "w-10"}`} />;
+
+function PageHeader({ eyebrow, title }){
+  return (
+    <header className="max-w-3xl">
+      <Eyebrow>{eyebrow}</Eyebrow>
+      <h1 className="mt-2 text-[30px] font-bold leading-[1.12] tracking-tight sm:text-[38px]">{title}</h1>
+      <div className="mt-4"><Rule wide /></div>
+    </header>
+  );
+}
+function SectionHeading({ children, className = "" }){
+  return (
+    <div className={className}>
+      <h2 className="text-[23px] font-bold leading-snug tracking-tight sm:text-[27px]">{children}</h2>
+      <Rule />
+    </div>
+  );
+}
+function Pill({ href, primary, children }){
+  return (
+    <a href={href} className={`inline-flex items-center gap-2 rounded-full px-5 py-3 text-[14px] font-medium transition duration-200 ease-out ${
+      primary ? "bg-coral text-white hover:opacity-90" : "border border-line text-ink hover:border-coral hover:text-coral"}`}>
+      {children}{primary && <Icon d={I.arrow} className="h-4 w-4" />}
+    </a>
+  );
+}
+const cardHover = "transition duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[0_10px_28px_-14px_rgba(22,24,29,0.22)]";
+
+function Reveal({ children, className = "", delay = 0 }){
+  const ref = useRef(null); const [shown, setShown] = useState(false);
+  useEffect(() => {
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting){ setShown(true); io.disconnect(); } }, { threshold: 0.12 });
+    io.observe(ref.current); return () => io.disconnect();
+  }, []);
+  return (
+    <div ref={ref} style={{ transitionDelay: `${delay}ms` }}
+      className={`transition duration-[550ms] ease-out ${shown ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"} ${className}`}>
+      {children}
+    </div>
+  );
+}
+
+/* ---------- signature components ---------- */
+function TableauFrame({ n, question, views, source }){
+  const [active, setActive] = useState(0);
+  const v = views[active];
+  // Tableau share links often carry ?:language=... etc. The viz only needs the bare /views/Workbook/Sheet URL.
+  const src = v.url && v.url.split("?")[0];
+  return (
+    <figure className="m-0">
+      <div className="overflow-hidden rounded-2xl border border-line bg-white">
+        <div className="flex flex-wrap items-center justify-between gap-3 bg-coral px-5 py-4">
+          <p className="text-[15px] font-semibold leading-snug text-white">{question}</p>
+          {views.length > 1 && (
+            <div className="flex gap-1.5">
+              {views.map((x, i) => (
+                <button key={i} onClick={() => setActive(i)}
+                  className={`rounded-full border px-3 py-1 text-[12.5px] font-semibold transition duration-200 ease-out ${
+                    i === active ? "border-white bg-white text-coral" : "border-white/60 text-white hover:border-white"}`}>{x.label}</button>
+              ))}
+            </div>
+          )}
+        </div>
+        <div className="relative h-[480px] sm:h-[620px]">
+          {src ? <tableau-viz key={src} src={src} toolbar="bottom" hide-tabs="" width="100%" height="100%" class="absolute inset-0 block h-full w-full"></tableau-viz>
+            : (
+              <div className="absolute inset-0 grid place-items-center px-6 text-center">
+                <div className="max-w-sm">
+                  <span className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-band text-coral"><Icon d={I.chart} className="h-5 w-5" /></span>
+                  <p className="mt-5 text-[16px] font-semibold">{v.label}</p>
+                  <p className="mt-2 text-[14px] leading-relaxed text-sub">Tableau dashboard slot. Paste the published link for this workbook and it will load inside this frame.</p>
+                </div>
+              </div>
+            )}
+        </div>
+      </div>
+      <figcaption className="mt-3 font-mono text-[11px] text-sub">FIG. {pad(n)}{views.length > 1 ? `.${active + 1}` : ""} — {v.label} · Source: {source}</figcaption>
+    </figure>
+  );
+}
+
+function InsightsAccordion({ items }){
+  const [open, setOpen] = useState(-1);
+  return (
+    <div className="mt-7 space-y-3">
+      {items.map(([q, a], i) => {
+        const isOpen = open === i;
+        return (
+          <div key={i} className="overflow-hidden rounded-xl">
+            <button onClick={() => setOpen(isOpen ? -1 : i)} aria-expanded={isOpen}
+              className="flex w-full items-center justify-between gap-4 bg-coral px-5 py-4 text-left text-[15px] font-semibold leading-snug text-white">
+              {q}<span className={`transition-transform duration-300 ease-out ${isOpen ? "rotate-180" : ""}`}><Icon d={I.chev} className="h-4 w-4" /></span>
+            </button>
+            <div className={`grid bg-band transition-[grid-template-rows] duration-300 ease-out ${isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
+              <div className="overflow-hidden"><p className="px-5 py-4 text-[15px] leading-[1.75] text-sub">{a}</p></div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function StakeholderGrid(){
+  const items = [
+    [I.fork, "Diners", "They choose by stars and have no practical way to see what an inspector found before they sit down."],
+    [I.store, "Restaurants", "A letter that lags behind today’s kitchen hides the restaurant that fixed a problem — and the one that hasn’t."],
+    [I.chat, "Review platforms", "They already publish the record, just unclearly. The fix is a display change, not a new dataset."],
+    [I.bank, "Regulators", "Inspection findings only change behaviour if the people eating there actually see them."]
+  ];
+  return (
+    <div className="mt-8 grid gap-x-10 gap-y-9 sm:grid-cols-2">
+      {items.map(([ic, t, d], i) => (
+        <Reveal key={t} delay={i * 80}>
+          <span className="grid h-12 w-12 place-items-center rounded-full bg-coral text-white"><Icon d={ic} className="h-5 w-5" /></span>
+          <h3 className="mt-4 text-[16px] font-bold">{t}</h3>
+          <p className="mt-2 text-[15px] leading-[1.75] text-sub">{d}</p>
+        </Reveal>
+      ))}
+    </div>
+  );
+}
+
+function BackToTop(){
+  const [show, setShow] = useState(false);
+  useEffect(() => { const on = () => setShow(scrollY > 400); addEventListener("scroll", on, { passive:true }); return () => removeEventListener("scroll", on); }, []);
+  return (
+    <button aria-label="Back to top" onClick={() => scrollTo({ top:0, behavior:"smooth" })}
+      className={`fixed bottom-6 right-6 z-40 grid h-12 w-12 place-items-center rounded-full bg-coral text-white shadow-[0_10px_24px_-8px_rgba(237,122,106,0.6)] transition duration-300 ease-out ${show ? "opacity-100" : "pointer-events-none translate-y-2 opacity-0"}`}>
+      <Icon d={I.up} className="h-[18px] w-[18px]" />
+    </button>
+  );
+}
+
+/* ---------- frame ---------- */
+function Sidebar({ route, open, onClose }){
+  const [dashOpen, setDashOpen] = useState(true);
+  const inDash = route.startsWith("dash-");
+  const item = active => `relative flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-[13.5px] transition-colors duration-200 ease-out ${
+    active ? "bg-sideactive font-medium text-coral" : "text-white/70 hover:bg-sideactive/60 hover:text-white"}`;
+  const Marker = () => <span className="absolute -left-3 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-full bg-coral" />;
+  const Link = ({ to, icon, label }) => (
+    <a href={`#${to}`} onClick={onClose} className={item(route === to)}>
+      {route === to && <Marker />}<Icon d={icon} /><span>{label}</span>
+    </a>
+  );
+  return (
+    <>
+      <div onClick={onClose} className={`fixed inset-0 z-40 bg-black/40 transition-opacity duration-300 lg:hidden ${open ? "opacity-100" : "pointer-events-none opacity-0"}`} />
+      <aside className={`fixed inset-y-0 left-0 z-50 flex w-[280px] flex-col border-r border-sideline bg-side text-white transition-transform duration-300 ease-out lg:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}>
+        <div className="flex items-center gap-3 border-b border-sideline p-6">
+          <a href="#home" onClick={onClose} className="flex flex-1 items-center gap-3">
+            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[10px] bg-coral text-[17px] font-semibold">A</span>
+            <span className="text-[13px] font-semibold leading-snug">{CONTENT.siteName}</span>
+          </a>
+          <button onClick={onClose} aria-label="Close menu" className="rounded-lg p-1.5 text-white/70 hover:bg-sideactive lg:hidden"><Icon d={I.close} /></button>
+        </div>
+        <nav className="flex-1 space-y-1 overflow-y-auto p-6">
+          <Link to="home" icon={I.home} label="Home" />
+          <Link to="problem" icon={I.info} label="Problem Statement" />
+          <Link to="overview" icon={I.doc} label="Overview" />
+          <div>
+            <button onClick={() => setDashOpen(!dashOpen)} aria-expanded={dashOpen} className={item(false) + (inDash ? " !text-coral" : "")}>
+              <Icon d={I.chart} /><span className="flex-1 text-left">Dashboards</span>
+              <span className={`transition-transform duration-300 ease-out ${dashOpen ? "rotate-180" : ""}`}><Icon d={I.chev} className="h-4 w-4" /></span>
+            </button>
+            {dashOpen && (
+              <div className="ml-4 mt-1 space-y-0.5 border-l border-sideline pl-4">
+                {CONTENT.dashboards.map(d => (
+                  <a key={d.n} href={`#dash-${d.n}`} onClick={onClose}
+                    className={`flex items-center gap-3 rounded-lg p-2 text-[13px] transition-colors duration-200 ease-out ${route === `dash-${d.n}` ? "bg-sideactive text-coral" : "text-white/60 hover:text-white"}`}>
+                    <span className="font-mono text-[10px] opacity-60">{pad(d.n)}</span><span>{d.nav}</span>
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
+          <Link to="redesign" icon={I.spark} label="Redesign Proposal" />
+        </nav>
+        <div className="border-t border-sideline p-6">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/40">Data</p>
+          <p className="mt-2 text-[12px] leading-relaxed text-white/60">{CONTENT.dataNote}</p>
+        </div>
+      </aside>
+    </>
+  );
+}
+function TopBar({ onMenu }){
+  return (
+    <div className="fixed inset-x-0 top-0 z-30 flex h-14 items-center gap-3 border-b border-line bg-white px-4 lg:hidden">
+      <button onClick={onMenu} aria-label="Open menu" className="rounded-lg p-2 text-ink hover:bg-band"><Icon d={I.menu} className="h-5 w-5" /></button>
+      <span className="text-[13px] font-semibold">{CONTENT.siteName}</span>
+    </div>
+  );
+}
+const Page = ({ children }) => <div className="mx-auto max-w-[1100px] px-6 pb-24 pt-16 sm:px-10 lg:px-14 lg:pt-20">{children}</div>;
+
+/* ---------- pages ---------- */
+function Home(){
+  const name = useNameCycle(CONTENT.members);
+  // Deliberate exception to the brief: dark full-screen photo hero with a gradient shade.
+  return (
+    <section className="relative flex min-h-[calc(100vh-56px)] items-end overflow-hidden bg-side lg:min-h-screen">
+      <img src={CONTENT.heroImage} alt="" className="absolute inset-0 h-full w-full object-cover" />
+      <div className="absolute inset-0 bg-gradient-to-t from-side via-side/80 to-side/25" />
+      <div className="relative z-10 w-full px-6 pb-16 pt-28 sm:px-10 lg:px-14 lg:pb-20">
+        <div className="max-w-4xl">
+          <h1 className="text-[34px] font-bold leading-[1.08] tracking-tight text-white sm:text-[44px] lg:text-[52px] xl:text-[58px]">{CONTENT.heroTitle}</h1>
+          <div className="mt-7 h-[3px] w-16 rounded-full bg-coral" />
+          <p className="caret mt-8 min-h-[1.3em] text-[24px] font-semibold tracking-tight text-white sm:text-[30px]">{name}</p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Problem(){
+  return (
+    <Page>
+      <PageHeader eyebrow="Problem Statement" title="Two signals, and a blind spot between them." />
+      <div className="mt-7 max-w-3xl space-y-6 text-[16.5px] leading-[1.75] text-sub">
+        <Reveal><p>Every diner in New York judges a restaurant twice. Once at the door, where the Department of Health posts a <b className="font-semibold text-ink">letter grade</b>. Once on a phone, where <b className="font-semibold text-ink">Yelp shows a star rating</b>. Both look like an answer. Neither is the whole record.</p></Reveal>
+        <Reveal><p>The letter is the end of a long process — inspection, score, re-inspection, letter. The stars are the end of a different one: a diner’s evening, compressed into one to five. Different people produce them, for different reasons, in different places.</p></Reveal>
+        <Reveal><p>Between them sits a blind spot. The <b className="font-semibold text-ink">DOHMH record is precise but buried</b>. Yelp is <b className="font-semibold text-ink">read by millions but was never built to carry public health information</b>: the health score sits under Amenities, an old grade can lead the page, and nothing tells a diner that anything changed.</p></Reveal>
+      </div>
+      <Reveal className="mt-14 max-w-3xl">
+        <blockquote className="m-0 rounded-2xl border-l-4 border-coral bg-band p-7 sm:p-9">
+          <p className="text-[19px] font-semibold leading-snug sm:text-[23px]">A diner is left with two numbers that feel authoritative. Neither was built to answer the question they are asking: is this kitchen safe?</p>
+        </blockquote>
+      </Reveal>
+      <div className="mt-12 flex flex-wrap gap-3"><Pill href="#overview" primary>Overview</Pill><Pill href="#dash-1">Start with Dashboard 01</Pill></div>
+    </Page>
+  );
+}
+
+function Overview(){
+  const probs = [
+    ["The grade can be out of date", "The letter can come from an earlier inspection while a newer one is still unresolved."],
+    ["The stars don’t track hygiene", "Ratings describe food, price and service. Reviewers never see the kitchen."],
+    ["The record is buried", "Online, the health score sits under Amenities, in legal wording, and is missing from search."]
+  ];
+  return (
+    <Page>
+      <PageHeader eyebrow="Overview" title="Diners can’t tell if a kitchen is safe at the moment they choose." />
+      <p className="mt-6 max-w-3xl text-[16.5px] leading-[1.75] text-sub">New York inspects every restaurant and publishes the results. But the two signals a diner sees — <b className="font-semibold text-ink">the letter on the door</b> and <b className="font-semibold text-ink">the stars on Yelp</b> — don’t reliably reflect what inspectors found. The record exists. It doesn’t reach the diner in a form they can use.</p>
+      <div className="mt-10 grid gap-5 md:grid-cols-3">
+        {probs.map(([t, d], i) => (
+          <Reveal key={t} delay={i * 80}>
+            <div className={`h-full rounded-2xl border border-line bg-white p-6 ${cardHover}`}>
+              <span className="font-mono text-[11px] text-coral">{pad(i + 1)}</span>
+              <h3 className="mt-3 text-[18px] font-bold leading-snug">{t}</h3>
+              <p className="mt-2 text-[15px] leading-[1.75] text-sub">{d}</p>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+      <Reveal className="mt-6">
+        <div className="rounded-2xl border-l-4 border-coral bg-band p-7 sm:p-9">
+          <Eyebrow>The question we ask</Eyebrow>
+          <p className="mt-3 text-[19px] font-semibold leading-snug sm:text-[22px]">Can a diner judge a restaurant’s food safety from what they see today — and if not, how should it be shown?</p>
+        </div>
+      </Reveal>
+      <Reveal className="mt-16">
+        <section className="rounded-2xl bg-band px-6 py-10 sm:px-10">
+          <SectionHeading>Who does it matter to?</SectionHeading>
+          <p className="mt-5 max-w-2xl text-[16px] leading-[1.75] text-sub">Four groups have something at stake in how New York shows inspection results.</p>
+          <StakeholderGrid />
+        </section>
+      </Reveal>
+    </Page>
+  );
+}
+
+function Dashboard({ d }){
+  const i = CONTENT.dashboards.indexOf(d);
+  const prev = CONTENT.dashboards[i - 1], next = CONTENT.dashboards[i + 1];
+  const Nav = ({ href, label, title, right }) => (
+    <a href={href} className={`flex flex-col rounded-2xl border border-line bg-white p-5 ${cardHover} ${right ? "sm:items-end sm:text-right" : ""}`}>
+      <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-sub">{label}</span>
+      <span className="mt-1.5 text-[15px] font-semibold">{title}</span>
+    </a>
+  );
+  return (
+    <Page>
+      <PageHeader eyebrow={`${pad(d.n)} · ${d.owner}`} title={d.title} />
+      <p className="mt-7 max-w-3xl text-[16.5px] leading-[1.75] text-sub">{d.intro}</p>
+      <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.16em] text-sub">Source: {d.source}</p>
+      <Reveal className="mt-8"><TableauFrame n={d.n} question={d.question} views={d.views} source={d.source} /></Reveal>
+      <Reveal className="mt-16">
+        <SectionHeading>Insights</SectionHeading>
+        <InsightsAccordion items={d.insights} />
+      </Reveal>
+      <Reveal className="mt-12">
+        <div className="rounded-2xl border-l-4 border-coral bg-band p-7 sm:p-8">
+          <Eyebrow>Takeaway</Eyebrow>
+          <p className="mt-3 text-[18px] font-semibold leading-snug sm:text-[20px]">{d.takeaway}</p>
+        </div>
+      </Reveal>
+      <div className="mt-12 grid gap-4 sm:grid-cols-2">
+        {prev ? <Nav href={`#dash-${prev.n}`} label="Previous" title={`${pad(prev.n)} · ${prev.nav}`} /> : <Nav href="#overview" label="Previous" title="Overview" />}
+        {next ? <Nav right href={`#dash-${next.n}`} label="Next" title={`${pad(next.n)} · ${next.nav}`} /> : <Nav right href="#redesign" label="Next" title="Redesign Proposal" />}
+      </div>
+    </Page>
+  );
+}
+
+function Redesign(){
+  const wrong = [
+    ["The health score sits under Amenities.", "A public health fact filed next to parking and Wi-Fi."],
+    ["The page can lead with an old grade.", "The first thing a diner reads may come from an earlier cycle."],
+    ["It uses regulatory wording.", "Findings are written for enforcement, not for reading."]
+  ];
+  const Stars = () => <span className="tracking-[2px] text-coral">★★★★½</span>;
+  const Label = ({ children, coral }) => <p className={`text-[10px] font-semibold uppercase tracking-[0.2em] ${coral ? "text-coral" : "text-sub"}`}>{children}</p>;
+  return (
+    <Page>
+      <PageHeader eyebrow="Redesign Proposal" title="Show the record where diners are already looking." />
+      <p className="mt-7 max-w-3xl text-[16.5px] leading-[1.75] text-sub">After a citation, ratings move about 0.02 and related complaints don’t rise. Nothing in the stars or reviews warns a diner. So the listing itself has to carry the inspection result — clearly, and without labelling any restaurant unsafe.</p>
+
+      <Reveal className="mt-14">
+        <section className="rounded-2xl bg-band px-6 py-10 sm:px-10">
+          <SectionHeading>What is wrong today</SectionHeading>
+          <div className="mt-7 grid gap-7 md:grid-cols-3">
+            {wrong.map(([t, d]) => <div key={t}><h3 className="text-[16px] font-bold leading-snug">{t}</h3><p className="mt-2 text-[15px] leading-[1.75] text-sub">{d}</p></div>)}
+          </div>
+        </section>
+      </Reveal>
+
+      <Reveal className="mt-16">
+        <SectionHeading>Before and after</SectionHeading>
+        <p className="mt-5 text-[16px] leading-[1.75] text-sub">Same restaurant, same day, same public data.</p>
+      </Reveal>
+      <div className="mt-7 grid items-start gap-5 lg:grid-cols-2">
+        <Reveal>
+          <div className={`rounded-2xl border border-line bg-white p-7 ${cardHover}`}>
+            <Label>Today</Label>
+            <h3 className="mt-4 text-[20px] font-bold">Casa Verdiana</h3>
+            <div className="mt-2 flex items-center gap-3 text-[14px] text-sub"><Stars />1,204 reviews</div>
+            <p className="mt-1 text-[14px] text-sub">$$ · Italian · East Village</p>
+            <div className="mt-5 border-t border-line pt-5 text-[14px] text-sub">
+              <p className="font-semibold text-ink">Amenities</p>
+              <p className="mt-1">Takeout · Delivery · Wi-Fi · Outdoor seating</p>
+              <p className="mt-3 font-mono text-[11.5px]">Health score 12 · Grade A · Inspected 2023-05-14</p>
+              <p className="mt-1 text-[13px] italic">[One long regulatory sentence per violation]</p>
+            </div>
+          </div>
+        </Reveal>
+        <Reveal delay={100}>
+          <div className={`rounded-2xl border border-coral/40 bg-white p-7 ${cardHover}`}>
+            <Label coral>Proposed</Label>
+            <h3 className="mt-4 text-[20px] font-bold">Casa Verdiana</h3>
+            <div className="mt-2 flex flex-wrap items-center gap-3 text-[14px] text-sub">
+              <Stars /><span className="font-mono text-[14px] font-medium text-ink">4.5</span>
+              <span className="grid h-8 w-8 place-items-center rounded-full bg-coral text-[15px] font-bold text-white">A</span>
+              <span>Inspected <span className="font-mono text-[12.5px]">08 Aug 2026</span></span>
+            </div>
+            <p className="mt-1 text-[14px] text-sub">1,204 reviews · $$ · Italian · East Village</p>
+            <div className="mt-5 flex gap-3 rounded-xl bg-band p-4 text-[14px] text-sub">
+              <span className="mt-0.5 text-coral"><Icon d={I.alert} className="h-4 w-4" /></span>
+              <p><b className="font-semibold text-ink">Grade pending.</b> A newer inspection on <span className="font-mono text-[12.5px]">12 Oct 2026</span> is unresolved.</p>
+            </div>
+            <div className="mt-5">
+              <Label>Latest findings</Label>
+              <div className="mt-2 divide-y divide-line text-[14px]">
+                <div className="flex items-center gap-3 py-2.5"><span className="w-[62px] shrink-0 rounded-full bg-coral py-0.5 text-center text-[10.5px] font-semibold uppercase tracking-wide text-white">Serious</span>Cold food stored too warm</div>
+                <div className="flex items-center gap-3 py-2.5"><span className="w-[62px] shrink-0 rounded-full border border-line py-0.5 text-center text-[10.5px] font-semibold uppercase tracking-wide text-sub">Minor</span>Food-contact surface not clean</div>
+              </div>
+            </div>
+            <div className="mt-5 text-[13.5px]">
+              <p className="text-ink">Findings vs. similar Italian restaurants nearby</p>
+              <div className="relative mt-2 h-2 rounded-full bg-band">
+                <span className="absolute inset-y-0 left-0 w-[38%] rounded-full bg-coral" />
+                <span className="absolute -top-1 left-[46%] h-4 w-0.5 bg-ink" />
+              </div>
+              <p className="mt-1.5 font-mono text-[11px] text-sub">2 findings · median 3</p>
+            </div>
+          </div>
+        </Reveal>
+      </div>
+      <p className="mt-3 font-mono text-[11px] text-sub">FIG. R1 — Illustrative mock-up. The restaurant is fictional.</p>
+
+      <Reveal className="mt-16"><SectionHeading>The six changes</SectionHeading></Reveal>
+      <div className="mt-7 grid gap-5 md:grid-cols-2">
+        {CONTENT.changes.map((c, i) => (
+          <Reveal key={c.t} delay={(i % 2) * 80}>
+            <div className={`h-full rounded-2xl border border-line bg-white p-7 ${cardHover}`}>
+              <span className="font-mono text-[11px] text-coral">{pad(i + 1)}</span>
+              <h3 className="mt-3 text-[18px] font-bold leading-snug">{c.t}</h3>
+              <p className="mt-2 text-[15px] leading-[1.75] text-sub">{c.d}</p>
+              <div className="mt-6 border-t border-line pt-5">
+                <Label>Design principle</Label>
+                <p className="mt-2 text-[14.5px] font-semibold">{c.principle}</p>
+                <p className="mt-1 text-[14px] leading-relaxed text-sub">{c.why}</p>
+              </div>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+    </Page>
+  );
+}
+
+/* ---------- app ---------- */
+function App(){
+  const route = useHashRoute();
+  const [menu, setMenu] = useState(false);
+  const dash = CONTENT.dashboards.find(d => route === `dash-${d.n}`);
+  const page = route === "problem" ? <Problem /> : route === "overview" ? <Overview /> : route === "redesign" ? <Redesign /> : dash ? <Dashboard d={dash} /> : <Home />;
+  const key = dash ? route : ["problem","overview","redesign"].includes(route) ? route : "home";
+  return (
+    <>
+      <TopBar onMenu={() => setMenu(true)} />
+      <Sidebar route={key} open={menu} onClose={() => setMenu(false)} />
+      <main className="min-h-screen pt-14 lg:ml-[280px] lg:pt-0">
+        <div key={key} className="route-in">{page}</div>
+      </main>
+      <BackToTop />
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>
