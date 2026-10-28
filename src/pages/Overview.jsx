@@ -19,7 +19,7 @@ export function Overview(){
         {problems.map(([t, d], i) => (
           <Reveal key={t} delay={i * 80}>
             <div className={`h-full rounded-2xl border border-line bg-white p-6 ${cardHover}`}>
-              <span className="font-mono text-[11px] text-coral">{pad(i + 1)}</span>
+              <span className="font-mono text-[11px] text-accent">{pad(i + 1)}</span>
               <h3 className="mt-3 text-[18px] font-bold leading-snug">{t}</h3>
               <p className="mt-2 text-[15px] leading-[1.75] text-sub">{d}</p>
             </div>
@@ -27,7 +27,7 @@ export function Overview(){
         ))}
       </div>
       <Reveal className="mt-6">
-        <div className="rounded-2xl border-l-4 border-coral bg-band p-7 sm:p-9">
+        <div className="rounded-2xl border-l-4 border-accent bg-band p-7 sm:p-9">
           <Eyebrow>The question we ask</Eyebrow>
           <p className="mt-3 text-[19px] font-semibold leading-snug sm:text-[22px]">Can a diner judge a restaurant’s food safety from what they see today — and if not, how should it be shown?</p>
         </div>

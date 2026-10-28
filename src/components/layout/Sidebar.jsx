@@ -4,13 +4,13 @@ import { CONTENT } from "../../data/content.js";
 import { pad } from "../../lib/format.js";
 
 const itemClass = active => `relative flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-[13.5px] transition-colors duration-200 ease-out ${
-  active ? "bg-sideactive font-medium text-coral" : "text-white/70 hover:bg-sideactive/60 hover:text-white"}`;
+  active ? "bg-sideactive font-medium text-accent" : "text-white/70 hover:bg-sideactive/60 hover:text-white"}`;
 
 function NavLink({ to, icon, label, route, onClose }){
   const active = route === to;
   return (
     <a href={`#${to}`} onClick={onClose} className={itemClass(active)}>
-      {active && <span className="absolute -left-3 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-full bg-coral" />}
+      {active && <span className="absolute -left-3 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-full bg-accent" />}
       <Icon d={icon} /><span>{label}</span>
     </a>
   );
@@ -29,7 +29,7 @@ export function Sidebar({ route, open, onClose }){
           <NavLink to="problem" icon={icons.info} label="Problem Statement" {...link} />
           <NavLink to="overview" icon={icons.doc} label="Overview" {...link} />
           <div>
-            <button onClick={() => setDashOpen(!dashOpen)} aria-expanded={dashOpen} className={itemClass(false) + (inDash ? " !text-coral" : "")}>
+            <button onClick={() => setDashOpen(!dashOpen)} aria-expanded={dashOpen} className={itemClass(false) + (inDash ? " !text-accent" : "")}>
               <Icon d={icons.chart} /><span className="flex-1 text-left">Dashboards</span>
               <span className={`transition-transform duration-300 ease-out ${dashOpen ? "rotate-180" : ""}`}><Icon d={icons.chev} className="h-4 w-4" /></span>
             </button>
@@ -37,7 +37,7 @@ export function Sidebar({ route, open, onClose }){
               <div className="ml-4 mt-1 space-y-0.5 border-l border-sideline pl-4">
                 {CONTENT.dashboards.map(d => (
                   <a key={d.n} href={`#dash-${d.n}`} onClick={onClose}
-                    className={`flex items-center gap-3 rounded-lg p-2 text-[13px] transition-colors duration-200 ease-out ${route === `dash-${d.n}` ? "bg-sideactive text-coral" : "text-white/60 hover:text-white"}`}>
+                    className={`flex items-center gap-3 rounded-lg p-2 text-[13px] transition-colors duration-200 ease-out ${route === `dash-${d.n}` ? "bg-sideactive text-accent" : "text-white/60 hover:text-white"}`}>
                     <span className="font-mono text-[10px] opacity-60">{pad(d.n)}</span><span>{d.nav}</span>
                   </a>
                 ))}

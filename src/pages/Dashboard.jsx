@@ -29,7 +29,7 @@ export function Dashboard({ d }){
         <InsightsAccordion items={d.insights} />
       </Reveal>
       <Reveal className="mt-12">
-        <div className="rounded-2xl border-l-4 border-coral bg-band p-7 sm:p-8">
+        <div className="rounded-2xl border-l-4 border-accent bg-band p-7 sm:p-8">
           <Eyebrow>Takeaway</Eyebrow>
           <p className="mt-3 text-[18px] font-semibold leading-snug sm:text-[20px]">{d.takeaway}</p>
         </div>

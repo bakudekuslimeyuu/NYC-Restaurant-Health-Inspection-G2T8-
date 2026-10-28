@@ -1,9 +1,9 @@
 export function Eyebrow({ children, className = "" }){
-  return <p className={`text-[11px] font-semibold uppercase tracking-[0.2em] text-coral ${className}`}>{children}</p>;
+  return <p className={`text-[11px] font-semibold uppercase tracking-[0.2em] text-accent ${className}`}>{children}</p>;
 }
 
 export function Rule({ wide }){
-  return <div className={`mt-3 h-[3px] rounded-full bg-coral ${wide ? "w-12" : "w-10"}`} />;
+  return <div className={`mt-3 h-[3px] rounded-full bg-accent ${wide ? "w-12" : "w-10"}`} />;
 }
 
 export function PageHeader({ eyebrow, title }){

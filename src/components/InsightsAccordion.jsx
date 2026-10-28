@@ -10,7 +10,7 @@ export function InsightsAccordion({ items }){
         return (
           <div key={i} className="overflow-hidden rounded-xl">
             <button onClick={() => setOpen(isOpen ? -1 : i)} aria-expanded={isOpen}
-              className="flex w-full items-center justify-between gap-4 bg-coral px-5 py-4 text-left text-[15px] font-semibold leading-snug text-white">
+              className="flex w-full items-center justify-between gap-4 bg-accent px-5 py-4 text-left text-[15px] font-semibold leading-snug text-white">
               {q}<span className={`transition-transform duration-300 ease-out ${isOpen ? "rotate-180" : ""}`}><Icon d={icons.chev} className="h-4 w-4" /></span>
             </button>
             <div className={`grid bg-band transition-[grid-template-rows] duration-300 ease-out ${isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>

@@ -37,7 +37,7 @@ export function Redesign(){
         {CONTENT.changes.map((c, i) => (
           <Reveal key={c.t} delay={(i % 2) * 80}>
             <div className={`h-full rounded-2xl border border-line bg-white p-7 ${cardHover}`}>
-              <span className="font-mono text-[11px] text-coral">{pad(i + 1)}</span>
+              <span className="font-mono text-[11px] text-accent">{pad(i + 1)}</span>
               <h3 className="mt-3 text-[18px] font-bold leading-snug">{c.t}</h3>
               <p className="mt-2 text-[15px] leading-[1.75] text-sub">{c.d}</p>
               <div className="mt-6 border-t border-line pt-5">
