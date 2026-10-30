@@ -24,5 +24,6 @@ src/
 
 ## Deploy
 
-Pushing to `main` builds the site and publishes it to GitHub Pages
-(Settings → Pages → Source: GitHub Actions).
+Deployed on Netlify. Build settings are in `netlify.toml`
+(build command `npm run build`, publish directory `dist`).
+Every push to `main` redeploys the site.
