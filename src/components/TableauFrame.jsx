@@ -1,13 +1,36 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Icon, icons } from "./Icon.jsx";
 import { pad } from "../lib/format.js";
+
+// Height of the Tableau toolbar shown under the viz (toolbar="bottom").
+const TOOLBAR = 30;
 
 // <tableau-viz> comes from the Tableau Embedding API v3 script loaded in index.html.
 export function TableauFrame({ n, question, views, source }){
   const [active, setActive] = useState(0);
+  const [vizHeight, setVizHeight] = useState(null);
+  const vizRef = useRef(null);
   const v = views[active];
   // Tableau share links often carry ?:language=... etc. The viz only needs the bare /views/Workbook/Sheet URL.
-  const src = v.url && v.url.split("?")[0];
+  // Profile-page links (/app/profile/<user>/viz/Workbook/Sheet) are rewritten to that form too.
+  const src = v.url && v.url.split("?")[0].replace(/\/app\/profile\/[^/]+\/viz\//, "/views/");
+
+  // Fixed-size dashboards report their height once loaded; grow the frame to fit so nothing is clipped.
+  // Automatic-size dashboards fall back to v.height (or the default) and fill whatever space they get.
+  useEffect(() => {
+    setVizHeight(null);
+    const el = vizRef.current;
+    if (!el) return;
+    const onReady = () => {
+      const size = el.workbook?.activeSheet?.size;
+      const h = size?.maxSize?.height;
+      if (size?.behavior === "exactly" && h) setVizHeight(h + TOOLBAR);
+    };
+    el.addEventListener("firstinteractive", onReady);
+    return () => el.removeEventListener("firstinteractive", onReady);
+  }, [src]);
+
+  const height = vizHeight ?? v.height;
   return (
     <figure className="m-0">
       <div className="overflow-hidden rounded-2xl border border-line bg-white">
@@ -23,8 +46,8 @@ export function TableauFrame({ n, question, views, source }){
             </div>
           )}
         </div>
-        <div className="relative h-[480px] sm:h-[620px]">
-          {src ? <tableau-viz key={src} src={src} toolbar="bottom" hide-tabs="" width="100%" height="100%" class="absolute inset-0 block h-full w-full"></tableau-viz>
+        <div className={`relative overflow-x-auto ${height ? "" : "h-[480px] sm:h-[620px]"}`} style={height ? { height } : undefined}>
+          {src ? <tableau-viz ref={vizRef} key={src} src={src} toolbar="bottom" hide-tabs="" width="100%" height="100%" class="absolute inset-0 block h-full w-full"></tableau-viz>
             : (
               <div className="absolute inset-0 grid place-items-center px-6 text-center">
                 <div className="max-w-sm">
