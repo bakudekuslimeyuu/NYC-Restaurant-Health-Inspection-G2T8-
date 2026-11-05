@@ -54,7 +54,7 @@ export const CONTENT = {
       intro:"If both familiar signals are weak, some others still carry information. This part looks at when violations happen and which kinds of restaurants are cited, so a diner knows what is actually worth checking.",
       source:"DOHMH NYC Restaurant Inspection Results, by month and restaurant type",
       question:"If both signals are weak, what should a diner actually use?",
-      views:[{label:"Seasonality", url:""},{label:"Chains vs. established", url:""}],
+      views:[{label:"Seasons, Cuisine Types and Chain Status", url:"https://public.tableau.com/views/Dashboard4Project_17938628387700/Dashboard1"}],
       insights:[
         ["Violations rise in the summer.", "Edit: monthly pattern of violations."],
         ["Chains and established restaurants differ.", "Edit: citation rates for chains vs. long-running independents."],
