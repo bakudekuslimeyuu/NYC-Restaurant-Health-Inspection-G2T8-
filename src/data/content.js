@@ -30,7 +30,7 @@ export const CONTENT = {
       intro:"This part asks whether the star rating does the job instead. We matched Yelp restaurant records to the DOHMH inspection history and compared stars against citations: before and after a restaurant is cited, and against comparable restaurants that are never cited at all.",
       source:"Yelp star ratings matched to DOHMH inspection history",
       question:"If the letter is stale, does the star rating tell a diner what the record does not?",
-      views:[{label:"Star rating vs. number of citations", url:""}],
+      views:[{label:"Yelp stars vs. inspection results", url:"https://public.tableau.com/views/NYCInspectionsDashboard2/Dashboard2-Dostarsmeanclean"}],
       insights:[
         ["There is no relationship between stars and citations.", "Highly rated and poorly rated restaurants are cited at similar rates."],
         ["A citation barely moves a rating.", "Average ratings move by about 0.02 stars after a citation."],
