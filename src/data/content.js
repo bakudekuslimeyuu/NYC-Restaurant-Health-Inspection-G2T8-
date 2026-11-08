@@ -30,7 +30,7 @@ export const CONTENT = {
       intro:"If the grade on the door isn't reliable, maybe diners can just look at Yelp instead. I matched Yelp restaurants to their DOHMH inspection records to see whether higher-rated places actually have cleaner inspections.",
       source:"Yelp star ratings matched to DOHMH inspection history",
       question:"If the letter is stale, does the star rating tell a diner what the record does not?",
-      views:[{label:"Yelp stars vs. inspection results", url:"https://public.tableau.com/views/NYCInspectionsDashboard2/Dashboard2-Dostarsmeanclean", height:1100}],
+      views:[{label:"Yelp stars vs. inspection results", url:"https://public.tableau.com/views/Dashboard2-Public/Dashboard2-Dostarsmeanclean"}],
       insights:[
         ["C-grade places get the same stars as A-grade ones.", "The Yelp ratings for A, B and C restaurants look almost the same, so a bad grade doesn't seem to hurt a restaurant's rating."],
         ["From 3 to 5 stars, the inspections barely change.", "Citations per inspection stay at about 3.4 to 3.5 and the average score stays around 17. A 5-star place isn't any cleaner than a 3-star one."],
