@@ -76,13 +76,45 @@ export const CONTENT = {
       takeaway:"Show the inspection record where diners are already looking." }
   ],
 
-  // `principle` = the course concept behind each change — edit to match what your Prof taught.
-  changes: [
-    { t:"Put the grade next to the stars", d:"The record sits where a diner is already looking, not under Amenities.", principle:"Information hierarchy", why:"The most decision-relevant fact belongs where attention already is." },
-    { t:"Show “Grade pending” when a newer inspection is unresolved", d:"A pending result becomes a state a diner can read, not a stale letter.", principle:"Displaying uncertainty", why:"A missing or unresolved result is information too." },
-    { t:"List findings in plain English, marked Serious or Minor", d:"Short descriptions, with severity carried by a label.", principle:"Plain language + severity encoding", why:"Reading effort drops when severity is a tag, not a paragraph." },
-    { t:"Compare with similar restaurants", d:"A grade alone means little. Next to similar places nearby, it becomes readable.", principle:"Reference classes", why:"A number needs a comparison before it says anything." },
-    { t:"Allow filtering by grade in the initial search", d:"Grade becomes part of how a diner chooses, not a footnote found later.", principle:"Dynamic queries / filtering", why:"Let people narrow options by what matters to them, up front." },
-    { t:"Show the grade on every search result", d:"The information arrives at the point of comparison — in the results list.", principle:"Information at the point of decision", why:"Facts shown while options are compared get used." }
-  ]
+  // Redesign Proposal page. `img` files live in public/redesign/.
+  redesign: {
+    motivation: "In our research, we found no meaningful reaction to a citation. Across the citations, ratings moved by only 0.02 and complaints about pests, dirt, food temperature or illness did not rise. Nothing in the stars or the reviews warns a diner, so Yelp’s listing should carry the inspection result itself.",
+    changes: [
+      { t:"Relocate the hygiene grade to sit beside the stars",
+        d:"Today the health score is filed under “Amenities and More”, next to delivery and take-out. The proposal moves it into the rating row, where every diner already looks.",
+        principle:"Proximity / visual hierarchy",
+        why:"Items placed together are read together, and readers scan the top of a page first.",
+        refs:"Wertheimer 1923; Nielsen 2006",
+        img:"redesign/01-grade-beside-stars.png",
+        alt:"Katz’s Delicatessen on Yelp today, with the health score under Amenities, beside the proposed listing with an NYC health inspection badge in the rating row." },
+      { t:"Redesign the existing hygiene grade card",
+        d:"Yelp’s card shows a bare letter under “Powered by Health Department Intelligence”. The proposal uses the familiar NYC window-card style for A, B and C, plus a Grade Pending card.",
+        principle:"Recognition over recall / preattentive cues",
+        why:"A familiar symbol needs no learning, and colour plus enclosure stand out before conscious attention.",
+        refs:"Nielsen 1994; Ware 2012",
+        img:"redesign/02-grade-card.png",
+        alt:"Yelp’s current Health Score card with a large letter A, beside proposed NYC window-card style cards for A, B, C and Grade Pending." },
+      { t:"Lead the inspection data with the newest inspection",
+        d:"Yelp opens on an older graded inspection, so the first thing a diner reads may be out of date. The proposal puts the newest full inspection first, with its score, issues and pending status.",
+        principle:"Recency / reading order",
+        why:"People take the first item shown as the current state, so the newest result must come first.",
+        refs:"Nielsen 2006; Tufte 2001",
+        img:"redesign/03-newest-inspection-first.png",
+        alt:"Yelp’s inspection history headed by a February 2025 inspection, beside the proposed view headed by the July 13, 2026 inspection with a pending grade." },
+      { t:"Give the hygiene score more context",
+        d:"A score of 20 means little on its own. The proposal shows it on a bar with the A, B and C bands and a dashed benchmark for similar restaurants nearby.",
+        principle:"“Compared with what?” / bullet graph",
+        why:"A number only means something next to a reference; a band bar shows value and range in one line.",
+        refs:"Tufte 2006; Few 2006",
+        img:"redesign/04-score-context.png",
+        alt:"Yelp’s table of inspection scores, beside a proposed score bar with A, B and C bands and a benchmark for similar Manhattan sandwich shops." },
+      { t:"Simplify the violations text",
+        d:"Yelp repeats the DOHMH legal wording, cut off after two lines. The proposal writes each finding in everyday words and labels it Serious or Minor with both text and an icon.",
+        principle:"Redundant encoding / plain language",
+        why:"About 1 in 12 men has a colour-vision deficiency, so colour cannot carry meaning alone; everyday wording cuts reading effort.",
+        refs:"WCAG 2.2 SC 1.4.1; plainlanguage.gov",
+        img:"redesign/05-plain-violations.png",
+        alt:"Yelp’s long regulatory violation text, beside a proposed list of plain-English findings tagged Serious or Minor." }
+    ]
+  }
 };
