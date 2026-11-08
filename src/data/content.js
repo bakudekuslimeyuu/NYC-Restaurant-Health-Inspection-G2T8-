@@ -30,7 +30,14 @@ export const CONTENT = {
       intro:"If the grade on the door isn't reliable, maybe diners can just look at Yelp instead. I matched Yelp restaurants to their DOHMH inspection records to see whether higher-rated places actually have cleaner inspections.",
       source:"Yelp star ratings matched to DOHMH inspection history",
       question:"If the letter is stale, does the star rating tell a diner what the record does not?",
-      views:[{label:"Yelp stars vs. inspection results", url:"https://public.tableau.com/views/Dashboard2-Public/Dashboard2-Dostarsmeanclean"}],
+      views:[
+        {label:"Main findings", url:"https://public.tableau.com/views/Dashboard2-Public/Dashboard2-Dostarsmeanclean"},
+        {label:"Why citations rise", url:"https://public.tableau.com/views/Dashboard2b-Public/Dashboard2b-Whycitationsrisewithstars",
+          insights:[
+            ["The rise comes from chains.", "76% of 2★ restaurants are chains, but only 5% of 5★ ones are, and chains get cleaner scores. If every star level had the same share of chains, the rise disappears (18.3 at 2★, 17.4 at 5★)."],
+            ["Asian cuisine isn't what drives it.", "Asian restaurants do get higher inspection scores (19.6 vs 16.3), but they stay around 19 to 20 at every star level. With the same share of Asian restaurants at every star level, the score still rises from 14.4 to 17.7."]
+          ]}
+      ],
       insights:[
         ["C-grade places get the same stars as A-grade ones.", "The Yelp ratings for A, B and C restaurants look almost the same, so a bad grade doesn't seem to hurt a restaurant's rating."],
         ["From 3 to 5 stars, the inspections barely change.", "Citations per inspection stay at about 3.4 to 3.5 and the average score stays around 17. A 5-star place isn't any cleaner than a 3-star one."],

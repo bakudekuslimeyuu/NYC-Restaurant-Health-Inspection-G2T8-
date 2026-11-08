@@ -6,7 +6,7 @@ import { pad } from "../lib/format.js";
 const TOOLBAR = 30;
 
 // <tableau-viz> comes from the Tableau Embedding API v3 script loaded in index.html.
-export function TableauFrame({ n, question, views, source }){
+export function TableauFrame({ n, question, views, source, onViewChange }){
   const [active, setActive] = useState(0);
   const [vizHeight, setVizHeight] = useState(null);
   const vizRef = useRef(null);
@@ -39,7 +39,7 @@ export function TableauFrame({ n, question, views, source }){
           {views.length > 1 && (
             <div className="flex gap-1.5">
               {views.map((x, i) => (
-                <button key={i} onClick={() => setActive(i)}
+                <button key={i} onClick={() => { setActive(i); onViewChange?.(i); }}
                   className={`rounded-full border px-3 py-1 text-[12.5px] font-semibold transition duration-200 ease-out ${
                     i === active ? "border-white bg-white text-accent" : "border-white/60 text-white hover:border-white"}`}>{x.label}</button>
               ))}

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { CONTENT } from "../data/content.js";
 import { Page } from "../components/layout/Page.jsx";
 import { Eyebrow, PageHeader, SectionHeading } from "../components/Typography.jsx";
@@ -18,15 +19,18 @@ function PageNav({ href, label, title, right }){
 export function Dashboard({ d }){
   const i = CONTENT.dashboards.indexOf(d);
   const prev = CONTENT.dashboards[i - 1], next = CONTENT.dashboards[i + 1];
+  const [view, setView] = useState(0);
+  // A view can carry its own insights; otherwise the dashboard's insights are shown.
+  const insights = d.views[view]?.insights ?? d.insights;
   return (
     <Page>
       <PageHeader eyebrow={`Dashboard ${pad(d.n)}`} title={d.title} />
       <p className="mt-7 max-w-3xl text-[16.5px] leading-[1.75] text-sub">{d.intro}</p>
       <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.16em] text-sub">Source: {d.source}</p>
-      <Reveal className="mt-8"><TableauFrame n={d.n} question={d.question} views={d.views} source={d.source} /></Reveal>
+      <Reveal className="mt-8"><TableauFrame n={d.n} question={d.question} views={d.views} source={d.source} onViewChange={setView} /></Reveal>
       <Reveal className="mt-16">
         <SectionHeading>Insights</SectionHeading>
-        <InsightsAccordion items={d.insights} />
+        <InsightsAccordion key={view} items={insights} />
       </Reveal>
       <Reveal className="mt-12">
         <div className="rounded-2xl border-l-4 border-accent bg-band p-7 sm:p-8">

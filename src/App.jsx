@@ -18,7 +18,7 @@ export default function App(){
   const dash = CONTENT.dashboards.find(d => route === `dash-${d.n}`);
   const key = dash || pages[route] ? route : "home";
   const PageComponent = pages[key];
-  const page = dash ? <Dashboard d={dash} /> : PageComponent ? <PageComponent /> : <Home />;
+  const page = dash ? <Dashboard key={dash.n} d={dash} /> : PageComponent ? <PageComponent /> : <Home />;
   return (
     <>
       <TopBar onMenu={() => setMenu(true)} />
