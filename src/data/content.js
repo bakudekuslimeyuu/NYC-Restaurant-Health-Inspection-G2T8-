@@ -27,16 +27,17 @@ export const CONTENT = {
       takeaway:"The letter is the end of a process, not a live reading of the kitchen." },
     { n:2, owner:"Mei Yu", nav:"Stars vs. Citations",
       title:"You can’t rely on the Yelp stars either",
-      intro:"This part asks whether the star rating does the job instead. We matched Yelp restaurant records to the DOHMH inspection history and compared stars against citations: before and after a restaurant is cited, and against comparable restaurants that are never cited at all.",
+      intro:"If the grade on the door isn't reliable, maybe diners can just look at Yelp instead. I matched Yelp restaurants to their DOHMH inspection records to see whether higher-rated places actually have cleaner inspections.",
       source:"Yelp star ratings matched to DOHMH inspection history",
       question:"If the letter is stale, does the star rating tell a diner what the record does not?",
       views:[{label:"Yelp stars vs. inspection results", url:"https://public.tableau.com/views/NYCInspectionsDashboard2/Dashboard2-Dostarsmeanclean", height:1100}],
       insights:[
-        ["There is no relationship between stars and citations.", "Highly rated and poorly rated restaurants are cited at similar rates."],
-        ["A citation barely moves a rating.", "Average ratings move by about 0.02 stars after a citation."],
-        ["The reviews don’t react either.", "Related complaints do not rise in the reviews that follow a citation."]
+        ["C-grade places get the same stars as A-grade ones.", "The Yelp ratings for A, B and C restaurants look almost the same, so a bad grade doesn't seem to hurt a restaurant's rating."],
+        ["From 3 to 5 stars, the inspections barely change.", "Citations per inspection stay at about 3.4 to 3.5 and the average score stays around 17. A 5-star place isn't any cleaner than a 3-star one."],
+        ["5-star restaurants still have Poor records.", "15% of inspection records for 5-star restaurants are Poor, which is actually the highest out of all the star levels."],
+        ["It's the same in every borough.", "The correlation between stars and inspection score is only 0.04 to 0.12 in all five boroughs, which is basically no link."]
       ],
-      takeaway:"Stars measure the meal, not the kitchen. They should not carry a public health signal they were never built for." },
+      takeaway:"A good Yelp rating means people liked the food, not that the kitchen is clean. If hygiene matters to you, check the inspection record instead of the stars." },
     { n:3, owner:"Zheng Long", nav:"Why Reviewers Miss It",
       title:"Reviewers don’t see the kitchen",
       intro:"If neither the letter nor the stars warn a diner, the reason is probably in what reviewers actually describe. This part reads the review text itself — what it talks about, and how it feels — and compares that with the inspection record for the same restaurants.",
