@@ -37,7 +37,7 @@ export function TableauFrame({ n, question, views, source, onViewChange }){
         <div className="flex flex-wrap items-center justify-between gap-3 bg-accent px-5 py-4">
           <p className="text-[15px] font-semibold leading-snug text-white">{question}</p>
           {views.length > 1 && (
-            <div className="flex gap-1.5">
+            <div className="flex flex-wrap gap-1.5">
               {views.map((x, i) => (
                 <button key={i} onClick={() => { setActive(i); onViewChange?.(i); }}
                   className={`rounded-full border px-3 py-1 text-[12.5px] font-semibold transition duration-200 ease-out ${
