@@ -16,6 +16,7 @@ export const icons = {
   arrow: <path d="M5 12h14M13 6l6 6-6 6"/>,
   menu: <path d="M4 6h16M4 12h16M4 18h16"/>,
   close: <path d="M6 6l12 12M18 6 6 18"/>,
+  panel: <><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></>,
   alert: <><path d="M12 3 2 21h20z"/><path d="M12 10v4M12 17h.01"/></>,
   fork: <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/>,
   store: <><path d="M3 9l1.5-5h15L21 9M3 9h18v2a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0z"/><path d="M5 13v8h14v-8M10 21v-4h4v4"/></>,
