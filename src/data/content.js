@@ -18,7 +18,7 @@ export const CONTENT = {
       intro:"This part looks only at the official record: the DOHMH inspection results for New York City restaurants. Nothing here comes from Yelp. The question is whether the letter on the door — the signal almost every diner already uses — is an accurate picture of the kitchen behind it.",
       source:"DOHMH NYC Restaurant Inspection Results",
       question:"Does the letter on the door match what the inspection record actually says?",
-      views:[{label:"Grade posted vs. inspection score", url:"https://public.tableau.com/views/Dashboard1_17934406077990/Dashboard1"}],
+      views:[{label:"Grade posted vs. inspection score", url:"https://public.tableau.com/views/Dashboard_1_v5/Dashboard1"}],
       insights:[
         ["The letter can trail the latest inspection.", "Edit: how often the posted grade comes from an older inspection cycle."],
         ["“Grade pending” hides the newest result.", "Edit: restaurants whose most recent inspection is unresolved."],
