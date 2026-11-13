@@ -8,7 +8,7 @@ export function Rule({ wide }){
 
 export function PageHeader({ eyebrow, title }){
   return (
-    <header className="max-w-3xl">
+    <header>
       <Eyebrow>{eyebrow}</Eyebrow>
       <h1 className="mt-2 text-[30px] font-bold leading-[1.12] tracking-tight sm:text-[38px]">{title}</h1>
       <div className="mt-4"><Rule wide /></div>
