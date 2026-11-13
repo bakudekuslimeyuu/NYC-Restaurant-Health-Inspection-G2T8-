@@ -43,7 +43,7 @@ export function Redesign(){
       <Reveal className="mt-12">
         <section className="rounded-2xl bg-band px-6 py-10 sm:px-10">
           <SectionHeading>Motivation for change</SectionHeading>
-          <p className="mt-6 max-w-3xl text-[16px] leading-[1.75] text-sub">{motivation}</p>
+          <p className="mt-6 text-[16px] leading-[1.75] text-sub">{motivation}</p>
         </section>
       </Reveal>
 
