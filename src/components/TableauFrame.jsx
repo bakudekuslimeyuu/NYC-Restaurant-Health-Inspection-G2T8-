@@ -6,11 +6,24 @@ import { pad } from "../lib/format.js";
 const TOOLBAR = 30;
 
 // <tableau-viz> comes from the Tableau Embedding API v3 script loaded in index.html.
-export function TableauFrame({ n, question, views, source, onViewChange }){
+// plain: no teal header bar (used for walkthrough steps, which have their own heading).
+// lazy: only load the viz once the frame is close to being scrolled into view, so a page with many charts stays quick.
+// caption: replaces the default "FIG." caption text.
+export function TableauFrame({ n, question, views, source, onViewChange, plain, lazy, caption }){
   const [active, setActive] = useState(0);
   const [vizHeight, setVizHeight] = useState(null);
-  const vizRef = useRef(null);
+  const [near, setNear] = useState(!lazy);
+  const vizRef = useRef(null), boxRef = useRef(null);
   const v = views[active];
+
+  useEffect(() => {
+    if (near) return;
+    const box = boxRef.current;
+    if (!box || !("IntersectionObserver" in window)) { setNear(true); return; }
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setNear(true); io.disconnect(); } }, { rootMargin: "600px 0px" });
+    io.observe(box);
+    return () => io.disconnect();
+  }, [near]);
   // Tableau share links often carry ?:language=... etc. The viz only needs the bare /views/Workbook/Sheet URL.
   // Profile-page links (/app/profile/<user>/viz/Workbook/Sheet) are rewritten to that form too.
   const src = v.url && v.url.split("?")[0].replace(/\/app\/profile\/[^/]+\/viz\//, "/views/");
@@ -28,13 +41,13 @@ export function TableauFrame({ n, question, views, source, onViewChange }){
     };
     el.addEventListener("firstinteractive", onReady);
     return () => el.removeEventListener("firstinteractive", onReady);
-  }, [src]);
+  }, [src, near]);
 
   const height = vizHeight ?? v.height;
   return (
     <figure className="m-0">
-      <div className="overflow-hidden rounded-2xl border border-line bg-white">
-        <div className="flex flex-wrap items-center justify-between gap-3 bg-accent px-5 py-4">
+      <div ref={boxRef} className="overflow-hidden rounded-2xl border border-line bg-white">
+        {!plain && <div className="flex flex-wrap items-center justify-between gap-3 bg-accent px-5 py-4">
           <p className="text-[15px] font-semibold leading-snug text-white">{question}</p>
           {views.length > 1 && (
             <div className="flex flex-wrap gap-1.5">
@@ -45,9 +58,9 @@ export function TableauFrame({ n, question, views, source, onViewChange }){
               ))}
             </div>
           )}
-        </div>
+        </div>}
         <div className={`relative overflow-x-auto ${height ? "" : "h-[480px] sm:h-[620px]"}`} style={height ? { height } : undefined}>
-          {src ? <tableau-viz ref={vizRef} key={src} src={src} toolbar="bottom" hide-tabs="" width="100%" height="100%" class="absolute inset-0 block h-full w-full"></tableau-viz>
+          {src ? near && <tableau-viz ref={vizRef} key={src} src={src} toolbar="bottom" hide-tabs="" width="100%" height="100%" class="absolute inset-0 block h-full w-full"></tableau-viz>
             : (
               <div className="absolute inset-0 grid place-items-center px-6 text-center">
                 <div className="max-w-sm">
@@ -59,7 +72,7 @@ export function TableauFrame({ n, question, views, source, onViewChange }){
             )}
         </div>
       </div>
-      <figcaption className="mt-3 font-mono text-[11px] text-sub">FIG. {pad(n)}{views.length > 1 ? `.${active + 1}` : ""} — {v.label} · Source: {source}</figcaption>
+      <figcaption className="mt-3 font-mono text-[11px] text-sub">{caption ?? <>FIG. {pad(n)}{views.length > 1 ? `.${active + 1}` : ""} — {v.label} · Source: {source}</>}</figcaption>
     </figure>
   );
 }

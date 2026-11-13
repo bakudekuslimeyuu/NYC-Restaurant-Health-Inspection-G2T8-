@@ -62,6 +62,54 @@ function ScopeToggle({ scope, setScope, viewLabel }){
   );
 }
 
+// One chart at a time, below the overview. Each step: question → chart → how to read | what we found → lead-in to the next step.
+// Steps come from `steps` in content.js; a dashboard without them shows no walkthrough.
+function Walkthrough({ d }){
+  return (
+    <section className="mt-20">
+      <SectionHeading>One chart at a time</SectionHeading>
+      <p className="mt-5 text-[16px] leading-[1.75] text-sub">Each chart from the dashboard above, in order, with what to look for and what it shows.</p>
+      <ol className="m-0 mt-10 list-none space-y-16 p-0">
+        {d.steps.map((s, k) => (
+          <li key={k} id={`d${d.n}-step-${k + 1}`} className="scroll-mt-24">
+            <Reveal>
+              <div className="flex items-start gap-4">
+                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-accent font-mono text-[13px] font-semibold text-white">{k + 1}</span>
+                <div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-sub">{s.chart}</p>
+                  <h3 className="mt-1 text-[21px] font-bold leading-snug sm:text-[24px]">{s.question}</h3>
+                </div>
+              </div>
+              <div className="mt-6">
+                <TableauFrame plain lazy n={d.n} views={[{ label: s.chart, url: s.url, height: s.height }]} source={d.source}
+                  caption={`FIG. ${pad(d.n)}.S${k + 1} — ${s.chart}`} />
+              </div>
+              <div className="mt-6 grid gap-4 md:grid-cols-2">
+                <div className="rounded-xl border border-line bg-white p-5 sm:p-6">
+                  <Eyebrow>How to read</Eyebrow>
+                  <Bullets items={s.howToRead} />
+                </div>
+                <div className="rounded-xl border-l-4 border-accent bg-band p-5 sm:p-6">
+                  <Eyebrow>What we found</Eyebrow>
+                  <p className="mt-2 text-[16px] font-semibold leading-relaxed">{s.found}</p>
+                  {s.note && <p className="mt-3 text-[13.5px] leading-relaxed text-sub">{s.note}</p>}
+                </div>
+              </div>
+              {s.next && (
+                <a href={`#d${d.n}-step-${k + 2}`} onClick={e => { e.preventDefault(); document.getElementById(`d${d.n}-step-${k + 2}`)?.scrollIntoView({ behavior: "smooth" }); }}
+                  className="group mt-6 flex items-start gap-2.5 text-[15.5px] font-medium leading-relaxed text-ink hover:text-accent">
+                  <span className="mt-[1px] text-accent transition-transform duration-200 ease-out group-hover:translate-x-0.5">→</span>
+                  <span>{s.next}</span>
+                </a>
+              )}
+            </Reveal>
+          </li>
+        ))}
+      </ol>
+    </section>
+  );
+}
+
 export function Dashboard({ d }){
   const i = CONTENT.dashboards.indexOf(d);
   const prev = CONTENT.dashboards[i - 1], next = CONTENT.dashboards[i + 1];
@@ -92,6 +140,7 @@ export function Dashboard({ d }){
             ))
           : <InsightsAccordion key={view} items={insights} />}
       </Reveal>
+      {d.steps?.length > 0 && <Walkthrough d={d} />}
       <Reveal className="mt-12">
         <div className="rounded-2xl border-l-4 border-accent bg-band p-7 sm:p-8">
           <Eyebrow>Takeaway</Eyebrow>
