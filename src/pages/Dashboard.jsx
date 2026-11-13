@@ -69,7 +69,7 @@ function Walkthrough({ d }){
     <section className="mt-20">
       <SectionHeading>One chart at a time</SectionHeading>
       <p className="mt-5 text-[16px] leading-[1.75] text-sub">Each chart from the dashboard above, in order, with what to look for and what it shows.</p>
-      <ol className="m-0 mt-10 list-none space-y-16 p-0">
+      <ol className="m-0 mt-10 list-none space-y-14 p-0">
         {d.steps.map((s, k) => (
           <li key={k} id={`d${d.n}-step-${k + 1}`} className="scroll-mt-24">
             <Reveal>
@@ -80,21 +80,21 @@ function Walkthrough({ d }){
                   <h3 className="mt-1 text-[21px] font-bold leading-snug sm:text-[24px]">{s.question}</h3>
                 </div>
               </div>
-              <div className="mt-6">
-                <TableauFrame plain lazy n={d.n} views={[{ label: s.chart, url: s.url, height: s.height }]} source={d.source}
-                  caption={`FIG. ${pad(d.n)}.S${k + 1} — ${s.chart}`} />
-              </div>
-              <div className="mt-6 grid gap-4 md:grid-cols-2">
-                <div className="rounded-xl border border-line bg-white p-5 sm:p-6">
-                  <Eyebrow>How to read</Eyebrow>
-                  <Bullets items={s.howToRead} />
+              {/* One card, read top to bottom: how to read the chart → the chart → what we found. */}
+              <figure className="m-0 mt-5 overflow-hidden rounded-2xl border border-line bg-white">
+                <div className="border-b border-line px-5 py-4 sm:px-6">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-accent">How to read</p>
+                  <ul className="mt-1.5 list-disc space-y-1 pl-5 text-[13.5px] leading-[1.6] text-sub">
+                    {s.howToRead.map((t, j) => <li key={j}>{t}</li>)}
+                  </ul>
                 </div>
-                <div className="rounded-xl border-l-4 border-accent bg-band p-5 sm:p-6">
-                  <Eyebrow>What we found</Eyebrow>
-                  <p className="mt-2 text-[16px] font-semibold leading-relaxed">{s.found}</p>
-                  {s.note && <p className="mt-3 text-[13.5px] leading-relaxed text-sub">{s.note}</p>}
+                <TableauFrame bare plain lazy n={d.n} views={[{ label: s.chart, url: s.url, height: s.height }]} source={d.source} />
+                <div className="border-t border-line bg-band px-5 py-4 sm:px-6">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-accent">What we found</p>
+                  <p className="mt-1.5 text-[14.5px] font-semibold leading-[1.6]">{s.found}</p>
+                  {s.note && <p className="mt-2 text-[12.5px] leading-[1.55] text-sub">{s.note}</p>}
                 </div>
-              </div>
+              </figure>
               {s.next && (
                 <a href={`#d${d.n}-step-${k + 2}`} onClick={e => { e.preventDefault(); document.getElementById(`d${d.n}-step-${k + 2}`)?.scrollIntoView({ behavior: "smooth" }); }}
                   className="group mt-6 flex items-start gap-2.5 text-[15.5px] font-medium leading-relaxed text-ink hover:text-accent">
@@ -128,18 +128,21 @@ export function Dashboard({ d }){
       <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.16em] text-sub">Source: {d.source}</p>
       {howToRead && <HowToRead h={howToRead} />}
       <Reveal className="mt-8"><TableauFrame n={d.n} question={d.question} views={d.views} source={d.source} onViewChange={setView} /></Reveal>
-      <Reveal className="mt-16">
-        <SectionHeading>Insights</SectionHeading>
-        {perView && <ScopeToggle scope={scope} setScope={setScope} viewLabel={d.views[view].label} />}
-        {perView && scope === "all"
-          ? d.views.map((v, k) => (
-              <div key={k} className="mt-8">
-                <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-sub">{pad(k + 1)} · {v.label}</p>
-                <InsightsAccordion items={v.insights} />
-              </div>
-            ))
-          : <InsightsAccordion key={view} items={insights} />}
-      </Reveal>
+      {/* Shown only when the dashboard has insights; Dashboard 3 puts its findings in the walkthrough instead. */}
+      {insights?.length > 0 && (
+        <Reveal className="mt-16">
+          <SectionHeading>Insights</SectionHeading>
+          {perView && <ScopeToggle scope={scope} setScope={setScope} viewLabel={d.views[view].label} />}
+          {perView && scope === "all"
+            ? d.views.map((v, k) => (
+                <div key={k} className="mt-8">
+                  <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-sub">{pad(k + 1)} · {v.label}</p>
+                  <InsightsAccordion items={v.insights} />
+                </div>
+              ))
+            : <InsightsAccordion key={view} items={insights} />}
+        </Reveal>
+      )}
       {d.steps?.length > 0 && <Walkthrough d={d} />}
       <Reveal className="mt-12">
         <div className="rounded-2xl border-l-4 border-accent bg-band p-7 sm:p-8">

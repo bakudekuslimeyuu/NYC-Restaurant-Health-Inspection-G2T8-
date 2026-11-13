@@ -52,7 +52,7 @@ export const CONTENT = {
       question:"Why is there no relationship between stars and citations?",
       // Overview: the whole dashboard, switched with the buttons above the frame.
       views:[
-        {label:"Found vs. stars", url:"https://public.tableau.com/views/FoodHygieneandYelpReviewsinNYC/D3Overview",
+        {label:"Found vs. stars", url:"https://public.tableau.com/views/FoodHygieneandYelpReviewsinNYC/D3Overview", height:1330,
           howToRead:{
             ask:"Do Yelp reviews or stars reflect what inspectors find?",
             notes:[
@@ -60,31 +60,20 @@ export const CONTENT = {
               "Read the bottom row left to right: the left headline ends where the right one begins.",
               "Each chart is explained one at a time in the walkthrough below."
             ]
-          },
-          insights:[
-            ["Inspectors find hygiene problems often; reviewers almost never mention them.", "Each of the seven problem types is found in 8% to 52% of routine inspections, but no type is mentioned in more than 0.80% of reviews. The gap holds at every star level: at most 0.63% of reviews at 4 to 5 star restaurants and 1.68% at 1 to 2.9 star restaurants."],
-            ["Even repeated pest problems go unmentioned.", "Among restaurants cited for live pests three or more times, 71% to 85% never get a single review mentioning pests, depending on the borough."],
-            ["Stars and review tone agree with each other.", "A restaurant’s average stars and how positive its reviews read move together closely (correlation 0.90), so the text tells the same story as the stars."],
-            ["Cited restaurants look like everyone else.", "Whichever problem inspectors cited, 57% to 59% of those restaurants still have 4+ stars and positive reviews, against 60% of all restaurants."],
-            ["Neither tracks the inspection grade.", "Reviews read almost equally positive at grade A, B and C restaurants (0.69, 0.68 and 0.67 on a −1 to +1 scale)."]
-          ]},
-        {label:"What reviews talk about", url:"https://public.tableau.com/views/FoodHygieneandYelpReviewsinNYC/D3Words",
+          }},
+        {label:"What reviews talk about", url:"https://public.tableau.com/views/FoodHygieneandYelpReviewsinNYC/D3Words", height:980,
           howToRead:{
             ask:"When diners write a review, what do they actually talk about?",
             notes:[
               "Two word clouds: the words most typical of 1-star reviews, and the words most typical of 5-star reviews. Orange words are about hygiene.",
               "Explained in step 5 of the walkthrough below."
             ]
-          },
-          insights:[
-            ["Bad reviews are about service and money, not hygiene.", "The words most typical of 1-star reviews are about rude staff, waiting, charges and refunds. The first hygiene word, poison, ranks only 38th; hair, dirty and sick rank 55th, 57th and 66th."],
-            ["Good reviews are about taste, staff and atmosphere.", "No hygiene word is among the 90 most typical words in 5-star reviews. Diners praise what reaches the table."]
-          ]}
+          }}
       ],
       // Walkthrough: one chart at a time, below the overview. Each step: a question, its chart, how to read it,
       // what we found, and a line leading into the next step. Leave `url` empty until the chart is published.
       steps:[
-        {question:"Do reviewers mention the problems inspectors find?", chart:"Inspections vs. reviews", url:"",
+        {question:"Do reviewers mention the problems inspectors find?", chart:"Inspections vs. reviews", url:"https://public.tableau.com/views/FoodHygieneandYelpReviewsinNYC/D3StepGap", height:630,
           howToRead:[
             "Each row is one type of problem inspectors cite: dirty surfaces, unclean utensils and dishes, food temperature, contaminated food, conditions that attract pests, live pests, and worker hygiene.",
             "Purple dot: the share of routine inspections (2023 onwards) that found the problem. Orange dot: the share of reviews that mention it. The longer the line, the bigger the gap.",
@@ -94,7 +83,7 @@ export const CONTENT = {
           found:"Inspectors find each problem in 8% to 52% of routine inspections, yet no problem is mentioned in more than 0.80% of reviews. The gap holds at every star level, even at 1 to 2.9 star restaurants (at most 1.68%).",
           note:"Mentions are found by keyword matching, so some complaints worded differently will be missed. Mentions are still far too rare to close a gap this large.",
           next:"Most of these problems happen out of sight. But what about one that is hard to miss: live pests?"},
-        {question:"Do reviewers notice even repeated pest problems?", chart:"Repeated live pests", url:"",
+        {question:"Do reviewers notice even repeated pest problems?", chart:"Repeated live pests", url:"https://public.tableau.com/views/FoodHygieneandYelpReviewsinNYC/D3StepPests", height:630,
           howToRead:[
             "Only restaurants that inspectors cited for live pests (rats, mice, roaches or flies) three or more times: 1,556 restaurants with more than 20 Yelp reviews.",
             "Each bar is one borough. Grey: not one review of the restaurant mentions pests. Orange: at least one review does.",
@@ -102,7 +91,7 @@ export const CONTENT = {
           ],
           found:"73% of these restaurants never received a single review mentioning pests, from 71% to 85% depending on the borough.",
           next:"So reviews rarely flag hygiene. Do the stars, or the tone of the reviews, pick it up instead?"},
-        {question:"Do the stars follow what reviews say?", chart:"Stars vs. review tone", url:"",
+        {question:"Do the stars follow what reviews say?", chart:"Stars vs. review tone", url:"https://public.tableau.com/views/FoodHygieneandYelpReviewsinNYC/D3StepScatter", height:630,
           howToRead:[
             "Each circle is one restaurant with more than 20 Yelp reviews (9,521 restaurants).",
             "Across: how positive its reviews read, from −1 (very negative) to +1 (very positive), scored from the review text. Up: its average Yelp stars.",
@@ -110,21 +99,21 @@ export const CONTENT = {
           ],
           found:"Stars and review tone agree closely (correlation 0.90). Restaurants cited for any problem look like everyone else: 57% to 59% still have 4+ stars and positive reviews, against 60% of all restaurants.",
           next:"…but do stars or review tone follow what inspectors find?"},
-        {question:"Do reviews read differently at grade C restaurants?", chart:"Review tone by grade", url:"",
+        {question:"Do reviews read differently at grade C restaurants?", chart:"Review tone by grade", url:"https://public.tableau.com/views/FoodHygieneandYelpReviewsinNYC/D3StepGrades", height:630,
           howToRead:[
             "Average review tone, on the same −1 to +1 scale, for restaurants grouped by their latest inspection grade (8,833 restaurants with a grade).",
             "If reviews reflected the kitchen, the grade C bar would be clearly lower than grade A. Hover over a bar for the number of restaurants behind it."
           ],
           found:"Reviews read almost equally positive at grade A, B and C restaurants: 0.69, 0.68 and 0.67.",
           next:"If reviews don’t reflect the kitchen, what do reviewers write about instead?"},
-        {question:"What do reviewers write about instead?", chart:"Words in 1-star and 5-star reviews", url:"https://public.tableau.com/views/FoodHygieneandYelpReviewsinNYC/D3Words",
+        {question:"What do reviewers write about instead?", chart:"Words in 1-star and 5-star reviews", url:"https://public.tableau.com/views/FoodHygieneandYelpReviewsinNYC/D3Words", height:980,
           howToRead:[
-            "The 1-star cloud shows the 90 words that most set 1-star reviews apart from 5-star reviews; the 5-star cloud shows the reverse.",
+            "The 1-star cloud shows the 60 words that most set 1-star reviews apart from 5-star reviews; the 5-star cloud shows the reverse.",
             "A word is large when it is both common in that group and much more common there than in the other.",
-            "Orange words are about hygiene (for example dirty, hair, sick); grey words are about everything else.",
+            "Orange words are about hygiene (poison, hair and dirty); grey words are about everything else.",
             "Word forms are merged (refund and refunds count as one), and common or general words such as the, good or terrible are removed."
           ],
-          found:"1-star reviews are about rude staff, waiting, charges and refunds; the first hygiene word, poison, ranks only 38th. 5-star reviews are about taste, staff and atmosphere, with no hygiene word in the top 90."}
+          found:"1-star reviews are about rude staff, waiting, charges and refunds; the first hygiene word, poison, ranks only 38th. 5-star reviews are about taste, staff and atmosphere, with no hygiene word in the top 60."}
       ],
       takeaway:"Diners review what they experience at the table. The kitchen is out of sight, so it is out of the reviews." },
     { n:4, owner:"Shanice", nav:"What to Check Instead",

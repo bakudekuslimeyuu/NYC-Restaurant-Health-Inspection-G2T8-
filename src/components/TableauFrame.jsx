@@ -9,7 +9,8 @@ const TOOLBAR = 30;
 // plain: no teal header bar (used for walkthrough steps, which have their own heading).
 // lazy: only load the viz once the frame is close to being scrolled into view, so a page with many charts stays quick.
 // caption: replaces the default "FIG." caption text.
-export function TableauFrame({ n, question, views, source, onViewChange, plain, lazy, caption }){
+// bare: no border, rounding or caption, for placing the chart inside another card.
+export function TableauFrame({ n, question, views, source, onViewChange, plain, lazy, caption, bare }){
   const [active, setActive] = useState(0);
   const [vizHeight, setVizHeight] = useState(null);
   const [near, setNear] = useState(!lazy);
@@ -28,16 +29,17 @@ export function TableauFrame({ n, question, views, source, onViewChange, plain, 
   // Profile-page links (/app/profile/<user>/viz/Workbook/Sheet) are rewritten to that form too.
   const src = v.url && v.url.split("?")[0].replace(/\/app\/profile\/[^/]+\/viz\//, "/views/");
 
-  // Fixed-size dashboards report their height once loaded; grow the frame to fit so nothing is clipped.
-  // Automatic-size dashboards fall back to v.height (or the default) and fill whatever space they get.
+  // Dashboards with a set size (fixed, or a range) report their height once loaded; grow the frame to fit so nothing is clipped.
+  // If Tableau doesn't report one, v.height from content.js is used (set it for every dashboard so the frame is right
+  // even before the dashboard loads); automatic-size dashboards fill whatever space they get.
   useEffect(() => {
     setVizHeight(null);
     const el = vizRef.current;
     if (!el) return;
     const onReady = () => {
       const size = el.workbook?.activeSheet?.size;
-      const h = size?.maxSize?.height;
-      if (size?.behavior === "exactly" && h) setVizHeight(h + TOOLBAR);
+      const h = size?.maxSize?.height || size?.minSize?.height;
+      if (size && size.behavior !== "automatic" && h) setVizHeight(h + TOOLBAR);
     };
     el.addEventListener("firstinteractive", onReady);
     return () => el.removeEventListener("firstinteractive", onReady);
@@ -46,7 +48,7 @@ export function TableauFrame({ n, question, views, source, onViewChange, plain, 
   const height = vizHeight ?? v.height;
   return (
     <figure className="m-0">
-      <div ref={boxRef} className="overflow-hidden rounded-2xl border border-line bg-white">
+      <div ref={boxRef} className={`overflow-hidden bg-white ${bare ? "" : "rounded-2xl border border-line"}`}>
         {!plain && <div className="flex flex-wrap items-center justify-between gap-3 bg-accent px-5 py-4">
           <p className="text-[15px] font-semibold leading-snug text-white">{question}</p>
           {views.length > 1 && (
@@ -72,7 +74,7 @@ export function TableauFrame({ n, question, views, source, onViewChange, plain, 
             )}
         </div>
       </div>
-      <figcaption className="mt-3 font-mono text-[11px] text-sub">{caption ?? <>FIG. {pad(n)}{views.length > 1 ? `.${active + 1}` : ""} — {v.label} · Source: {source}</>}</figcaption>
+      {!bare && <figcaption className="mt-3 font-mono text-[11px] text-sub">{caption ?? <>FIG. {pad(n)}{views.length > 1 ? `.${active + 1}` : ""} — {v.label} · Source: {source}</>}</figcaption>}
     </figure>
   );
 }
