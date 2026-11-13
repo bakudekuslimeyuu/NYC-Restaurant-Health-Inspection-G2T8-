@@ -130,19 +130,7 @@ export const CONTENT = {
         ["Chains and established restaurants differ.", "Edit: citation rates for chains vs. long-running independents."],
         ["The inspection date matters as much as the letter.", "Edit: how recency changes what a grade means."]
       ],
-      takeaway:"Check when the restaurant was last inspected and what was found — not just the letter or the stars." },
-    { n:5, owner:"Zheng Seng", nav:"Insights",
-      title:"Making health information readable",
-      intro:"This part brings the findings together and asks what should change in how health information is shown to diners — on the door, and on the review platforms they already use.",
-      source:"Synthesis of dashboards 01–04",
-      question:"What should change in how health information is displayed?",
-      views:[{label:"Insights", url:""}],
-      insights:[
-        ["Neither signal warns a diner today.", "The letter can be stale. The stars don’t respond to citations."],
-        ["The data already exists.", "Platforms already publish inspection results. The problem is placement and wording."],
-        ["The fix is a display change.", "Put the grade beside the stars, flag pending results, and write findings in plain English."]
-      ],
-      takeaway:"Show the inspection record where diners are already looking." }
+      takeaway:"Check when the restaurant was last inspected and what was found — not just the letter or the stars." }
   ],
 
   // Redesign Proposal page. `img` files live in public/redesign/.
