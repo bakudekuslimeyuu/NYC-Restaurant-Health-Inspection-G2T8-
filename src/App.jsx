@@ -30,10 +30,10 @@ export default function App(){
   const key = dash || pages[route] ? route : "home";
   const PageComponent = pages[key];
   const page = dash ? <Dashboard key={dash.n} d={dash} /> : PageComponent ? <PageComponent /> : <Home />;
-  // Scrolling past the top or bottom of any page moves to the previous / next page in the reading order.
+  // On the intro pages (Home, Problem Statement, Overview), scrolling past the top or bottom moves to the previous / next one.
   const { prev, next } = neighbours(key);
   useScrollToNext({ prev: prev?.[0], next: next?.[0] });
-  // Home has its own full-screen hint, so the cues are added on every other page.
+  // Home has its own full-screen hint; Problem Statement and Overview get cues (other pages have no neighbours, so none).
   const cues = key !== "home";
   return (
     <>
