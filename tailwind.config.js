@@ -4,7 +4,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        ink: "#16181D", sub: "#6A7078", line: "#E5E7EB", band: "#F2F2F2",
+        // sub: body and secondary text. Set to the same near-black as headings (ink) so long text is easy to read;
+        // headings still stand out through size and weight. (Was #6A7078, about 4.9:1 on white.)
+        ink: "#16181D", sub: "#16181D", line: "#E5E7EB", band: "#F2F2F2",
         accent: "#14A38B", side: "#0A0B10", sideline: "#1E2029", sideactive: "#171922"
       },
       fontFamily: {
