@@ -116,7 +116,7 @@ export const CONTENT = {
           found:"1-star reviews are mostly about service and money: “rude” appears in 13% of them, followed by “charge”, “pay”, “manager”, “minute” and “money”. The first hygiene word, “poison” (as in “food poisoning”), ranks only 38th and appears in under 2% of 1-star reviews; “hair” and “dirty” rank 55th and 57th. 5-star reviews praise taste, staff and atmosphere (“delicious”, “friendly”, “attentive”), and no hygiene word is among their top 60. This suggests that ratings are driven by what diners experience at the table rather than by hygiene, even in the most negative reviews.",
           note:"The clouds show the words that differ most between the two groups, not every word used, so hygiene complaints worded in other ways (such as “something crawling”) do not appear."}
       ],
-      takeaway:"Diners review what they experience at the table. The kitchen is out of sight, so it is out of the reviews." },
+      takeaway:"Review text is not a reliable signal of food safety. Reviews rarely mention the problems inspectors find, even repeated pests, and read almost as positively at grade C restaurants as at grade A. Together with the star ratings, this means Yelp, as it is used today, gives New Yorkers little help in finding restaurants with high food safety standards." },
     { n:4, owner:"Shanice", nav:"What to Check Instead",
       title:"What to check instead",
       intro:"If both familiar signals are weak, some others still carry information. This part looks at when violations happen and which kinds of restaurants are cited, so a diner knows what is actually worth checking.",
