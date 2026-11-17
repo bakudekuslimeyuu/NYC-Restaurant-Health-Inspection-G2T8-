@@ -1,12 +1,9 @@
 import { CONTENT } from "../data/content.js";
 import { useNameCycle } from "../hooks/useNameCycle.js";
 import { Icon, icons } from "../components/Icon.jsx";
-import { useCoverScroll } from "../hooks/useCoverScroll.js";
 
 export function Home(){
   const name = useNameCycle(CONTENT.members);
-  // Scrolling down on the cover moves on to the Introduction (the only page that changes on scroll).
-  useCoverScroll("introduction");
   // Dark full-screen photo hero with a gradient shade.
   return (
     <section className="relative flex min-h-[calc(100vh-56px)] items-end overflow-hidden bg-side lg:min-h-screen">
@@ -20,10 +17,11 @@ export function Home(){
           <p className="caret mt-8 min-h-[1.3em] text-[24px] font-semibold tracking-tight text-white sm:text-[30px]">{name}</p>
         </div>
       </div>
-      {/* Hint at the bottom; scrolling or clicking it goes to the Introduction */}
-      <a href="#introduction" className="absolute inset-x-0 bottom-6 z-10 mx-auto flex w-fit flex-col items-center gap-1 text-white/70 transition-colors duration-200 ease-out hover:text-white">
-        <span className="text-[11px] font-semibold uppercase tracking-[0.2em]">Scroll to continue</span>
-        <Icon d={icons.chev} className="h-5 w-5 motion-safe:animate-bounce" />
+      {/* Button at the bottom of the cover: the only way on to the Introduction (no page changes on scroll) */}
+      {/* Outlined pill with a → arrow (no bounce, which suggested scrolling); the arrow nudges right on hover. */}
+      <a href="#introduction" className="group absolute inset-x-0 bottom-8 z-10 mx-auto flex w-fit items-center gap-2.5 rounded-full border border-white/50 px-5 py-2.5 text-white/85 transition-colors duration-200 ease-out hover:border-white hover:bg-white/10 hover:text-white">
+        <span className="text-[11px] font-semibold uppercase tracking-[0.2em]">Click me to continue</span>
+        <Icon d={icons.arrow} className="h-4 w-4 transition-transform duration-200 ease-out group-hover:translate-x-0.5" />
       </a>
     </section>
   );
