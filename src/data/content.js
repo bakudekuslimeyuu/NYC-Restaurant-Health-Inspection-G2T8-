@@ -54,7 +54,6 @@ export const CONTENT = {
         "Review text gives diners room to describe the whole visit, including what they noticed about cleanliness: a dirty table, a cockroach or food poisoning, details that a single star cannot carry. This page asks **whether review text gives New Yorkers a reliable signal of food safety**. To find out, we analysed 776,637 Yelp reviews of 9,553 restaurants (reviews from 2023 onwards, restaurants with more than 20 reviews) and compared what they say with what inspectors found at the same restaurants."
       ],
       source:"Yelp review text (keyword matching, sentiment scores and word frequencies) matched to DOHMH inspections, 2023–2026",
-      overviewIntro:"The dashboard brings all the charts together to give a broad answer to our question. After this, we go through each chart in turn, with instructions on how to use it and what it shows.",
       question:"Does review text give New Yorkers a reliable signal of food safety?",
       // Overview: the whole dashboard, switched with the buttons above the frame.
       views:[

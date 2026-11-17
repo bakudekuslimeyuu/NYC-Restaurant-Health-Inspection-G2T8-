@@ -7,11 +7,23 @@ import { TableauFrame } from "../components/TableauFrame.jsx";
 import { InsightsAccordion } from "../components/InsightsAccordion.jsx";
 import { cardHover, pad } from "../lib/format.js";
 
-// Turns **text** inside a string into bold, so content.js can mark key phrases.
-function rich(t){
-  return t.split(/(\*\*[^*]+\*\*)/).map((part, k) =>
-    part.startsWith("**") && part.endsWith("**") ? <b key={k} className="font-semibold text-ink">{part.slice(2, -2)}</b> : part);
+// Formatting for text from content.js: **text** becomes bold, and [[text]] becomes a link that scrolls
+// smoothly to the element with id `linkTo` on the same page (the hash isn't changed, so the page route stays put).
+function rich(t, linkTo){
+  return t.split(/(\*\*[^*]+\*\*|\[\[[^\]]+\]\])/).map((part, k) => {
+    if (part.startsWith("**") && part.endsWith("**")) return <b key={k} className="font-semibold text-ink">{part.slice(2, -2)}</b>;
+    if (part.startsWith("[[") && part.endsWith("]]")) return (
+      <a key={k} href={`#${linkTo}`} onClick={e => { e.preventDefault(); document.getElementById(linkTo)?.scrollIntoView({ behavior: "smooth" }); }}
+        className="font-semibold text-accent underline-offset-4 hover:underline">{part.slice(2, -2)}</a>
+    );
+    return part;
+  });
 }
+
+// Shared wording for every dashboard page. [[…]] links to the walkthrough section (see rich()).
+// A dashboard can override either with `overviewIntro` / `walkthroughIntro` in content.js.
+const OVERVIEW_TEXT = "The dashboard brings all the charts together to give a broad answer to our question. After this, in the [[Visualisation walkthrough]], we go through each chart in turn, with instructions on how to use it and what it shows.";
+const WALKTHROUGH_TEXT = "We go through each chart from the dashboard one at a time, explaining how to read it and what it shows.";
 
 function PageNav({ href, label, title, right }){
   return (
@@ -72,9 +84,10 @@ function ScopeToggle({ scope, setScope, viewLabel }){
 // Steps come from `steps` in content.js; a dashboard without them shows no walkthrough.
 function Walkthrough({ d }){
   return (
-    <section className="mt-20">
-      <SectionHeading>One chart at a time</SectionHeading>
-      <p className="mt-5 text-[16px] leading-[1.75] text-sub">Each chart from the dashboard above, in order, with what to look for and what it shows.</p>
+    <section id={`d${d.n}-walkthrough`} className="mt-20 scroll-mt-8">
+      <SectionHeading>Visualisation walkthrough</SectionHeading>
+      {/* Shared default for every dashboard's walkthrough; a dashboard can set `walkthroughIntro` in content.js to override it. */}
+      <p className="mt-5 text-[16px] leading-[1.75] text-sub">{d.walkthroughIntro ?? WALKTHROUGH_TEXT}</p>
       <ol className="m-0 mt-10 list-none space-y-14 p-0">
         {d.steps.map((s, k) => (
           <li key={k} id={`d${d.n}-step-${k + 1}`} className="scroll-mt-24">
@@ -135,19 +148,21 @@ export function Dashboard({ d }){
         {[].concat(d.intro).map((t, k) => <p key={k}>{rich(t)}</p>)}
       </div>
       <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.16em] text-sub">Source: {d.source}</p>
-      {/* Dashboards with a walkthrough get a heading for the overview, to pair with "One chart at a time" below. */}
-      {d.steps?.length > 0 && (
-        <section className="mt-16">
-          <SectionHeading>Dashboard overview</SectionHeading>
-          {d.overviewIntro && <p className="mt-5 text-[16px] leading-[1.75] text-sub">{d.overviewIntro}</p>}
-        </section>
-      )}
+      {/* Every dashboard page: "Dashboard overview" above the frame, paired with "Visualisation walkthrough" further down. */}
+      <section className="mt-16">
+        <SectionHeading>Dashboard overview</SectionHeading>
+        <p className="mt-5 text-[16px] leading-[1.75] text-sub">{rich(d.overviewIntro ?? OVERVIEW_TEXT, `d${d.n}-walkthrough`)}</p>
+      </section>
       {howToRead && <HowToRead h={howToRead} />}
       <Reveal className="mt-8"><TableauFrame n={d.n} question={d.question} views={d.views} source={d.source} onViewChange={setView} /></Reveal>
-      {/* Shown only when the dashboard has insights; Dashboard 3 puts its findings in the walkthrough instead. */}
-      {insights?.length > 0 && (
+      {/* Dashboards without walkthrough steps show their insights under the "Visualisation walkthrough" heading.
+          Dashboard 3 has steps, so its findings sit in the step-by-step walkthrough instead. */}
+      {!(d.steps?.length > 0) && insights?.length > 0 && (
         <Reveal className="mt-16">
-          <SectionHeading>Insights</SectionHeading>
+          <section id={`d${d.n}-walkthrough`} className="scroll-mt-8">
+            <SectionHeading>Visualisation walkthrough</SectionHeading>
+            <p className="mt-5 text-[16px] leading-[1.75] text-sub">{d.walkthroughIntro ?? WALKTHROUGH_TEXT}</p>
+          </section>
           {perView && <ScopeToggle scope={scope} setScope={setScope} viewLabel={d.views[view].label} />}
           {perView && scope === "all"
             ? d.views.map((v, k) => (
