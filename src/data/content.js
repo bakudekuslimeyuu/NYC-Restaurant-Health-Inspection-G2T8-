@@ -3,7 +3,7 @@ export const CONTENT = {
   siteName: "Restaurant Health Inspection Analysis",
   // Street photo from the base44 site. To use your own, put hero.jpg in public/ and set this to "hero.jpg".
   heroImage: "https://media.base44.com/images/public/6ae0c7d1eaacca254cee908c/f93a37096_generated_image.png",
-  heroTitle: "Can you trust a restaurant’s health grade or its Yelp stars?",
+  heroTitle: "Can New York diners trust Yelp reviews to eat safely?",
   heroSub: "We compared NYC inspection records with Yelp reviews to find out.",
   members: ["Xuan Wei", "Mei Yu", "Zheng Long", "Shanice", "Zheng Seng"],
   dataNote: "DOHMH New York City Restaurant Inspection Results · Yelp restaurant records, star ratings & public review text",
@@ -130,6 +130,77 @@ export const CONTENT = {
       ],
       takeaway:"Check when the restaurant was last inspected and what was found — not just the letter or the stars." }
   ],
+
+  // Introduction page (address #introduction; the old #problem still works). Text uses the same formatting as the dashboards: **bold**.
+  introduction: {
+    title:"Do the sources New Yorkers rely on reflect what inspectors find?",
+    intro:[
+      "New Yorkers eat out **more than a billion times a year** (DOHMH, 2019), and each meal relies on food safety practices that diners cannot easily check for themselves. Between 2012 and 2022, the Department of Health and Mental Hygiene (DOHMH) confirmed **268 foodborne illness outbreaks** linked to the city’s eating and drinking establishments, and it notes that the true number is likely much higher, because many cases go unreported (DOHMH, 2026b).",
+      "To manage this risk, the DOHMH carries out random inspections of the city’s restaurants and publishes its findings: a **letter grade posted at the entrance**, and the full record of every inspection on NYC Open Data.",
+      "That record is detailed, but it is published as a dataset of almost 300,000 rows, one for each violation cited, with codes and regulatory descriptions. Checking a single restaurant means searching that dataset or the city’s lookup tool, a step that is impractical for a quick decision about where to eat. The signals diners actually see are quicker, but it is not clear whether they tell diners what the record does."
+    ],
+    signals:[
+      { t:"The grade on the door",
+        offers:"Official, issued by inspectors and posted where every diner can see it." },
+      { t:"Yelp",
+        offers:"Familiar and quick: a star rating and written reviews from other diners. Most consumers read online reviews before choosing a local business (BrightLocal, 2026)." }
+    ],
+    approach:"We test each signal against what inspectors actually recorded. First, we check whether the grade on the door gives a complete and current picture of the inspection behind it. We then test whether Yelp’s star ratings and review text reflect what inspectors found at the same restaurants.",
+    prior:[
+      { who:"Pulaski (2020); Vaghani (2018)",
+        found:"Both compared inspection grades with Yelp star ratings for New York restaurants and found no clear relationship: some C-graded restaurants earned 4 to 5 stars, while some A-graded restaurants earned 1 or 2. Vaghani attributed this to diners weighing taste and service more heavily than hygiene." },
+      { who:"Farronato and Zervas (2022)",
+        found:"Linked DOHMH inspections to Yelp review text and used machine learning to predict violations from review language. Accuracy (AUC) ranged from 0.51 to 0.68 across the 20 most common violation codes, only slightly better than chance for most." },
+      { who:"Mathayomchan and Taecharungroj (2020)",
+        found:"Analysed over 900,000 Google Maps reviews of 5,010 restaurants in London, Birmingham and Manchester, using VADER sentiment analysis and logistic regression to compare what drives positive and negative reviews across four attributes: food, service, atmosphere and value. Hygiene was not one of them." }
+    ],
+    adds:[
+      { t:"All five boroughs",
+        d:"Pulaski studied roughly 3,900 restaurants in Manhattan alone. We cover restaurants across all five boroughs." },
+      { t:"Change over time",
+        d:"Earlier studies compared grades and ratings at a single point in time. We also look at whether ratings move after a citation, and whether the same violations return at later inspections." },
+      { t:"Hygiene in review text",
+        d:"Building on Mathayomchan and Taecharungroj, we add hygiene to the attributes studied in reviews, and analyse whether diners write about it as well as how they rate." },
+      { t:"A practical outcome",
+        d:"We turn our findings into a proposed redesign of how Yelp displays inspection results." }
+    ]
+  },
+
+  // Overview page. Numbers come from the project data (inspections and reviews from 1 January 2023 onwards).
+  overview: {
+    title:"How we tested the signals diners rely on",
+    intro:"We combined the official inspection record with Yelp reviews we collected ourselves, then tested each signal against what inspectors found. Each dashboard answers one part of our question, and the last page turns the findings into a recommendation for Yelp.",
+    stats:[
+      { n:"88,828", label:"DOHMH inspections", sub:"of 27,245 restaurants, January 2023 to September 2026" },
+      { n:"1,103,426", label:"Yelp reviews collected", sub:"from 19,781 restaurants matched to the inspection record" },
+      { n:"776,637", label:"reviews analysed", sub:"of 9,553 restaurants: reviews from 2023 onwards, restaurants with more than 20 reviews" }
+    ],
+    method:[
+      { t:"Collect",
+        d:"We built our own dataset of Yelp reviews. A custom scraper searched Yelp for each of the 27,527 restaurants in the DOHMH record and saved every dated review." },
+      { t:"Match",
+        d:"A Yelp listing was kept only if it matched the restaurant’s name and location, checked against phone numbers and addresses. Rules handled common differences, such as Queens house numbers written as “104-02” or “104-2”." },
+      { t:"Filter",
+        d:"Inspections and reviews are limited to 1 January 2023 onwards, as the DOHMH data holds few inspections before then. Review analyses use only restaurants with more than 20 reviews, so that a single rating cannot swing the average." }
+    ],
+    methodNote:"Our proposal planned to use Google Maps reviews. We switched to Yelp because Google Maps shows only relative dates, such as “1 year ago”, and our analysis needs exact dates to place each review before or after an inspection.",
+    steps:[
+      { href:"#dash-1", label:"Grade on the Door", q:"Does the grade on the door give a complete and current picture of the inspection?", data:"DOHMH inspections" },
+      { href:"#dash-2", label:"Stars vs. Citations", q:"Do Yelp star ratings reflect what inspectors find?", data:"Yelp star ratings and DOHMH inspections" },
+      { href:"#dash-3", label:"Review Text", q:"Does review text give New Yorkers a reliable signal of food safety?", data:"Yelp review text and DOHMH inspections" },
+      { href:"#dash-4", label:"What to Check Instead", q:"If neither signal is enough, what should diners look at instead?", data:"DOHMH inspections by season, cuisine and chain status" },
+      { href:"#redesign", label:"Redesign Proposal", q:"How could Yelp show inspection results so that diners notice them?", data:"Yelp’s current listing pages" }
+    ],
+    readNote:"Each dashboard page opens with the full dashboard, followed by a walkthrough that explains each chart one at a time: how to read it, and what it shows.",
+    stakeholders:[
+      { icon:"fork", t:"Diners",
+        d:"They choose where to eat with the information in front of them, usually the grade and Yelp. If those signals miss what inspectors found, diners cannot take it into account." },
+      { icon:"chat", t:"Review platforms",
+        d:"Yelp already shows a health score for New York restaurants, but places it where few diners look. Showing it more clearly is a design change, not a new data source." },
+      { icon:"bank", t:"Regulators",
+        d:"Inspection results can only guide diners if diners see and understand them, so how results appear on the platforms diners use matters to the grading system’s purpose." }
+    ]
+  },
 
   // Redesign Proposal page. `img` files live in public/redesign/.
   redesign: {
