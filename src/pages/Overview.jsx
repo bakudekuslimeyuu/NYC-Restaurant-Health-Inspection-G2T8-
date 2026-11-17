@@ -18,11 +18,12 @@ export function Overview(){
 
       <section className="mt-14">
         <SectionHeading>The data</SectionHeading>
+        {/* Counting starts after the page and the tiles have faded in (about 0.6 s), so the whole count is visible. */}
         <div className="mt-7 grid gap-4 md:grid-cols-3">
           {o.stats.map((s, k) => (
             <Reveal key={s.label} delay={k * 80}>
               <div className={`h-full rounded-2xl border border-line bg-white p-6 ${cardGlow}`}>
-                <p className="font-mono text-[28px] font-semibold leading-none tracking-tight text-ink sm:text-[30px]"><CountUp value={s.n} delay={k * 100} /></p>
+                <p className="font-mono text-[28px] font-semibold leading-none tracking-tight text-ink sm:text-[30px]"><CountUp value={s.n} delay={600 + k * 100} /></p>
                 <p className="mt-2 text-[15px] font-semibold">{s.label}</p>
                 <p className="mt-1.5 text-[13.5px] leading-[1.6] text-sub">{s.sub}</p>
               </div>
