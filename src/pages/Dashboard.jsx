@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Page } from "../components/layout/Page.jsx";
 import { Eyebrow, PageHeader, SectionHeading } from "../components/Typography.jsx";
 import { Reveal } from "../components/Reveal.jsx";
@@ -113,7 +113,25 @@ function Walkthrough({ d }){
   );
 }
 
+// Links such as #dash-3/step-2 (e.g. from the report's figures) open this page at that walkthrough step.
+// Runs on arrival and whenever the step part of the address changes while already on the page.
+function useStepLink(n){
+  useEffect(() => {
+    let timer;
+    const go = () => {
+      const m = window.location.hash.match(/\/step-(\d+)$/);
+      const el = m && document.getElementById(`d${n}-step-${m[1]}`);
+      // Wait for the page's fade-in so the jump lands on the step heading.
+      if (el) { clearTimeout(timer); timer = setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 450); }
+    };
+    go();
+    window.addEventListener("hashchange", go);
+    return () => { clearTimeout(timer); window.removeEventListener("hashchange", go); };
+  }, [n]);
+}
+
 export function Dashboard({ d }){
+  useStepLink(d.n);
   const [view, setView] = useState(0);
   const [scope, setScope] = useState("view");
   // A view can carry its own insights; otherwise the dashboard's insights are shown.
