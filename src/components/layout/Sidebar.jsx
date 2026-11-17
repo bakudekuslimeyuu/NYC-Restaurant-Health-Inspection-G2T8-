@@ -36,12 +36,13 @@ export function Sidebar({ route, open, onClose, collapsed, onToggle }){
         <div className={`hidden px-6 pt-5 lg:flex ${shut ? "lg:justify-center lg:px-3" : "justify-end"}`}>
           <button onClick={onToggle} aria-label={shut ? "Expand sidebar" : "Collapse sidebar"} title={shut ? "Expand sidebar" : "Collapse sidebar"}
             className="rounded-lg p-2 text-white/60 transition-colors duration-200 ease-out hover:bg-sideactive hover:text-white">
-            <Icon d={icons.panel} className="h-[18px] w-[18px]" />
+            {/* An arrow pointing the way the sidebar will move: ">" to open it, "<" to collapse it. */}
+            <Icon d={icons.chev} className={`h-[18px] w-[18px] transition-transform duration-300 ease-out ${shut ? "-rotate-90" : "rotate-90"}`} />
           </button>
         </div>
         <nav className={`flex-1 space-y-1 overflow-y-auto overflow-x-hidden p-6 lg:pt-3 ${shut ? "lg:px-3" : ""}`}>
           <NavLink to="home" icon={icons.home} label="Home" {...link} />
-          <NavLink to="problem" icon={icons.info} label="Problem Statement" {...link} />
+          <NavLink to="introduction" icon={icons.info} label="Introduction" {...link} />
           <NavLink to="overview" icon={icons.doc} label="Overview" {...link} />
           <div>
             <button onClick={() => setDashOpen(!dashOpen)} aria-expanded={dashOpen} title={shut ? "Dashboards" : undefined}
