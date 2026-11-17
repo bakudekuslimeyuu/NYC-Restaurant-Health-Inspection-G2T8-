@@ -45,30 +45,21 @@ export const CONTENT = {
         ["It's the same in every borough.", "The correlation between stars and inspection score is only 0.04 to 0.12 in all five boroughs, which is basically no link."]
       ],
       takeaway:"A good Yelp rating means people liked the food, not that the kitchen is clean. If hygiene matters to you, check the inspection record instead of the stars." },
-    { n:3, owner:"Zheng Long", nav:"Why Reviewers Miss It",
-      title:"Reviewers don’t see the kitchen",
-      intro:"If neither the letter nor the stars warn a diner, the reason is probably in what reviewers actually write. This part reads 776,637 Yelp reviews of 9,553 restaurants (reviews from 2023 onwards, restaurants with more than 20 reviews) and compares what they mention with what inspectors found at the same restaurants.",
+    { n:3, owner:"Zheng Long", nav:"Review Text",
+      title:"You can’t rely on what reviewers write either",
+      intro:[
+        "Diners have two quick ways to judge a restaurant: **the inspection grade on the door, and Yelp**.",
+        "Earlier, we saw that **a good grade can hide the problems inspectors found**, and may be out of date. Yelp’s star rating, which many diners check first because it is quick and familiar, fares no better: **it stays almost the same whether a restaurant’s inspections are good or poor**.",
+        "However, Yelp offers more than stars. **A star rating compresses a whole dining experience into a single number**, and we believe many diners rate based on the one part that mattered most to them, such as rude service or an outstanding dish, which can push the rating up or down regardless of everything else.",
+        "Review text gives diners room to describe the whole visit, including what they noticed about cleanliness: a dirty table, a cockroach or food poisoning, details that a single star cannot carry. This page asks **whether review text gives New Yorkers a reliable signal of food safety**. To find out, we analysed 776,637 Yelp reviews of 9,553 restaurants (reviews from 2023 onwards, restaurants with more than 20 reviews) and compared what they say with what inspectors found at the same restaurants."
+      ],
       source:"Yelp review text (keyword matching, sentiment scores and word frequencies) matched to DOHMH inspections, 2023–2026",
-      question:"Why is there no relationship between stars and citations?",
+      overviewIntro:"The dashboard brings all the charts together to give a broad answer to our question. After this, we go through each chart in turn, with instructions on how to use it and what it shows.",
+      question:"Does review text give New Yorkers a reliable signal of food safety?",
       // Overview: the whole dashboard, switched with the buttons above the frame.
       views:[
-        {label:"Found vs. stars", url:"https://public.tableau.com/views/FoodHygieneandYelpReviewsinNYC/D3Overview", height:980,
-          howToRead:{
-            ask:"Do Yelp reviews or stars reflect what inspectors find?",
-            notes:[
-              "Four charts. Top row: what inspectors find against what reviews mention, then restaurants with repeated live pests. Bottom row: stars against how positive reviews read, then review tone by inspection grade.",
-              "Read the bottom row left to right: the left headline ends where the right one begins.",
-              "Each chart is explained one at a time in the walkthrough below."
-            ]
-          }},
-        {label:"What reviews talk about", url:"https://public.tableau.com/views/FoodHygieneandYelpReviewsinNYC/D3Words", height:980,
-          howToRead:{
-            ask:"When diners write a review, what do they actually talk about?",
-            notes:[
-              "Two word clouds: the words most typical of 1-star reviews, and the words most typical of 5-star reviews. Orange words are about hygiene.",
-              "Explained in step 5 of the walkthrough below."
-            ]
-          }}
+        {label:"Yelp reviews and stars", url:"https://public.tableau.com/views/FoodHygieneandYelpReviewsinNYC/D3Overview", height:980},
+        {label:"Words in 1★ and 5★ reviews", url:"https://public.tableau.com/views/FoodHygieneandYelpReviewsinNYC/D3Words", height:980}
       ],
       // Walkthrough: one chart at a time, below the overview. Each step: a question, its chart, how to read it,
       // what we found, and a line leading into the next step. Leave `url` empty until the chart is published.

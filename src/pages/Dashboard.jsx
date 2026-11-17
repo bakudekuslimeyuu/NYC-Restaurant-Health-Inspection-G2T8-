@@ -7,6 +7,12 @@ import { TableauFrame } from "../components/TableauFrame.jsx";
 import { InsightsAccordion } from "../components/InsightsAccordion.jsx";
 import { cardHover, pad } from "../lib/format.js";
 
+// Turns **text** inside a string into bold, so content.js can mark key phrases.
+function rich(t){
+  return t.split(/(\*\*[^*]+\*\*)/).map((part, k) =>
+    part.startsWith("**") && part.endsWith("**") ? <b key={k} className="font-semibold text-ink">{part.slice(2, -2)}</b> : part);
+}
+
 function PageNav({ href, label, title, right }){
   return (
     <a href={href} className={`flex flex-col rounded-2xl border border-line bg-white p-5 ${cardHover} ${right ? "sm:items-end sm:text-right" : ""}`}>
@@ -124,8 +130,18 @@ export function Dashboard({ d }){
   return (
     <Page>
       <PageHeader eyebrow={`Dashboard ${pad(d.n)}`} title={d.title} />
-      <p className="mt-7 text-[16.5px] leading-[1.75] text-sub">{d.intro}</p>
+      {/* intro can be one paragraph (a string) or several (a list of strings) */}
+      <div className="mt-7 space-y-4 text-[16.5px] leading-[1.75] text-sub">
+        {[].concat(d.intro).map((t, k) => <p key={k}>{rich(t)}</p>)}
+      </div>
       <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.16em] text-sub">Source: {d.source}</p>
+      {/* Dashboards with a walkthrough get a heading for the overview, to pair with "One chart at a time" below. */}
+      {d.steps?.length > 0 && (
+        <section className="mt-16">
+          <SectionHeading>Dashboard overview</SectionHeading>
+          {d.overviewIntro && <p className="mt-5 text-[16px] leading-[1.75] text-sub">{d.overviewIntro}</p>}
+        </section>
+      )}
       {howToRead && <HowToRead h={howToRead} />}
       <Reveal className="mt-8"><TableauFrame n={d.n} question={d.question} views={d.views} source={d.source} onViewChange={setView} /></Reveal>
       {/* Shown only when the dashboard has insights; Dashboard 3 puts its findings in the walkthrough instead. */}
