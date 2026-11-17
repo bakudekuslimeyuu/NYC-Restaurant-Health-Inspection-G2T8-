@@ -18,8 +18,7 @@ function rich(t, linkTo){
   return t.split(/(\*\*[^*]+\*\*|\[\[[^\]]+\]\]|\{(?:orange|purple|grey):[^}]+\})/).map((part, k) => {
     const colour = part.match(/^\{(orange|purple|grey):([^}]+)\}$/);
     if (colour) return <b key={k} className="font-semibold" style={{ color: CHART_COLOURS[colour[1]] }}>{colour[2]}</b>;
-    if (part.startsWith("**") && part.endsWith("**")) return <b key={k} className="font-semibold text-ink">{part.slice(2, -2)}</b>;
-    if (part.startsWith("[[") && part.endsWith("]]")) return (
+    if (part.startsWith("**") && part.endsWith("**")) return <b key={k} className="font-semibold text-ink">{part.slice(2, -2)}</b>;    if (part.startsWith("[[") && part.endsWith("]]")) return (
       <a key={k} href={`#${linkTo}`} onClick={e => { e.preventDefault(); document.getElementById(linkTo)?.scrollIntoView({ behavior: "smooth" }); }}
         className="font-semibold text-accent underline-offset-4 hover:underline">{part.slice(2, -2)}</a>
     );
@@ -118,7 +117,7 @@ function Walkthrough({ d }){
                 <div className="border-t border-line bg-band px-5 py-4 sm:px-6">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-accent">What we found</p>
                   <p className="mt-1.5 text-[14.5px] font-semibold leading-[1.6]">{rich(s.found)}</p>
-                  {s.note && <p className="mt-2 text-[12.5px] leading-[1.55] text-sub">{s.note}</p>}
+                  {s.note && <p className="mt-2 text-[12.5px] leading-[1.55] text-sub">{rich(s.note)}</p>}
                 </div>
               </figure>
               {/* Lead-in to the next chart: one box holding the reasoning, with "Next: …" and an arrow at the bottom right.
