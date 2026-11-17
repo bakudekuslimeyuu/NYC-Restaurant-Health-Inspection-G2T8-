@@ -72,23 +72,22 @@ function Walkthrough({ d }){
             <Reveal>
               <div className="flex items-start gap-4">
                 <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-accent font-mono text-[13px] font-semibold text-white">{k + 1}</span>
-                <div>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-sub">{s.chart}</p>
-                  <h3 className="mt-1 text-[21px] font-bold leading-snug sm:text-[24px]">{s.question}</h3>
-                </div>
+                {/* The question is the step's heading; the chart's short name (s.chart) is kept for the frame's label only. */}
+                <h3 className="mt-0.5 text-[21px] font-bold leading-snug sm:text-[24px]">{s.question}</h3>
               </div>
               {/* One card, read top to bottom: how to read the chart → the chart → what we found. */}
               <figure className="m-0 mt-5 overflow-hidden rounded-2xl border border-line bg-white">
                 <div className="border-b border-line px-5 py-4 sm:px-6">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-accent">How to read</p>
-                  <ul className="mt-1.5 list-disc space-y-1 pl-5 text-[13.5px] leading-[1.6] text-sub">
+                  <ul className="mt-2 list-disc space-y-1.5 pl-5 text-[15.5px] leading-relaxed text-sub">
                     {s.howToRead.map((t, j) => <li key={j}>{rich(t)}</li>)}
                   </ul>
                 </div>
                 <TableauFrame bare plain lazy n={d.n} views={[{ label: s.chart, url: s.url, height: s.height }]} source={d.source} />
                 <div className="border-t border-line bg-band px-5 py-4 sm:px-6">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-accent">What we found</p>
-                  <p className="mt-1.5 text-[14.5px] font-semibold leading-[1.6]">{rich(s.found)}</p>
+                  {/* found can be one paragraph (a string) or several (a list of strings) */}
+                  {[].concat(s.found).map((t, j) => <p key={j} className={`${j ? "mt-3" : "mt-1.5"} text-[15.5px] font-semibold leading-relaxed`}>{rich(t)}</p>)}
                   {s.note && <p className="mt-2 text-[12.5px] leading-[1.55] text-sub">{rich(s.note)}</p>}
                 </div>
               </figure>
@@ -158,11 +157,13 @@ export function Dashboard({ d }){
         </Reveal>
       )}
       {d.steps?.length > 0 && <Walkthrough d={d} />}
-      <Reveal className="mt-12">
-        <div className="rounded-2xl border-l-4 border-accent bg-band p-7 sm:p-8">
-          <Eyebrow>Takeaway</Eyebrow>
-          <p className="mt-3 text-[18px] font-semibold leading-snug sm:text-[20px]">{d.takeaway}</p>
-        </div>
+      {/* Summary (the `takeaway` field in content.js): a quiet panel with a faint teal tint and thin teal border, so it reads as the page's conclusion
+          without a heavy side bar or dark block. */}
+      <Reveal className="mt-14">
+        <section aria-label="Summary" className="rounded-2xl border border-accent/30 bg-accent/[0.05] p-7 sm:p-9">
+          <Eyebrow>Summary</Eyebrow>
+          <p className="mt-4 text-[18px] font-semibold leading-[1.55] text-ink sm:text-[20px]">{d.takeaway}</p>
+        </section>
       </Reveal>
     </Page>
   );
