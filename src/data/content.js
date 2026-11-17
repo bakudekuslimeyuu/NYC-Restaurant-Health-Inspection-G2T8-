@@ -113,9 +113,9 @@ export const CONTENT = {
           howToRead:[
             "The top cloud shows 60 words typical of 1-star reviews, and the bottom cloud shows 60 words typical of 5-star reviews.",
             "A word is large when it is both common in its group and much more common there than in the other group.",
-            "{orange:Orange} words are about hygiene (“poison”, “hair” and “dirty”); {grey:grey} words are about everything else."
+            "{orange:Orange} words are about hygiene (“poison” and “hair”); {grey:grey} words are about everything else."
           ],
-          found:"1-star reviews are mostly about service and money: “rude” appears in 13% of them, along with words such as “charge”, “pay” and “manager”. Hygiene words are far rarer: “poison” (almost always in “food poisoning”), “hair” and “dirty” each appear in under 3% of 1-star reviews. 5-star reviews praise taste, staff and atmosphere (“delicious”, “friendly”, “attentive”), and no hygiene word appears in the 5-star cloud. This suggests that ratings are driven by what diners experience at the table rather than by hygiene, even in the most negative reviews.",
+          found:"1-star reviews are mostly about service and money: “rude” appears in 13% of them, along with words such as “charge”, “pay” and “manager”. Hygiene words are far rarer: “poison” (almost always in “food poisoning”) and “hair” each appear in under 2% of 1-star reviews. 5-star reviews praise taste, staff and atmosphere (“delicious”, “friendly”, “attentive”), and no hygiene word appears in the 5-star cloud. This suggests that ratings are driven by what diners experience at the table rather than by hygiene, even in the most negative reviews.",
           note:"Word forms are merged (“refund” and “refunds” count as one, and “poisoning” counts as “poison”). Common or general words such as “the”, “good” or “terrible” are removed, because they do not show what a review is about."}
       ],
       takeaway:"Review text is not a reliable signal of food safety. Reviews rarely mention the problems inspectors find, even repeated pests. They are also almost as positive at grade C restaurants as at grade A. Together with the star ratings, this means Yelp, as it is used today, gives New Yorkers little help in finding restaurants with high food safety standards." },
