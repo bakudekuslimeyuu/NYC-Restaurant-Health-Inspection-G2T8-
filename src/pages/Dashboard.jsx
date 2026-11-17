@@ -5,7 +5,8 @@ import { Eyebrow, PageHeader, SectionHeading } from "../components/Typography.js
 import { Reveal } from "../components/Reveal.jsx";
 import { TableauFrame } from "../components/TableauFrame.jsx";
 import { InsightsAccordion } from "../components/InsightsAccordion.jsx";
-import { cardHover, pad } from "../lib/format.js";
+import { pad } from "../lib/format.js";
+import { Icon, icons } from "../components/Icon.jsx";
 
 // Colours used in the Dashboard 3 charts, so text can name a colour in the same colour as the marks.
 // grey is darker than the chart's light grey bars so it stays readable as text.
@@ -18,8 +19,7 @@ function rich(t, linkTo){
   return t.split(/(\*\*[^*]+\*\*|\[\[[^\]]+\]\]|\{(?:orange|purple|grey):[^}]+\})/).map((part, k) => {
     const colour = part.match(/^\{(orange|purple|grey):([^}]+)\}$/);
     if (colour) return <b key={k} className="font-semibold" style={{ color: CHART_COLOURS[colour[1]] }}>{colour[2]}</b>;
-    if (part.startsWith("**") && part.endsWith("**")) return <b key={k} className="font-semibold text-ink">{part.slice(2, -2)}</b>;
-    if (part.startsWith("[[") && part.endsWith("]]")) return (
+    if (part.startsWith("**") && part.endsWith("**")) return <b key={k} className="font-semibold text-ink">{part.slice(2, -2)}</b>;    if (part.startsWith("[[") && part.endsWith("]]")) return (
       <a key={k} href={`#${linkTo}`} onClick={e => { e.preventDefault(); document.getElementById(linkTo)?.scrollIntoView({ behavior: "smooth" }); }}
         className="font-semibold text-accent underline-offset-4 hover:underline">{part.slice(2, -2)}</a>
     );
@@ -32,11 +32,17 @@ function rich(t, linkTo){
 const OVERVIEW_TEXT = "The dashboard brings all the charts together to give a broad answer to our question. After this, in the [[Visualisation walkthrough]], we go through each chart in turn, with instructions on how to use it and what it shows.";
 const WALKTHROUGH_TEXT = "We go through each chart from the dashboard one at a time, explaining how to read it and what it shows.";
 
+// One half of the previous/next bar: a round teal arrow (same style as the walkthrough's "Next" button) beside the label and page title.
 function PageNav({ href, label, title, right }){
   return (
-    <a href={href} className={`flex flex-col rounded-2xl border border-line bg-white p-5 ${cardHover} ${right ? "sm:items-end sm:text-right" : ""}`}>
-      <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-sub">{label}</span>
-      <span className="mt-1.5 text-[15px] font-semibold">{title}</span>
+    <a href={href} className={`group flex items-center gap-4 p-5 transition-colors duration-200 ease-out hover:bg-band sm:p-6 ${right ? "flex-row-reverse text-right" : ""}`}>
+      <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-full bg-accent text-white transition-transform duration-200 ease-out ${right ? "group-hover:translate-x-0.5" : "group-hover:-translate-x-0.5"}`}>
+        <Icon d={icons.arrow} className={`h-[18px] w-[18px] ${right ? "" : "rotate-180"}`} />
+      </span>
+      <span className="flex flex-col">
+        <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-sub">{label}</span>
+        <span className="mt-1 text-[15px] font-semibold text-ink group-hover:text-accent">{title}</span>
+      </span>
     </a>
   );
 }
@@ -118,7 +124,7 @@ function Walkthrough({ d }){
                 <div className="border-t border-line bg-band px-5 py-4 sm:px-6">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-accent">What we found</p>
                   <p className="mt-1.5 text-[14.5px] font-semibold leading-[1.6]">{rich(s.found)}</p>
-                  {s.note && <p className="mt-2 text-[12.5px] leading-[1.55] text-sub">{s.note}</p>}
+                  {s.note && <p className="mt-2 text-[12.5px] leading-[1.55] text-sub">{rich(s.note)}</p>}
                 </div>
               </figure>
               {/* Lead-in to the next chart: one box holding the reasoning, with "Next: …" and an arrow at the bottom right.
@@ -195,7 +201,8 @@ export function Dashboard({ d }){
           <p className="mt-3 text-[18px] font-semibold leading-snug sm:text-[20px]">{d.takeaway}</p>
         </div>
       </Reveal>
-      <div className="mt-12 grid gap-4 sm:grid-cols-2">
+      {/* Previous / next pages in one outlined bar, split by a divider (vertical on wider screens, horizontal on phones). */}
+      <div className="mt-12 grid divide-y-2 divide-accent/30 overflow-hidden rounded-2xl border-2 border-accent/40 bg-white sm:grid-cols-2 sm:divide-x-2 sm:divide-y-0">
         {prev ? <PageNav href={`#dash-${prev.n}`} label="Previous" title={`${pad(prev.n)} · ${prev.nav}`} /> : <PageNav href="#overview" label="Previous" title="Overview" />}
         {next ? <PageNav right href={`#dash-${next.n}`} label="Next" title={`${pad(next.n)} · ${next.nav}`} /> : <PageNav right href="#redesign" label="Next" title="Redesign Proposal" />}
       </div>
