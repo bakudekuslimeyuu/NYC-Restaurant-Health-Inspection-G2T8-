@@ -7,10 +7,17 @@ import { TableauFrame } from "../components/TableauFrame.jsx";
 import { InsightsAccordion } from "../components/InsightsAccordion.jsx";
 import { cardHover, pad } from "../lib/format.js";
 
-// Formatting for text from content.js: **text** becomes bold, and [[text]] becomes a link that scrolls
-// smoothly to the element with id `linkTo` on the same page (the hash isn't changed, so the page route stays put).
+// Colours used in the Dashboard 3 charts, so text can name a colour in the same colour as the marks.
+// grey is darker than the chart's light grey bars so it stays readable as text.
+const CHART_COLOURS = { orange: "#E8590C", purple: "#5B3A8C", grey: "#7A7A7A" };
+
+// Formatting for text from content.js: **text** becomes bold, {orange:text} / {purple:text} become bold text in that
+// chart colour, and [[text]] becomes a link that scrolls smoothly to the element with id `linkTo` on the same page
+// (the hash isn't changed, so the page route stays put).
 function rich(t, linkTo){
-  return t.split(/(\*\*[^*]+\*\*|\[\[[^\]]+\]\])/).map((part, k) => {
+  return t.split(/(\*\*[^*]+\*\*|\[\[[^\]]+\]\]|\{(?:orange|purple|grey):[^}]+\})/).map((part, k) => {
+    const colour = part.match(/^\{(orange|purple|grey):([^}]+)\}$/);
+    if (colour) return <b key={k} className="font-semibold" style={{ color: CHART_COLOURS[colour[1]] }}>{colour[2]}</b>;
     if (part.startsWith("**") && part.endsWith("**")) return <b key={k} className="font-semibold text-ink">{part.slice(2, -2)}</b>;
     if (part.startsWith("[[") && part.endsWith("]]")) return (
       <a key={k} href={`#${linkTo}`} onClick={e => { e.preventDefault(); document.getElementById(linkTo)?.scrollIntoView({ behavior: "smooth" }); }}
@@ -90,7 +97,7 @@ function Walkthrough({ d }){
       <p className="mt-5 text-[16px] leading-[1.75] text-sub">{d.walkthroughIntro ?? WALKTHROUGH_TEXT}</p>
       <ol className="m-0 mt-10 list-none space-y-14 p-0">
         {d.steps.map((s, k) => (
-          <li key={k} id={`d${d.n}-step-${k + 1}`} className="scroll-mt-24">
+          <li key={k} id={`d${d.n}-step-${k + 1}`} className="scroll-mt-6">
             <Reveal>
               <div className="flex items-start gap-4">
                 <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-accent font-mono text-[13px] font-semibold text-white">{k + 1}</span>
@@ -104,22 +111,29 @@ function Walkthrough({ d }){
                 <div className="border-b border-line px-5 py-4 sm:px-6">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-accent">How to read</p>
                   <ul className="mt-1.5 list-disc space-y-1 pl-5 text-[13.5px] leading-[1.6] text-sub">
-                    {s.howToRead.map((t, j) => <li key={j}>{t}</li>)}
+                    {s.howToRead.map((t, j) => <li key={j}>{rich(t)}</li>)}
                   </ul>
                 </div>
                 <TableauFrame bare plain lazy n={d.n} views={[{ label: s.chart, url: s.url, height: s.height }]} source={d.source} />
                 <div className="border-t border-line bg-band px-5 py-4 sm:px-6">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-accent">What we found</p>
-                  <p className="mt-1.5 text-[14.5px] font-semibold leading-[1.6]">{s.found}</p>
+                  <p className="mt-1.5 text-[14.5px] font-semibold leading-[1.6]">{rich(s.found)}</p>
                   {s.note && <p className="mt-2 text-[12.5px] leading-[1.55] text-sub">{s.note}</p>}
                 </div>
               </figure>
-              {s.next && (
-                <a href={`#d${d.n}-step-${k + 2}`} onClick={e => { e.preventDefault(); document.getElementById(`d${d.n}-step-${k + 2}`)?.scrollIntoView({ behavior: "smooth" }); }}
-                  className="group mt-6 flex items-start gap-2.5 text-[15.5px] font-medium leading-relaxed text-ink hover:text-accent">
-                  <span className="mt-[1px] text-accent transition-transform duration-200 ease-out group-hover:translate-x-0.5">→</span>
-                  <span>{s.next}</span>
-                </a>
+              {/* Lead-in to the next chart: one box holding the reasoning, with "Next: …" and an arrow at the bottom right.
+                  Only the teal "Next: …" text and arrow are clickable; they scroll to the next chart's heading. */}
+              {s.next && d.steps[k + 1] && (
+                <div className="mt-6 rounded-2xl border border-line bg-white px-5 py-5 sm:px-6">
+                  <p className="text-[15.5px] leading-relaxed text-sub">{rich(s.next)}</p>
+                  <div className="mt-4 flex justify-end">
+                    <a href={`#d${d.n}-step-${k + 2}`} onClick={e => { e.preventDefault(); document.getElementById(`d${d.n}-step-${k + 2}`)?.scrollIntoView({ behavior: "smooth", block: "start" }); }}
+                      className="group inline-flex items-center gap-2.5 text-right text-[14px] font-semibold text-accent">
+                      <span className="group-hover:underline group-hover:underline-offset-4">Next: {d.steps[k + 1].question}</span>
+                      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-accent text-white transition-transform duration-200 ease-out group-hover:translate-y-0.5">↓</span>
+                    </a>
+                  </div>
+                </div>
               )}
             </Reveal>
           </li>
