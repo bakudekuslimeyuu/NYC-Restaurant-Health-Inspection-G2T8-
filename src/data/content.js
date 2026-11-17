@@ -52,7 +52,7 @@ export const CONTENT = {
       question:"Why is there no relationship between stars and citations?",
       // Overview: the whole dashboard, switched with the buttons above the frame.
       views:[
-        {label:"Found vs. stars", url:"https://public.tableau.com/views/FoodHygieneandYelpReviewsinNYC/D3Overview", height:1330,
+        {label:"Found vs. stars", url:"https://public.tableau.com/views/FoodHygieneandYelpReviewsinNYC/D3Overview", height:980,
           howToRead:{
             ask:"Do Yelp reviews or stars reflect what inspectors find?",
             notes:[
