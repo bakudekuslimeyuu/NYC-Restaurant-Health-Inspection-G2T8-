@@ -174,44 +174,41 @@ export const CONTENT = {
       steps:[
         {question:"Are chain restaurants cited less often than independent ones?", chart:"Restaurants cited, chains vs. independents", url:"https://public.tableau.com/views/Dashboard4ProjectWorkbook/Citationinchainsvsnonchains", height:420,
           howToRead:[
-            "Each bar is one group of restaurants: chains or independents. We count a restaurant as a chain if its name appears at 10 or more locations.",
+            "Each bar is one group of restaurants: chains or independents. We count a restaurant as a chain if its name appears at 2 or more locations.",
             "A bar is split into the share of restaurants that were {orange:cited at least once} since 2023 and the share that never were (blue).",
             "A restaurant counts as cited if any of its routine inspections scored 14 or more (grade B or C)."
           ],
-          found:["Yes. 45% of chain restaurants were cited at least once, against 61% of independents (2,950 chains and 19,114 independents).",
-            "Counting inspections instead of restaurants, the gap is wider: 24% of chain inspections ended in a citation, against 43% of independent ones."],
-          note:"Chains are inspected slightly more often (2.5 times each, against 1.9), which gives them more chances to be cited at least once, so the gap by restaurant is probably understated.",
-          next:"Chain status is easy to spot, but it is not the only thing a diner can check. Next, we look at something that has nothing to do with the restaurant itself: the time of year."},
+          found:["Yes. 54% of chain restaurants were cited at least once, against 62% of independents (3,397 chains and 9,901 independents were cited)."],
+          next:"Chain status is easy to spot, but it is not the only thing a diner can check to determine if a restaurant is likely have been cited. Next, we look at something that has nothing to do with the restaurant itself but rather what the season is during the visit."},
         {question:"Are citations more common in summer?", chart:"Citation rate and temperature by month", url:"https://public.tableau.com/views/Dashboard4ProjectWorkbook/Citationrateagainstmonth", height:520,
           howToRead:[
-            "The bars show the share of routine inspections that ended in a citation in each month, with every year since 2023 combined. {orange:Orange} bars are June to August.",
+            "The bars show the share of routine inspections that ended in a citation in each month, with every year since 2023 combined. {orange:Orange} bars are the summer months: June to August.",
             "The red line shows the average temperature in Central Park for that month, in °C, on the right-hand axis. The two axes use different scales, so compare the shapes of the bars and the line, not their heights.",
             "The grey line marks the average citation rate across all months."
           ],
           found:["Yes, modestly. 43% of summer inspections ended in a citation, against 38% in winter (December to February). July is the highest month at 45%, and December the lowest at 36%.",
-            "Hotter months go with higher citation rates: across the 12 months, the correlation between temperature and citation rate is 0.82. After allowing for cuisine, borough and chain status, summer inspections still have higher odds of a citation (odds ratio 1.26)."],
-          note:"This shows an association, not that heat causes citations: busier summer trade or the timing of inspections could produce the same pattern. It is also not the same every year. Summer was 6 points lower than winter in 2023 (the file has few summer inspections that year), then 3, 7 and 10 points higher in 2024, 2025 and 2026.",
-          next:"Season is not something a diner can choose, but the type of restaurant is. Next, we check whether some cuisines are cited more often than others."},
+            "Hotter months go with higher citation rates: across the 12 months, there is a clear visual correlation between temperature and citation rate."],
+          note:"This shows an association, not that heat causes citations: busier summer trade or the timing of inspections could produce the same pattern. It is also not the same every summer. It is just that, on average, restaurants will be cited more during the summer.",
+          next:"Season is not something a diner can choose in a whim, but the type of restaurant is. Next, we check whether some cuisines are cited more often than others."},
         {question:"Do some cuisines get cited more often than others?", chart:"Citation rate by cuisine", url:"https://public.tableau.com/views/Dashboard4ProjectWorkbook/Citationratepercuisine", height:560,
           howToRead:[
-            "Each bar is one cuisine: the share of its routine inspections that ended in a citation (score of 14 or more). Cuisines with fewer than 300 inspections are left out.",
+            "Each bar is one cuisine: the share of its routine inspections that ended in a citation (score of 14 or more). Cuisines with fewer than 100 inspections are left out.",
             "The bars are sorted from the highest rate to the lowest. Hover over a bar to see the exact rate."
           ],
-          found:["Yes, by a wide margin. The rate runs from 18% for donut shops to 65% for Indian restaurants, with Thai (61%) and Asian fusion (59%) close behind. Hamburger (22%), Tex-Mex (25%) and coffee and tea (28%) places are among the lowest.",
-            "Chain status explains part of this: 93% of donut-shop inspections and 76% of hamburger-place inspections are at chains, while no Indian or Thai restaurant in the data is a chain. But it is not the whole story. In each of the six cuisines with enough chains and independents (American, chicken, coffee and tea, pizza, sandwiches and Tex-Mex), chains were still cited less often."],
+          found:["Yes, by a wide margin. The rate runs from 18% for donut shops to 77% for Indian restaurants, with African (65%) and Indian (64%) close behind. Salads (21%), Hamburgers (22%), and Tex-Mex (24%) places are among the lowest.",
+            "Chain status explains part of this: 95% of donut-shop inspections (486 restaurants) and 83% of hamburger-place inspections (365 restaurants) are at chains, while an almost insignificant number of Bangladeshi (6 restaurants) or African restaurant (3 restaurants) in the data is a chain."],
           note:"A cuisine’s rate describes the group, not any one restaurant, and says nothing about the food.",
           next:"The last thing a diner can see is where the restaurant is. We check whether neighbourhoods with more restaurants are cited more often."},
         {question:"Does the neighbourhood matter?", chart:"Restaurants and citations by ZIP code", url:"https://public.tableau.com:/views/Dashboard4ProjectWorkbook/Citationratesagainstnumberofrestaurantsinanarea", height:640,
           howToRead:[
             "Each shape is one ZIP code. The darker the shape, the more restaurants it has.",
-            "The {orange:dot} on each ZIP code shows how many of its restaurants were cited at least once. A bigger dot means more cited restaurants.",
+            "The {orange:dot} on each ZIP code shows how many of its restaurants were cited at least once. A bigger dot means a higher citation rate.",
             "ZIP codes with fewer than 30 restaurants are left out. Hover over a ZIP code to see its numbers."
           ],
-          found:["Not much. ZIP codes with more restaurants are not cited more often. Across the 154 ZIP codes with at least 30 restaurants, the correlation between the number of restaurants and the citation rate is −0.05, which is close to none.",
-            "Big dots mostly sit on dark shapes only because those ZIP codes have more restaurants. The quarter of ZIP codes with the most restaurants has a citation rate of about 40%, the same as the quarter with the fewest."],
-          note:"A ZIP code’s rate is an average for the area, so it should not be used to judge a single restaurant."}
+          found:["Looking at the big picture, across the 167 ZIP codes with at least 30 restaurants, more restaurants in a ZIP code does not equate to more citations or a higher citation rate. This shows that there might not be bias from the inspectors when conducting inspections in these areas.", 
+            "However, taking a closer look at the Manhatten area, especially Lower Manhatten, the ZIP codes with the highest concentration of restaurants seem to have the lowest citation rates."],}
       ],
-      takeaway:"Season, chain status and cuisine each shift the odds that an inspection ends in a citation: higher in summer, at independents and for cuisines such as Thai and Indian, and lower at chains. The neighbourhood makes little difference. These are patterns across groups, not a verdict on any one kitchen, and together they predict a citation only modestly. They are still a better starting point than Yelp stars, which tell a diner almost nothing." }
+      takeaway:"Season, chain status, cuisine, and neighbourhood each shift the odds that an inspection ends in a citation. Rates are higher in summer, at independents and for cuisines such as Thai and Indian, with restaurants in Lower Manhatten being less likely to be cited. These are patterns across groups, not a verdict on any one kitchen, and together they predict a citation only modestly. They are still a better starting point on food safety than Yelp stars, which tell a diner almost nothing." }
   ],
 
   // Introduction page (address #introduction; the old #problem still works). Text uses the same formatting as the dashboards: **bold**.
