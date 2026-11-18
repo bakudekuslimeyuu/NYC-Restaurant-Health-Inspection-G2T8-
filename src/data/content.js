@@ -170,9 +170,9 @@ export const CONTENT = {
       source:"DOHMH NYC Restaurant Inspection Results, by seasons, restaurant type and ZIP code, 2023-2026; NOAA monthly average temperature",
       question:"If both signals are weak, what should a diner actually use?",
       overviewIntro:"This dashboard brings all the charts together to answer one part of our wider question: **if neither signal is enough, what should diners look at instead?** After this, in the [[Visualisation walkthrough]], we go through each chart in turn, with instructions on how to use it and what it shows.",
-      views:[{label:"Seasons, Cuisine Types and Chain Status", url:"https://public.tableau.com:9443/views/Dashboard4ProjectWorkbook/Dashboard1"}],
+      views:[{label:"Seasons, Cuisine Types and Chain Status", url:"https://public.tableau.com/views/Dashboard4ProjectWorkbook/Dashboard1"}],
       steps:[
-        {question:"Are chain restaurants cited less often than independent ones?", chart:"Restaurants cited, chains vs. independents", url:"https://public.tableau.com:9443/views/Dashboard4ProjectWorkbook/Citationinchainsvsnonchains", height:420,
+        {question:"Are chain restaurants cited less often than independent ones?", chart:"Restaurants cited, chains vs. independents", url:"https://public.tableau.com/views/Dashboard4ProjectWorkbook/Citationinchainsvsnonchains", height:420,
           howToRead:[
             "Each bar is one group of restaurants: chains or independents. We count a restaurant as a chain if its name appears at 10 or more locations.",
             "A bar is split into the share of restaurants that were {orange:cited at least once} since 2023 and the share that never were (blue).",
@@ -182,7 +182,7 @@ export const CONTENT = {
             "Counting inspections instead of restaurants, the gap is wider: 24% of chain inspections ended in a citation, against 43% of independent ones."],
           note:"Chains are inspected slightly more often (2.5 times each, against 1.9), which gives them more chances to be cited at least once, so the gap by restaurant is probably understated.",
           next:"Chain status is easy to spot, but it is not the only thing a diner can check. Next, we look at something that has nothing to do with the restaurant itself: the time of year."},
-        {question:"Are citations more common in summer?", chart:"Citation rate and temperature by month", url:"https://public.tableau.com:9443/views/Dashboard4ProjectWorkbook/Citationrateagainstmonth", height:520,
+        {question:"Are citations more common in summer?", chart:"Citation rate and temperature by month", url:"https://public.tableau.com/views/Dashboard4ProjectWorkbook/Citationrateagainstmonth", height:520,
           howToRead:[
             "The bars show the share of routine inspections that ended in a citation in each month, with every year since 2023 combined. {orange:Orange} bars are June to August.",
             "The red line shows the average temperature in Central Park for that month, in °C, on the right-hand axis. The two axes use different scales, so compare the shapes of the bars and the line, not their heights.",
@@ -192,7 +192,7 @@ export const CONTENT = {
             "Hotter months go with higher citation rates: across the 12 months, the correlation between temperature and citation rate is 0.82. After allowing for cuisine, borough and chain status, summer inspections still have higher odds of a citation (odds ratio 1.26)."],
           note:"This shows an association, not that heat causes citations: busier summer trade or the timing of inspections could produce the same pattern. It is also not the same every year. Summer was 6 points lower than winter in 2023 (the file has few summer inspections that year), then 3, 7 and 10 points higher in 2024, 2025 and 2026.",
           next:"Season is not something a diner can choose, but the type of restaurant is. Next, we check whether some cuisines are cited more often than others."},
-        {question:"Do some cuisines get cited more often than others?", chart:"Citation rate by cuisine", url:"https://public.tableau.com:9443/views/Dashboard4ProjectWorkbook/Citationratepercuisine", height:560,
+        {question:"Do some cuisines get cited more often than others?", chart:"Citation rate by cuisine", url:"https://public.tableau.com/views/Dashboard4ProjectWorkbook/Citationratepercuisine", height:560,
           howToRead:[
             "Each bar is one cuisine: the share of its routine inspections that ended in a citation (score of 14 or more). Cuisines with fewer than 300 inspections are left out.",
             "The bars are sorted from the highest rate to the lowest. Hover over a bar to see the exact rate."
@@ -201,7 +201,7 @@ export const CONTENT = {
             "Chain status explains part of this: 93% of donut-shop inspections and 76% of hamburger-place inspections are at chains, while no Indian or Thai restaurant in the data is a chain. But it is not the whole story. In each of the six cuisines with enough chains and independents (American, chicken, coffee and tea, pizza, sandwiches and Tex-Mex), chains were still cited less often."],
           note:"A cuisine’s rate describes the group, not any one restaurant, and says nothing about the food.",
           next:"The last thing a diner can see is where the restaurant is. We check whether neighbourhoods with more restaurants are cited more often."},
-        {question:"Does the neighbourhood matter?", chart:"Restaurants and citations by ZIP code", url:"https://public.tableau.com:9443/views/Dashboard4ProjectWorkbook/Citationratesagainstnumberofrestaurantsinanarea", height:640,
+        {question:"Does the neighbourhood matter?", chart:"Restaurants and citations by ZIP code", url:"https://public.tableau.com:/views/Dashboard4ProjectWorkbook/Citationratesagainstnumberofrestaurantsinanarea", height:640,
           howToRead:[
             "Each shape is one ZIP code. The darker the shape, the more restaurants it has.",
             "The {orange:dot} on each ZIP code shows how many of its restaurants were cited at least once. A bigger dot means more cited restaurants.",
