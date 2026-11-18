@@ -42,8 +42,6 @@ export const CONTENT = {
         {label:"Why citations rise", url:"https://public.tableau.com/views/Dashboard2b-Public/Dashboard2b-Whycitationsrisewithstars"}
       ],
       // Walkthrough: one chart at a time, below the overview (same format as Dashboard 3).
-      // howToReadBelow: the chart comes first, with how to read next to what we found.
-      howToReadBelow:true,
       steps:[
         {question:"Do grade C restaurants get lower Yelp stars?", chart:"Yelp rating by inspection grade", url:"https://public.tableau.com/views/Dashboard2-Public/D2eRatingbygradedots", height:520,
           howToRead:[
