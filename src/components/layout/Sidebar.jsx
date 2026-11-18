@@ -24,7 +24,7 @@ function NavLink({ to, icon, label, route, onClose, shut }){
 
 export function Sidebar({ route, open, onClose, collapsed, onToggle }){
   const [dashOpen, setDashOpen] = useState(true);
-  const inDash = route.startsWith("dash-");
+  const inDash = route.startsWith("dash-") || route === "redesign";
   const shut = collapsed;
   const link = { route, onClose, shut };
   return (
@@ -60,10 +60,16 @@ export function Sidebar({ route, open, onClose, collapsed, onToggle }){
                     <span className={labelClass(shut)}>{d.nav}</span>
                   </a>
                 ))}
+                {/* The redesign proposal follows the last dashboard, so it sits at the end of this group. */}
+                <a href="#redesign" onClick={onClose} title={shut ? "Redesign Proposal" : undefined}
+                  className={`flex items-center gap-3 rounded-lg p-2 text-[13px] transition-colors duration-200 ease-out ${shut ? "lg:justify-center" : ""} ${
+                    route === "redesign" ? "bg-sideactive text-accent" : "text-white/60 hover:text-white"}`}>
+                  <Icon d={icons.spark} className={`h-[14px] w-[14px] shrink-0 ${shut ? "opacity-60 lg:opacity-100" : "opacity-60"}`} />
+                  <span className={labelClass(shut)}>Redesign Proposal</span>
+                </a>
               </div>
             )}
           </div>
-          <NavLink to="redesign" icon={icons.spark} label="Redesign Proposal" {...link} />
         </nav>
         <div className={`border-t border-sideline p-6 ${shut ? "lg:hidden" : ""}`}>
           <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/40">Data</p>
