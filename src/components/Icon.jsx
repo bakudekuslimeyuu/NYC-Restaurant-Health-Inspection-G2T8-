@@ -11,6 +11,8 @@ export const icons = {
   doc: <><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></>,
   chart: <><path d="M3 3v18h18"/><path d="M8 17v-3M12 17V9M16 17v-6M20 17V7"/></>,
   spark: <><path d="M11 6.5 12.2 10l3.3 1.2L12.2 12.4 11 16l-1.2-3.6-3.3-1.2L9.8 10z"/><path d="M18 3v4M16 5h4M19 15v3M17.5 16.5h3"/></>,
+  link: <><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></>,
+  check: <path d="M5 12.5 10 17.5 19 7"/>,
   chev: <path d="m6 9 6 6 6-6"/>,
   up: <path d="M12 19V5M5 12l7-7 7 7"/>,
   arrow: <path d="M5 12h14M13 6l6 6-6 6"/>,
