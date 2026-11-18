@@ -233,13 +233,13 @@ export const CONTENT = {
             "The red line shows the average temperature in Central Park for that month, in °C, on the right-hand axis. The two axes use different scales, so compare the shapes of the bars and the line, not their heights.",
             "The grey line marks the average citation rate across all months."
           ],
-          found:["Yes, modestly. 43% of summer inspections ended in a citation, against 38% in winter (December to February). July is the highest month at 45%, and December the lowest at 36%.",
+          found:["Yes, modestly. 41% of summer inspections ended in a citation, against 37% in winter (December to February). July is the highest month at 45%, and December the lowest at 37%.",
             "Hotter months go with higher citation rates: across the 12 months, there is a clear visual correlation between temperature and citation rate."],
           note:"This shows an association, not that heat causes citations: busier summer trade or the timing of inspections could produce the same pattern. It is also not the same every summer. It is just that, on average, restaurants will be cited more during the summer.",
           next:"Season is not something a diner can choose in a whim, but the type of restaurant is. Next, we check whether some cuisines are cited more often than others."},
         {question:"Do some cuisines get cited more often than others?", chart:"Citation rate by cuisine", url:"https://public.tableau.com/views/Dashboard4ProjectWorkbook/Citationratepercuisine", height:560,
           howToRead:[
-            "Each bar is one cuisine: the share of its routine inspections that ended in a citation (score of 14 or more). Cuisines with fewer than 100 inspections are left out.",
+            "Each bar is one cuisine: the share of its routine inspections that ended in a citation (score of 14 or more). Cuisines with fewer than 100 inspections or have less than 50 restaurants are left out.",
             "The bars are sorted from the highest rate to the lowest. Hover over a bar to see the exact rate."
           ],
           found:["Yes, by a wide margin. The rate runs from 18% for donut shops to 77% for Indian restaurants, with African (65%) and Indian (64%) close behind. Salads (21%), Hamburgers (22%), and Tex-Mex (24%) places are among the lowest.",
@@ -250,9 +250,9 @@ export const CONTENT = {
           howToRead:[
             "Each shape is one ZIP code. The darker the shape, the more restaurants it has.",
             "The {orange:dot} on each ZIP code shows how many of its restaurants were cited at least once. A bigger dot means a higher citation rate.",
-            "ZIP codes with fewer than 30 restaurants are left out. Hover over a ZIP code to see its numbers."
+            "Hover over a ZIP code to see its numbers."
           ],
-          found:["Looking at the big picture, across the 167 ZIP codes with at least 30 restaurants, more restaurants in a ZIP code does not equate to more citations or a higher citation rate. This shows that there might not be bias from the inspectors when conducting inspections in these areas.", 
+          found:["Looking at the big picture, across the ZIP codes in New York City, more restaurants in a ZIP code does not equate to more citations or a higher citation rate.", 
             "However, taking a closer look at the Manhatten area, especially Lower Manhatten, the ZIP codes with the highest concentration of restaurants seem to have the lowest citation rates."],}
       ],
       takeaway:"Season, chain status, cuisine, and neighbourhood each shift the odds that an inspection ends in a citation. Rates are higher in summer, at independents and for cuisines such as Thai and Indian, with restaurants in Lower Manhatten being less likely to be cited. These are patterns across groups, not a verdict on any one kitchen, and together they predict a citation only modestly. They are still a better starting point on food safety than Yelp stars, which tell a diner almost nothing." }
