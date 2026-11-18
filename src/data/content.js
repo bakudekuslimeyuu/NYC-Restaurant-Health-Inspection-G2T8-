@@ -29,9 +29,8 @@ export const CONTENT = {
     { n:2, owner:"Mei Yu", nav:"Stars vs. Citations",
       title:"You can’t rely on the Yelp stars either",
       intro:[
-        "Diners have two quick ways to judge a restaurant: **the inspection grade on the door, and Yelp**.",
-        "Earlier, we saw that **a good grade can hide the problems inspectors found**, and may be out of date. So a diner might turn to Yelp instead: the star rating is quick, familiar and kept up to date by thousands of other diners.",
-        "This page asks **whether higher Yelp stars mean cleaner inspections**. To find out, we matched 19,237 Yelp restaurants to their DOHMH inspection records from 2023 onwards, and compared their stars with what inspectors found. The charts by star level cover the 18,865 restaurants rated 2 to 5 stars."
+        "In Dashboard 1 we saw that the letter grade on the door can hide what inspectors actually found. Many diners skip the grade and check Yelp instead, so this page asks a simple question: **do restaurants with more stars have cleaner inspections?**",
+        "We matched 19,237 restaurants on Yelp to their DOHMH inspections from 2023 onwards. The charts by star rating use the 18,865 restaurants rated between 2 and 5 stars."
       ],
       source:"Yelp star ratings matched to DOHMH inspection history, 2023–2026",
       question:"Can diners rely on Yelp stars to tell how clean a restaurant is?",
@@ -42,57 +41,56 @@ export const CONTENT = {
         {label:"Why citations rise", url:"https://public.tableau.com/views/Dashboard2b-Public/Dashboard2b-Whycitationsrisewithstars"}
       ],
       // Walkthrough: one chart at a time, below the overview (same format as Dashboard 3).
+      // Keep each part short: how to read = only what isn't obvious from the chart; found = the answer first, then the numbers.
       steps:[
         {question:"Do grade C restaurants get lower Yelp stars?", chart:"Yelp rating by inspection grade", url:"https://public.tableau.com/views/Dashboard2-Public/D2eRatingbygradedots", height:520,
           howToRead:[
-            "Each dot is one restaurant, grouped by its latest inspection grade: A (15,941 restaurants), B (1,502) and C (460).",
-            "The vertical axis shows the restaurant’s Yelp star rating, from 1 to 5 stars.",
-            "The grey box covers the middle half of the restaurants in each grade, and the line inside it marks the median rating.",
-            "Grade A means the inspection scored 13 points or fewer, grade B 14 to 27, and grade C 28 or more. More points mean more or worse problems."
+            "Each dot is one restaurant, grouped by its latest inspection grade.",
+            "The grey box shows where the middle half of ratings fall. The line inside it is the median."
           ],
-          found:"The three boxes sit at almost the same height. The median rating is 3.9 stars at every grade, and the average is 3.75 at grade A, 3.74 at grade B and 3.76 at grade C. Grade C restaurants are even slightly more likely to have 4 stars or more (48%) than grade A ones (47%). This suggests that a poor grade costs a restaurant almost nothing on Yelp, so a diner who only checks the stars gets no warning about a C.",
-          next:"The stars do not follow the grade. However, the grade comes from a single inspection and, as we saw in Dashboard 1, may be out of date. A fairer test is to compare the stars with each restaurant’s whole inspection record since 2023, which we do next."},
-        {question:"Do higher-rated restaurants have cleaner inspections?", chart:"Inspection measures by star rating", url:"https://public.tableau.com/views/Dashboard2-Public/D2dSamecitationsateverystarlevel", height:480,
+          found:["No. The median rating is 3.9 stars for A, B and C restaurants alike.",
+            "Average ratings are 3.75 (A), 3.74 (B) and 3.76 (C). Grade C restaurants are even slightly more likely to have 4 stars or more: 48%, against 47% for grade A."],
+          next:"A grade only reflects one inspection. Next, we compare stars with each restaurant’s full inspection history since 2023."},
+        {question:"Do restaurants with more stars get fewer citations?", chart:"Inspection measures by star rating", url:"https://public.tableau.com/views/Dashboard2-Public/D2dSamecitationsateverystarlevel", height:480,
           howToRead:[
-            "Each column is a Yelp star level, from 2 to 5 stars.",
-            "Each row is one inspection measure, averaged over the restaurants at that star level: citations per inspection, critical citations per inspection, the average inspection score, and the share of restaurants without an A grade.",
-            "For every row, a higher value is worse. A darker cell means a higher value compared with the rest of that row."
+            "Columns are star ratings. Rows are four inspection measures, and higher is worse for all of them.",
+            "A darker cell means a worse result compared with the rest of its row."
           ],
-          found:"From 3 to 5 stars, the numbers barely move: 3.38 to 3.47 citations and 1.81 to 1.85 critical citations per inspection, and an average score between 16.8 and 17.6. A 5-star restaurant is cited about as often as a 3-star one. The only clear difference is at the bottom: 2-star restaurants look the cleanest, with 2.86 citations per inspection and an average score of 13.4. This suggests that more stars do not mean a cleaner kitchen.",
-          next:"Averages can hide the worst cases. Even if highly rated restaurants are cited about as often on average, they might still avoid the most serious results. Next, we look at how often restaurants at each star level have a poor inspection record."},
-        {question:"Do 5-star restaurants avoid poor inspection records?", chart:"Inspection record by star rating", url:"https://public.tableau.com/views/Dashboard2-Public/D2gInspectionrecordbystars", height:520,
+          found:["Not really. From 3 to 5 stars, the numbers barely move: about 3.4 citations per inspection and an average score of about 17.",
+            "The odd one out is 2 stars, which looks the cleanest of all (average score 13.4). Steps 5 and 6 explain why."],
+          next:"Averages can hide the worst cases, so next we look at how many restaurants at each rating have a poor record."},
+        {question:"Are 5-star restaurants less likely to have a poor record?", chart:"Inspection record by star rating", url:"https://public.tableau.com/views/Dashboard2-Public/D2gInspectionrecordbystars", height:520,
           howToRead:[
-            "Each bar is one star level, split by the restaurant’s inspection record: Good (green), Fair (yellow) and Poor (red).",
-            "The record uses the same cut-offs as the grades: Good is an inspection score of 0 to 13, Fair 14 to 27, and Poor 28 or more.",
-            "Each bar adds up to 100%, so compare the size of the red portion across the bars."
+            "Each bar splits one star rating into Good, Fair and Poor records. These use the same score cut-offs as grades A, B and C.",
+            "Compare the red sections across the bars."
           ],
-          found:"The share of restaurants with a Poor record rises from 6% at 2 stars to 9% at 2.5 stars, stays at 11% to 12% from 3 to 4.5 stars, and is highest at 5 stars: 15%, or 145 of 936 restaurants. The share with a Good record falls from 67% at 2 stars to between 41% and 49% at 3 stars and above. This suggests that high stars do not protect a diner from a poorly inspected restaurant; if anything, the top-rated restaurants have the most Poor records.",
-          next:"Could one part of the city be driving this? A borough with many highly rated restaurants and strict inspections could pull the whole result one way. Next, we check each borough on its own."},
+          found:["No. 5-star restaurants have the highest share of poor records: 15%, or 145 of 936.",
+            "At 2 stars it is 6%, and between 3 and 4.5 stars it stays at 11–12%."],
+          next:"Could one borough be skewing this? We check each one separately next."},
         {question:"Is it the same in every borough?", chart:"Stars and inspection score by borough", url:"https://public.tableau.com/views/Dashboard2-Public/D2fCorrelationbyborough", height:420,
           howToRead:[
-            "Each bar is one borough. Its length is the correlation (r) between a restaurant’s Yelp stars and its average inspection score.",
-            "A correlation of 0 means no link at all, and 1 means a perfect link. Grand Total is all five boroughs together."
+            "Each bar is the correlation between stars and inspection score in one borough. 0 means no link and 1 means a perfect one."
           ],
-          found:"The correlation is between 0.04 and 0.12 in every borough, and 0.06 for the whole city. A correlation this close to 0 means that knowing a restaurant’s stars tells you almost nothing about its inspection score. This suggests that the result is not driven by any one borough: anywhere in New York, the stars say very little about hygiene.",
-          next:"Across the city, stars and inspections are barely linked. But one pattern from the second chart still needs explaining: 2-star restaurants look cleaner than 5-star ones, so citations seem to rise slightly with stars. Does a good rating really go with a dirtier kitchen? We believe the answer lies in which restaurants get low stars, so we look at that next."},
-        {question:"Which restaurants get low stars?", chart:"Chain share by star rating", url:"https://public.tableau.com/views/Dashboard2b-Public/D2zStep2Chainshare", height:480,
+          found:["Yes. The correlation is between 0.04 and 0.12 in every borough, and 0.06 across the city.",
+            "Wherever you are in New York, a restaurant’s rating tells you almost nothing about its inspection score."],
+          next:"That leaves one odd result from step 2: why do 2-star restaurants look the cleanest? It comes down to which restaurants end up with low ratings."},
+        {question:"What kind of restaurants get low stars?", chart:"Chain share by star rating", url:"https://public.tableau.com/views/Dashboard2b-Public/D2zStep2Chainshare", height:480,
           howToRead:[
-            "Each bar is one star level, split into chains (blue) and independent restaurants (orange).",
-            "A chain is a restaurant name with 5 or more locations in the data.",
-            "Each bar adds up to 100%, so compare the size of the blue portion across the bars."
+            "Each bar splits one star rating into chains (blue) and independent restaurants (orange).",
+            "We count a restaurant as a chain if its name appears at 5 or more locations."
           ],
-          found:"Chains make up 76% of 2-star restaurants (457 of 604) and 48% of 2.5-star ones, but only 5% of 4.5-star and 5-star restaurants. The low-star group is mostly chains, while almost every highly rated restaurant is independent. This suggests that the averages for 2-star restaurants mostly describe chains.",
-          next:"If chains also have cleaner inspections, that alone would make the low-star group look cleaner. We compare chains and independent restaurants next."},
-        {question:"Are chains cleaner than independent restaurants?", chart:"Inspection score, chains vs. independents", url:"https://public.tableau.com/views/Dashboard2b-Public/D2yStep2Chainvsindependent", height:480,
+          found:["Mostly chains. They make up 76% of 2-star restaurants, but only 5% of those rated 4.5 or 5 stars.",
+            "So the 2-star averages are mostly describing chains."],
+          next:"If chains also get cleaner inspections, that would explain the 2-star result."},
+        {question:"Do chains get cleaner inspections?", chart:"Inspection score, chains vs. independents", url:"https://public.tableau.com/views/Dashboard2b-Public/D2yStep2Chainvsindependent", height:480,
           howToRead:[
-            "Each line shows the average inspection score at each star level: chains in blue and independent restaurants in orange.",
-            "A lower score means fewer or less serious problems."
+            "Average inspection score at each star rating, for chains (blue) and independent restaurants (orange). Lower is cleaner."
           ],
-          found:["Chains score cleaner than independent restaurants at every star level: 11.5 vs. 19.5 at 2 stars, and 15.8 vs. 17.7 at 5 stars. Because 2-star restaurants are mostly chains, their average looks clean. If every star level had the same share of chains, the rise disappears: the average score would go from 18.3 at 2 stars to 17.4 at 5 stars. This suggests that citations seem to rise with stars because low-rated restaurants are mostly chains, not because a good rating goes with a dirtier kitchen.",
-            "We also checked whether cuisine explains it, since Asian restaurants get higher inspection scores on average (19.6 vs. 16.3). With the same share of Asian restaurants at every star level, the score still rises from 14.4 to 17.7, so cuisine does not account for it."],
-          note:"Chain scores do rise with stars, from 11.5 at 2 stars to 15.8 at 5 stars, but only 49 chains are rated 5 stars, so the chain line at 5 stars rests on few restaurants."}
+          found:["Yes, at every star rating: 11.5 against 19.5 at 2 stars, and 15.8 against 17.7 at 5 stars.",
+            "That is why low-rated restaurants look cleaner overall. With the same mix of chains at every rating, the average score goes from 18.3 at 2 stars to 17.4 at 5 stars, so the rise disappears. We also tested cuisine, since Asian restaurants score higher on average, and it does not explain the pattern."],
+          note:"Only 49 chains have 5 stars, so read the last point on the blue line with caution."}
       ],
-      takeaway:"Yelp stars are not a reliable signal of food safety. Grade C restaurants are rated as highly as grade A ones, 5-star restaurants have Poor inspection records at least as often as any other star level, and the link between stars and inspection scores is close to zero in every borough. The slight rise in citations with stars comes from chains, not from cleaner low-rated kitchens. A good rating tells diners that people enjoyed the food, not that the kitchen is clean." },
+      takeaway:"Yelp stars tell you whether people enjoyed the food, not whether the kitchen is clean. Grade C restaurants are rated as highly as grade A ones, and 5-star restaurants have the most poor inspection records. If food safety matters to you, check the inspection history, not the stars." },
     { n:3, owner:"Zheng Long", nav:"Review Text",
       title:"You can’t rely on what reviewers write either",
       intro:[
