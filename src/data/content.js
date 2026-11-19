@@ -208,49 +208,47 @@ export const CONTENT = {
     { n:4, owner:"Shanice", nav:"What to Check Instead",
       title:"What to check instead",
       intro:["Dashboards 1 to 3 showed that neither the grade on the door nor Yelp’s stars and reviews reliably tell a diner how a kitchen performs on inspection. This page asks what **diners can check instead**.", 
-        "We look at three things a diner can see before choosing a restaurant: **when** it is inspected (the season), **what kind** of restaurant it is (chain or independent, and its cuisine), and **where** it is (its ZIP code). For each one, we ask whether it is linked to how often a routine inspection ends in a citation. Here, a **citation** means a routine inspection score of 14 or more, which is a grade B or C. We use 44,765 routine inspections of 22,064 restaurants from January 2023 onwards, and monthly temperatures for Central Park from NOAA."],
-      source:"DOHMH NYC Restaurant Inspection Results, by seasons, restaurant type and ZIP code, 2023-2026; NOAA monthly average temperature",
+        "We look at three things a diner can see before choosing a restaurant: **when** it is inspected (the season), **what kind** of restaurant it is (chain or independent, and its cuisine), and **where** it is (its ZIP code). For each one, we ask whether it is linked to the grade that a restaurant receives upon inspection. Here, an A grade is a score of <13, while a B grade is a score anywhere from 14-27, while a C grade is anything above."],
+      source:"DOHMH NYC Restaurant Inspection Results, by seasons, restaurant type and ZIP code, 2023-2026",
       question:"If both signals are weak, what should a diner actually use?",
       overviewIntro:"This dashboard brings all the charts together to answer one part of our wider question: **if neither signal is enough, what should diners look at instead?** After this, in the [[Visualisation walkthrough]], we go through each chart in turn, with instructions on how to use it and what it shows.",
       views:[{label:"Seasons, Cuisine Types and Chain Status", url:"https://public.tableau.com/views/Dashboard4ProjectWorkbook/Dashboard1"}],
       steps:[
-        {question:"Are chain restaurants cited less often than independent ones?", chart:"Restaurants cited, chains vs. independents", url:"https://public.tableau.com/views/Dashboard4ProjectWorkbook/Citationinchainsvsnonchains", height:420,
+        {question:"Are chain restaurants given higher inspection grades on average than independent ones?", chart:"Restaurants cited, chains vs. independents", url:"https://public.tableau.com/views/Dashboard4ProjectWorkbook/Citationinchainsvsnonchains", height:420,
           howToRead:[
             "Each bar is one group of restaurants: chains or independents. We count a restaurant as a chain if its name appears at 2 or more locations.",
-            "A bar is split into the share of restaurants that were {orange:cited at least once} since 2023 and the share that never were (blue).",
-            "A restaurant counts as cited if any of its routine inspections scored 14 or more (grade B or C)."
+            "Each bar shows the distribution of the resulting grades of inspections (restaurants can have more than 1 inspection).",
           ],
-          found:["Yes. 54% of chain restaurants were cited at least once, against 62% of independents (3,397 chains and 9,901 independents were cited)."],
-          next:"Chain status is easy to spot, but it is not the only thing a diner can check to determine if a restaurant is likely have been cited. Next, we look at something that has nothing to do with the restaurant itself but rather what the season is during the visit."},
-        {question:"Are citations more common in summer?", chart:"Citation rate and temperature by month", url:"https://public.tableau.com/views/Dashboard4ProjectWorkbook/Citationrateagainstmonth", height:520,
+          found:["Mildly, yes. Inspections of independent restaurants were more likely to receive a lower grade (B or C) than chain restaurants by 7%."],
+          next:"Chain status is easy to spot, but it is not the only thing a diner can check to determine if a restaurant has had hygiene issues. Next, we look at something that has nothing to do with the restaurant itself but rather what the season is during the visit."},
+        {question:"Are restaurants given lower inspection grades on average in the summer?", chart:"Citation rate and temperature by month", url:"https://public.tableau.com/views/Dashboard4ProjectWorkbook/Citationrateagainstmonth", height:520,
           howToRead:[
-            "The bars show the share of routine inspections that ended in a citation in each month, with every year since 2023 combined. {orange:Orange} bars are the summer months: June to August.",
-            "The red line shows the average temperature in Central Park for that month, in °C, on the right-hand axis. The two axes use different scales, so compare the shapes of the bars and the line, not their heights.",
-            "The grey line marks the average citation rate across all months."
+            "The bars show the share of inspection grades given to restaurants in each month, with every year since 2023 combined. We should focus on the summer months: June to August (months 6 to 8).",
+            "The red line and its labels shows the average score given on an inspection, on the right-hand axis. The two axes use different scales, so compare the shapes of the bars and the line, not their heights.",
           ],
-          found:["Yes, modestly. 41% of summer inspections ended in a citation, against 37% in winter (December to February). July is the highest month at 45%, and December the lowest at 37%.",
-            "Hotter months go with higher citation rates: across the 12 months, there is a clear visual correlation between temperature and citation rate."],
+          found:["Yes, Summer inspections tended to result in a lower grade (B or C) being given. With an average score of 18.9 against 16.6 in winter (December to February). July is the month with the highest score accumulated at 19.6, and February the lowest at 16.2.",
+            "The trend is clear visually: across the 12 months, there is a clear visual correlation the average score and the months of the year."],
           note:"This shows an association, not that heat causes citations: busier summer trade or the timing of inspections could produce the same pattern. It is also not the same every summer. It is just that, on average, restaurants will be cited more during the summer.",
           next:"Season is not something a diner can choose in a whim, but the type of restaurant is. Next, we check whether some cuisines are cited more often than others."},
-        {question:"Do some cuisines get cited more often than others?", chart:"Citation rate by cuisine", url:"https://public.tableau.com/views/Dashboard4ProjectWorkbook/Citationratepercuisine", height:560,
+        {question:"Do some cuisines get lower inspection grades on average than others?", chart:"Citation rate by cuisine", url:"https://public.tableau.com/views/Dashboard4ProjectWorkbook/Citationratepercuisine", height:560,
           howToRead:[
-            "Each bar is one cuisine: the share of its routine inspections that ended in a citation (score of 14 or more). Cuisines with fewer than 100 inspections or have less than 50 restaurants are left out.",
-            "The bars are sorted from the highest rate to the lowest. Hover over a bar to see the exact rate."
+            "Each bar is one cuisine: with each colour representing the proportion of inspections that ended in being given that particular grade. Cuisines with fewer than 50 inspections have been left out.",
+            "The bars are sorted from the highest average score to the highest. Hover over a bar to see the exact rate."
           ],
-          found:["Yes, by a wide margin. The rate runs from 18% for donut shops to 77% for Indian restaurants, with African (65%) and Indian (64%) close behind. Salads (21%), Hamburgers (22%), and Tex-Mex (24%) places are among the lowest.",
-            "Chain status explains part of this: 95% of donut-shop inspections (486 restaurants) and 83% of hamburger-place inspections (365 restaurants) are at chains, while an almost insignificant number of Bangladeshi (6 restaurants) or African restaurant (3 restaurants) in the data is a chain."],
+          found:["Yes, some cuisines get higher inspection scores and thus lower grades on average than others. Bangladeshi restaurants got an inspection score of 34 (grade C) on average over 138 inspections while donut restaurants got an average score of 11 (grade A) over 1,545 inspections. It should be noted that the number of inspections varies across all cuisines and do not affect the average inspection score or grade.",
+            "Chain status may explain part of this: 86% of Bangladeshi restaurants are independents compared to just 7% of donut restaurants."],
           note:"A cuisine’s rate describes the group, not any one restaurant, and says nothing about the food.",
-          next:"The last thing a diner can see is where the restaurant is. We check whether neighbourhoods with more restaurants are cited more often."},
+          next:"The last thing a diner can see is where the restaurant is. We check whether neighbourhoods with more restaurants are given lower inspection grades."},
         {question:"Does the neighbourhood matter?", chart:"Restaurants and citations by ZIP code", url:"https://public.tableau.com:/views/Dashboard4ProjectWorkbook/Citationratesagainstnumberofrestaurantsinanarea", height:640,
           howToRead:[
             "Each shape is one ZIP code. The darker the shape, the more restaurants it has.",
-            "The {orange:dot} on each ZIP code shows how many of its restaurants were cited at least once. A bigger dot means a higher citation rate.",
+            "The {orange:colour} of the dot on each ZIP code shows the inspection average score. A bigger dot corresponds to more inspections having been conducted in that area.",
             "Hover over a ZIP code to see its numbers."
           ],
-          found:["Looking at the big picture, across the ZIP codes in New York City, more restaurants in a ZIP code does not equate to more citations or a higher citation rate.", 
-            "However, taking a closer look at the Manhatten area, especially Lower Manhatten, the ZIP codes with the highest concentration of restaurants seem to have the lowest citation rates."],}
+          found:["Looking at the big picture, across the ZIP codes in New York City, more restaurants in a ZIP code means more inspections, but it does not mean that those inspections lead to a higher score / lower grade.", 
+            "However, taking a closer look at the Manhatten area, especially Lower Manhatten, the ZIP codes with the highest concentration of restaurants tend to have the lowest inspection scores."],}
       ],
-      takeaway:"Season, chain status, cuisine, and neighbourhood each shift the odds that an inspection ends in a citation. Rates are higher in summer, at independents and for cuisines such as Thai and Indian, with restaurants in Lower Manhatten being less likely to be cited. These are patterns across groups, not a verdict on any one kitchen, and together they predict a citation only modestly. They are still a better starting point on food safety than Yelp stars, which tell a diner almost nothing." }
+      takeaway:"Season, chain status, cuisine, and neighbourhood each affect the inspection score and thus the grade that the restaurant receives. Scores are higher in summer, at independents and for cuisines such as Thai and Indian, with restaurants in Lower Manhatten being less likely to be cited. These are patterns across groups, not a verdict on any one kitchen, and together they predict a the food safety of a restaurant only modestly. They are still a better starting point on food safety than Yelp stars, which tell a diner almost nothing." }
   ],
 
   // Introduction page (address #introduction; the old #problem still works). Text uses the same formatting as the dashboards: **bold**.
