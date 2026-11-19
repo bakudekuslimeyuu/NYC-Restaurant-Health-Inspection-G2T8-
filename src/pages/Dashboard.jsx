@@ -150,11 +150,11 @@ export function Dashboard({ d }){
             <p>{rich(t)}</p>
             {/* Optional photo after the first paragraph; capped at 360px so a 750px-wide source stays sharp on retina screens. */}
             {k === 0 && d.introImage && (
-              <figure className="m-0 max-w-[360px] pt-2">
+              <figure className="mx-auto my-0 max-w-[360px] pt-2">
                 <div className="overflow-hidden rounded-2xl border border-line bg-white">
                   <img src={`${import.meta.env.BASE_URL}${d.introImage.img}`} alt={d.introImage.alt} width="750" height="506" className="block h-auto w-full" />
                 </div>
-                <figcaption className="mt-2 font-mono text-[11px] leading-snug text-sub">{d.introImage.caption}</figcaption>
+                <figcaption className="mt-2 text-center font-mono text-[11px] leading-snug text-sub">{d.introImage.caption}</figcaption>
               </figure>
             )}
           </div>
