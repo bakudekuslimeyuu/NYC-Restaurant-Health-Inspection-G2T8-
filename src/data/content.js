@@ -75,10 +75,7 @@ export const CONTENT = {
       takeaway:"The grade on the door is not a complete or current picture of the inspection. An A still allows critical violations and pests, many A’s are earned only on a retry, close to a third slip at the next inspection, a third of A cards are more than a year old, and many A’s sit just one or two points from a B. The letter shows that a restaurant passed at some point, not what its kitchen looks like today." },
     { n:2, owner:"Mei Yu", nav:"Stars vs. Citations",
       title:"You can’t rely on the Yelp stars either",
-      intro:[
-        "In Dashboard 1 we saw that the letter grade on the door can hide what inspectors actually found. Many diners skip the grade and check Yelp instead, so this page asks a simple question: **do restaurants with more stars have cleaner inspections?**",
-        "We matched 19,237 restaurants on Yelp to their DOHMH inspections from 2023 onwards. The charts by star rating use the 18,865 restaurants rated between 2 and 5 stars."
-      ],
+      intro:"This part matches Yelp to the official record: 19,237 restaurants on Yelp, linked to their DOHMH inspections since 2023. The question is whether the stars, the other signal diners check, say anything about how clean the kitchen is.",
       source:"Yelp star ratings matched to DOHMH inspection history, 2023–2026",
       question:"Can diners rely on Yelp stars to tell how clean a restaurant is?",
       overviewIntro:"This dashboard brings all the charts together to answer one part of our wider question: **can diners rely on Yelp stars to tell how clean a restaurant is?** After this, in the [[Visualisation walkthrough]], we go through each chart in turn, with instructions on how to use it and what it shows.",
