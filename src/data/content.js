@@ -74,8 +74,8 @@ export const CONTENT = {
     { n:2, owner:"Mei Yu", nav:"Stars vs. Citations",
       title:"You can’t rely on the Yelp stars either",
       intro:[
-        "When the grade on the door can be out of date, many diners turn to Yelp instead. **The star rating is quick, familiar and updated by thousands of other diners**, so it seems like a good stand-in for how well a restaurant is run.",
-        "This page asks **whether higher Yelp stars mean cleaner inspections**. To find out, we compared each restaurant's Yelp rating with its latest grade, how many citations it gets per inspection, its inspection score, and whether its record is good, fair or poor. We use 19,237 restaurants on Yelp matched to their DOHMH inspections from January 2023 to September 2026, and the charts by star level cover the 18,865 rated 2 to 5 stars."
+        "Many diners also check Yelp before choosing where to eat, and **the star rating is the quickest way to judge a restaurant online**. **More stars seem to mean a better-run restaurant.**",
+        "This page compares Yelp with the official inspection record. It asks **whether higher Yelp stars mean cleaner inspections**. To find out, we matched 19,237 restaurants on Yelp to their DOHMH inspection results from January 2023 to September 2026, and compared each restaurant's star rating with what its inspections actually recorded."
       ],
       source:"Yelp star ratings matched to DOHMH NYC restaurant inspection results, Jan 2023–Sep 2026",
       question:"Can diners rely on Yelp stars to tell how clean a restaurant is?",
