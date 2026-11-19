@@ -145,7 +145,20 @@ export function Dashboard({ d }){
       <PageHeader eyebrow={`Dashboard ${pad(d.n)}`} title={d.title} />
       {/* intro can be one paragraph (a string) or several (a list of strings) */}
       <div className="mt-7 space-y-4 text-[16.5px] leading-[1.75] text-sub">
-        {[].concat(d.intro).map((t, k) => <p key={k}>{rich(t)}</p>)}
+        {[].concat(d.intro).map((t, k) => (
+          <div key={k} className="space-y-4">
+            <p>{rich(t)}</p>
+            {/* Optional photo after the first paragraph; capped at 360px so a 750px-wide source stays sharp on retina screens. */}
+            {k === 0 && d.introImage && (
+              <figure className="m-0 max-w-[360px] pt-2">
+                <div className="overflow-hidden rounded-2xl border border-line bg-white">
+                  <img src={`${import.meta.env.BASE_URL}${d.introImage.img}`} alt={d.introImage.alt} width="750" height="506" className="block h-auto w-full" />
+                </div>
+                <figcaption className="mt-2 font-mono text-[11px] leading-snug text-sub">{d.introImage.caption}</figcaption>
+              </figure>
+            )}
+          </div>
+        ))}
       </div>
       <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.16em] text-sub">Source: {d.source}</p>
       {/* Every dashboard page: "Dashboard overview" above the frame, paired with "Visualisation walkthrough" further down. */}
