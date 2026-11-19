@@ -17,7 +17,7 @@ export const CONTENT = {
       title:"You can’t rely on the grade on the door",
       intro:[
         "Every restaurant in New York City must post its **inspection grade at the entrance**, and it is the signal almost every diner already uses to judge how clean a restaurant is. **A single letter seems to sum up what the inspector found**.",
-        "This page looks only at the official inspection record. It asks **whether the grade on the door gives a complete and current picture of the inspection**. To find out, we used the DOHMH inspection results for restaurants in all five boroughs from January 2023 to September 2026, and compared the letter each restaurant posts with what its inspections actually recorded."
+        "This page looks only at the official inspection record. 86% of the grade cards posted on restaurant doors show an A. It asks **whether the grade on the door gives a complete and current picture of the inspection**. To find out, we used the DOHMH inspection results for restaurants in all five boroughs from January 2023 to September 2026, and compared the letter each restaurant posts with what its inspections actually recorded."
       ],
       source:"DOHMH NYC Restaurant Inspection Results, five boroughs, Jan 2023–Sep 2026",
       question:"Does the grade on the door give a complete and current picture of the inspection?",
@@ -32,10 +32,10 @@ export const CONTENT = {
           howToRead:[
             "The chart covers routine inspections that ended in an A grade.",
             "Each bar is one type of violation, and its length is the share of those A inspections where inspectors cited it.",
-            "The grey bars are food-handling problems, such as food-contact surfaces not cleaned or cold food held too warm. The dark bars are live pests: mice, flies, roaches and rats.",
+            "The grey bars are other hygiene and food-safety problems, such as food-contact surfaces not cleaned or cold food held too warm. The dark bars are live pests (mice, flies, roaches and rats), the one problem a diner might see for themselves.",
             "The title gives two totals: the share of A inspections with at least one critical violation, and the share that found pests of any kind."
           ],
-          found:"81% of inspections that ended in an A still recorded at least one critical violation, and 16% found pests. The most common problems were food-contact surfaces not cleaned (18%) and food not protected (16%), followed by cold food held too warm (11%) and hot food held too cold (10%). Mice were found at 7% of A inspections and flies at 6%. This suggests that an A tells a diner the restaurant stayed under the points limit, not that the inspector found nothing serious.",
+          found:"81% of inspections that ended in an A still recorded at least one critical violation. The most common problems were food-contact surfaces not cleaned (18%) and food not protected (16%), followed by cold food held too warm (11%) and hot food held too cold (10%). Pests were found at 16% of A inspections, most often mice (7%) and flies (6%). This suggests that an A tells a diner the restaurant stayed under the points limit, not that the inspector found nothing serious.",
           note:"“Critical” is DOHMH’s label for violations more likely to cause illness.",
           next:"If an A can sit alongside critical violations and pests, how do so many restaurants end up with one? A restaurant does not have to earn its A at the first visit. Next, we follow restaurants from their first inspection to the card they finally post."},
         {question:"How many restaurants earn their A at the first visit?", chart:"Grade at each stage", url:"https://public.tableau.com/app/profile/ng.xw/viz/chart2_17950062256780/5_GradeJourney?publish=yes",
@@ -49,11 +49,11 @@ export const CONTENT = {
           next:"The retry explains why A cards are so common. But once a restaurant has its A, does it keep the standard that earned it? Next, we check what happens at the following routine inspection."},
         {question:"Do restaurants with an A keep it at their next inspection?", chart:"Next grade after an A", url:"https://public.tableau.com/app/profile/ng.xw/viz/chart3_17950063053780/6_NextInspection?publish=yes", height:325,
           howToRead:[
-            "The 100 squares stand for 100 restaurants that held an A.",
+            "Each of the 100 squares represents 1% of restaurants that held an A.",
             "Each square is coloured by the grade the restaurant earned at its next routine inspection, about 16 months later: yellow for A, orange for B and red for C.",
             "The orange and red squares are restaurants that slipped from an A to a B or C."
           ],
-          found:"Out of every 100 restaurants with an A, 29 fall to a B or C at their next routine inspection. This suggests that an A describes the kitchen on the day it was inspected, and that close to a third of A restaurants do not keep that standard until the next visit.",
+          found:"Out of every 100 restaurants with an A, 29 fall to a B or C at their next routine inspection, which comes about 16 months later. This suggests that an A describes the kitchen on the day it was inspected, and that close to a third of A restaurants do not keep that standard until the next visit.",
           next:"If the grade can change at the next inspection, then the age of the card matters. Until that next inspection, the old A stays on the door. Next, we look at how old the A cards on the door actually are."},
         {question:"How old is the A on the door?", chart:"Age of A cards on the door", url:"https://public.tableau.com/app/profile/ng.xw/viz/chart4_17950063639390/7_CardAgeCurve?publish=yes",
           howToRead:[
@@ -72,7 +72,7 @@ export const CONTENT = {
           ],
           found:"40% of A inspections scored 12 or 13, one or two points away from a B. The scores pile up just under the cut-off, and drop sharply right after it. This suggests that a large share of A restaurants only just made the grade, so the same letter on the door covers both near-perfect kitchens and kitchens one violation away from a B."}
       ],
-      takeaway:"The grade on the door is not a complete or current picture of the inspection. An A still allows critical violations and pests, many A’s are earned only on a retry, close to a third slip at the next inspection, a third of A cards are more than a year old, and many A’s sit just one or two points from a B. The letter shows that a restaurant passed at some point, not what its kitchen looks like today." },
+      takeaway:"The grade on the door is not a complete or current picture of the inspection. An A still allows critical violations, from dirty surfaces to pests, many A’s are earned only on a retry, close to a third slip at the next inspection, a third of A cards are more than a year old, and many A’s sit just one or two points from a B. The letter shows that a restaurant passed at some point, not what its kitchen looks like today." },
     { n:2, owner:"Mei Yu", nav:"Stars vs. Citations",
       title:"You can’t rely on the Yelp stars either",
       intro:"This part matches Yelp to the official record: 19,237 restaurants on Yelp, linked to their DOHMH inspections since 2023. The question is whether the stars, the other signal diners check, say anything about how clean the kitchen is.",
