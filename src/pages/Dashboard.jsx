@@ -162,7 +162,7 @@ export function Dashboard({ d }){
       </div>
       <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.16em] text-sub">Source: {d.source}</p>
       {/* Every dashboard page: "Dashboard overview" above the frame, paired with "Visualisation walkthrough" further down. */}
-      <section className="mt-16">
+      <section id={`d${d.n}-overview`} className="mt-16 scroll-mt-8">
         <SectionHeading>Dashboard overview</SectionHeading>
         <p className="mt-5 text-[16px] leading-[1.75] text-sub">{rich(d.overviewIntro ?? OVERVIEW_TEXT, `d${d.n}-walkthrough`)}</p>
       </section>
@@ -191,7 +191,7 @@ export function Dashboard({ d }){
       {/* Summary (the `takeaway` field in content.js): a quiet panel with a faint teal tint and thin teal border, so it reads as the page's conclusion
           without a heavy side bar or dark block. */}
       <Reveal className="mt-14">
-        <section aria-label="Summary" className="rounded-2xl border border-accent/30 bg-accent/[0.05] p-7 sm:p-9">
+        <section id={`d${d.n}-summary`} aria-label="Summary" className="scroll-mt-8 rounded-2xl border border-accent/30 bg-accent/[0.05] p-7 sm:p-9">
           <Eyebrow>Summary</Eyebrow>
           <p className="mt-4 text-[18px] font-semibold leading-[1.55] text-ink sm:text-[20px]">{d.takeaway}</p>
         </section>
