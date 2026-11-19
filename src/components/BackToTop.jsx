@@ -5,7 +5,7 @@ import { Icon, icons } from "./Icon.jsx";
 // shows how far down the page the reader is, starting at 12 o'clock and filling clockwise.
 const R = 20.5, LENGTH = 2 * Math.PI * R;
 
-// Back-to-top button, shown after 400px of scrolling. The white ring around the arrow fills as the reader scrolls
+// Back-to-top button, shown after 400px of scrolling. It sits 80px up from the bottom so it clears the "Powered by Netlify" badge on the live site. The white ring around the arrow fills as the reader scrolls
 // (`progress` from useReadingProgress, 0 to 1).
 export function BackToTop({ progress = 0 }){
   const [show, setShow] = useState(false);
@@ -21,7 +21,7 @@ export function BackToTop({ progress = 0 }){
   };
   return (
     <button aria-label="Back to top" onClick={toTop}
-      className={`fixed bottom-6 right-6 z-40 grid h-12 w-12 place-items-center rounded-full bg-accent text-white shadow-[0_10px_24px_-8px_rgba(20,163,139,0.6)] transition duration-300 ease-out ${show ? "opacity-100" : "pointer-events-none translate-y-2 opacity-0"}`}>
+      className={`fixed bottom-20 right-6 z-40 grid h-12 w-12 place-items-center rounded-full bg-accent text-white shadow-[0_10px_24px_-8px_rgba(20,163,139,0.6)] transition duration-300 ease-out ${show ? "opacity-100" : "pointer-events-none translate-y-2 opacity-0"}`}>
       <svg viewBox="0 0 48 48" className="absolute inset-0 h-full w-full -rotate-90" fill="none" aria-hidden="true">
         <circle cx="24" cy="24" r={R} stroke="rgba(255,255,255,0.28)" strokeWidth="2.5" />
         <circle cx="24" cy="24" r={R} stroke="#fff" strokeWidth="2.5" strokeLinecap="round"

@@ -19,7 +19,7 @@ export const CONTENT = {
         "Every restaurant in New York City must post its **inspection grade at the entrance**, and it is the signal almost every diner already uses to judge how clean a restaurant is. **A single letter seems to sum up what the inspector found**.",
         "This page looks only at the official inspection record. 86% of the grade cards posted on restaurant doors show an A. It asks **whether the grade on the door gives a complete and current picture of the inspection**. To find out, we used the DOHMH inspection results for restaurants in all five boroughs from January 2023 to September 2026, and compared the letter each restaurant posts with what its inspections actually recorded."
       ],
-      // Shown under the first intro paragraph. Source file is 750×506, so keep it displayed at 375px or narrower for sharp retina rendering.
+      // Shown under the first intro paragraph, up to 480px wide (Dashboard.jsx). The source file is 750×506.
       introImage:{ img:"dashboard-1/grade-a-card.jpg", alt:"A blue letter A grade card, headed “Sanitary Inspection Grade”, posted on the glass door of a New York City coffee shop.", caption:"A grade A card posted on a restaurant door. Photo: Phoebe Zheng/The Epoch Times." },
       source:"DOHMH NYC Restaurant Inspection Results, five boroughs, Jan 2023–Sep 2026",
       question:"Does the grade on the door give a complete and current picture of the inspection?",

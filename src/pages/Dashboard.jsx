@@ -148,9 +148,9 @@ export function Dashboard({ d }){
         {[].concat(d.intro).map((t, k) => (
           <div key={k} className="space-y-4">
             <p>{rich(t)}</p>
-            {/* Optional photo after the first paragraph; capped at 360px so a 750px-wide source stays sharp on retina screens. */}
+            {/* Optional photo after the first paragraph, centred and capped at 480px. The source is 750px wide, so it is slightly upscaled on retina screens. */}
             {k === 0 && d.introImage && (
-              <figure className="mx-auto my-0 max-w-[360px] pt-2">
+              <figure className="mx-auto my-0 max-w-[480px] pt-2">
                 <div className="overflow-hidden rounded-2xl border border-line bg-white">
                   <img src={`${import.meta.env.BASE_URL}${d.introImage.img}`} alt={d.introImage.alt} width="750" height="506" className="block h-auto w-full" />
                 </div>
