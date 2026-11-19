@@ -73,8 +73,11 @@ export const CONTENT = {
       takeaway:"The grade on the door is not a complete or current picture of the inspection. An A still allows critical violations, from dirty surfaces to pests, many A’s are earned only on a retry, close to a third slip at the next inspection, a third of A cards are more than a year old, and many A’s sit just one or two points from a B. The letter shows that a restaurant passed at some point, not what its kitchen looks like today." },
     { n:2, owner:"Mei Yu", nav:"Stars vs. Citations",
       title:"You can’t rely on the Yelp stars either",
-      intro:"This part matches Yelp to the official record: 19,237 restaurants on Yelp, linked to their DOHMH inspections since 2023. The question is whether the stars, the other signal diners check, say anything about how clean the kitchen is.",
-      source:"Yelp star ratings matched to DOHMH inspection history, 2023–2026",
+      intro:[
+        "Many diners also check Yelp before choosing where to eat, and **the star rating is the quickest way to judge a restaurant online**. **More stars seem to mean a better-run restaurant.**",
+        "This page compares Yelp with the official inspection record. It asks **whether higher Yelp stars mean cleaner inspections**. To find out, we matched 19,237 restaurants on Yelp to their DOHMH inspection results from January 2023 to September 2026, and compared each restaurant's star rating with what its inspections actually recorded."
+      ],
+      source:"Yelp star ratings matched to DOHMH NYC restaurant inspection results, Jan 2023–Sep 2026",
       question:"Can diners rely on Yelp stars to tell how clean a restaurant is?",
       overviewIntro:"This dashboard brings all the charts together to answer one part of our wider question: **can diners rely on Yelp stars to tell how clean a restaurant is?** After this, in the [[Visualisation walkthrough]], we go through each chart in turn, with instructions on how to use it and what it shows.",
       // Overview: the whole dashboard, switched with the buttons above the frame.
